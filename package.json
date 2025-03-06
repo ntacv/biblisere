@@ -9,15 +9,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "effector": "^23.3.0",
-    "effector-react": "^23.3.0",
+    "@react-navigation/native": "github:react-navigation/native",
+    "effector": "23.3.0",
+    "effector-react": "23.3.0",
     "expo": "52.0.37",
     "expo-status-bar": "2.0.1",
     "i18next": "24.2.2",
     "moment": "2.30.1",
     "react": "19.0.0",
     "react-native": "0.78.0",
-    "react-native-locale-detector": "^1.0.1",
+    "react-native-locale-detector": "1.0.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "4.4.0",
     "styled-components": "6.1.15"
   },
   "devDependencies": {
