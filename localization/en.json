@@ -1,0 +1,8 @@
+{
+  "language": "English",
+  "homepage": "Hello",
+
+  "translation": {
+    "intro": "Welcome to React and react-i18next"
+  }
+}

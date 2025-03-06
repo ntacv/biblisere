@@ -9,11 +9,13 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-navigation/native": "github:react-navigation/native",
     "expo": "52.0.37",
     "expo-status-bar": "2.0.1",
     "i18next": "24.2.2",
     "moment": "2.30.1",
     "react": "18.3.1",
+    "react-i18next": "^15.4.1",
     "react-native": "0.76.7",
     "react-native-locale-detector": "^1.0.1"
   },
