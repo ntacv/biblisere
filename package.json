@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@types/react": "18.3.12",
+    "effector": "23.3.0",
+    "effector-react": "23.3.0",
     "expo": "52.0.37",
     "expo-status-bar": "2.0.1",
     "i18next": "24.2.2",
@@ -21,7 +23,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.26.9",
-    "@types/react": "18.3.12",
+    "@types/react": "19.0.10",
     "typescript": "5.3.3"
   },
   "private": true,
