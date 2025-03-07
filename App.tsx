@@ -2,25 +2,27 @@ import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import Homepage from "./components/homepage/Homepage";
+import User from "./components/user/User";
+
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function RootStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator></Stack.Navigator>
-      <View style={styles.container}>
-        <Text>Plongeoir Nathan</Text>
-        <StatusBar style="auto" />
-      </View>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Homepage} />
+      <Stack.Screen name="User" component={User} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default function App() {
+  return (
+    <View>
+      <NavigationContainer>
+        <RootStack />
+      </NavigationContainer>
+    </View>
+  );
+}
