@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import Title from "../Title";
+import { color, size } from "../../styles/Variables";
 
 /*
 const Component = Platform.select({
@@ -16,29 +18,34 @@ const Component = Platform.select({
 })();
 */
 
-const ViewHome = styled.View`
+const ViewHome = styled(View)`
   background: green;
 `;
-const ViewMenu = styled.View`
+const ViewMenu = styled(View)`
   display: none;
   background: red;
 `;
-const ViewHeader = styled.View`
+const ViewHeader = styled(View)`
   background: lightblue;
   display: flex;
+  flex-direction: row;
 
   ${(props) =>
     props.os === "ios"
       ? `
-      margin: 60px 0 0 0;`
+      margin: ` +
+        size.header.ios +
+        `px 0 0 0;`
       : `
-      margin: 30px 0 0 0;`}
+      margin: ` +
+        size.header.android +
+        `px 0 0 0;`}
 `;
-const ViewFooter = styled.View`
+const ViewFooter = styled(View)`
   background: lightgrey;
   text-align: center;
 `;
-const ViewFilters = styled.View`
+const ViewFilters = styled(View)`
   display: none;
   background: yellow;
 `;
@@ -60,8 +67,8 @@ function Homepage() {
         <Text>Filters</Text>
       </ViewFilters>
       <ViewHeader os={os}>
-        <Text>Logo</Text>
-        <Text>Bibliotheque Bleue</Text>
+        <Text>Menu</Text>
+        <Title>Bibliotheque Bleue</Title>
         <TouchableOpacity onPress={() => navigation.navigate("User")}>
           <Text>Log in</Text>
         </TouchableOpacity>
@@ -70,6 +77,37 @@ function Homepage() {
         <Text>IMAGE</Text>
         <TextInput placeholder="Rechercher..."></TextInput>
         <Text>MAIN APP</Text>
+        <Text style={{ fontSize: 20 }}>
+          What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
+          and typesetting industry. Lorem Ipsum has been the industry's standard
+          dummy text ever since the 1500s, when an unknown printer took a galley
+          of type and scrambled it to make a type specimen book.{"\n"} {"\n"}It
+          has survived not only five centuries, but also the leap into
+          electronic typesetting, remaining essentially unchanged. It was
+          popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages, and more recently with desktop
+          publishing software like Aldus PageMaker including versions of Lorem
+          Ipsum. Why do we use it?
+          {"\n"}
+          {"\n"}
+          It is a long established fact that a reader will be distracted by the
+          readable content of a page when looking at its layout. The point of
+          using Lorem Ipsum is that it has a more-or-less normal distribution of
+          letters, as opposed to using 'Content here, content here', making it
+          look like readable English. {"\n"}
+          {"\n"}Many desktop publishing packages and web page editors now use
+          Lorem Ipsum as their default model text, and a search for 'lorem
+          ipsum' will uncover many web sites still in their infancy. Various
+          versions have evolved over the years, sometimes by accident, sometimes
+          on purpose (injected humour and the like). {"\n"}
+          {"\n"}
+          Where does it come from? Contrary to popular belief, Lorem Ipsum is
+          not simply random text. It has roots in a piece of classical Latin
+          literature from 45 BC, making it over 2000 years old. Richard
+          McClintock, a Latin professor at Hampden-Sydney College in Virginia,
+          looked up one of the more obscure Latin words, consectetur, from a
+          Lorem Ipsum passage, and going through the cites of the word
+        </Text>
         <Text>footer</Text>
       </ScrollView>
       <ViewFooter>

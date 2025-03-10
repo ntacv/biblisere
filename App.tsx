@@ -22,7 +22,7 @@ function RootStack() {
       initialRouteName="Homepage"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen component={Homepage} name="Homepage" />
+      <Stack.Screen name="Homepage" component={Homepage} />
       <Stack.Screen name="User" component={User} />
     </Stack.Navigator>
   );
