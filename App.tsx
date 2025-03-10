@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Homepage from "./components/homepage/Homepage";
 import User from "./components/user/User";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
 const Screen = Stack.Screen;
