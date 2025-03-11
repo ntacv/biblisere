@@ -1,22 +1,13 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Homepage from "./components/homepage/Homepage";
 import User from "./components/user/User";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
-const Screen = Stack.Screen;
 
-function RootStack() {
+const RootStack = () => {
   return (
     <Stack.Navigator
       id={undefined}
@@ -27,7 +18,7 @@ function RootStack() {
       <Stack.Screen name="User" component={User} />
     </Stack.Navigator>
   );
-}
+};
 
 export default function App() {
   return (
