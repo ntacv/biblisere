@@ -70,7 +70,6 @@ function Homepage() {
   return (
     <SafeAreaView>
       <ViewHome>
-        {menuVisible ? <Menu /> : null}
         <ViewFilters>
           <TextTranslated>components:filter:title</TextTranslated>
         </ViewFilters>
@@ -105,6 +104,7 @@ function Homepage() {
           <TextTranslated>footer:privacy</TextTranslated>
           <TextTranslated>footer:terms</TextTranslated>
         </ViewFooter>
+        {menuVisible ? <Menu /> : null}
       </ViewHome>
     </SafeAreaView>
   );

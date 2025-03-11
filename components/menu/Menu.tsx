@@ -4,9 +4,12 @@ import styled from "styled-components/native";
 import { StackParamList } from "../../types";
 import TouchableContainer from "../button/TouchableContainer";
 import TextTranslated from "../../localization/TextTranslated";
+import { size } from "../../styles/Variables";
 
 const ViewMenu = styled(View)<{ visible: string }>`
   background: red;
+  position: absolute;
+  top: 100px;
 `;
 
 const Menu = () => {
