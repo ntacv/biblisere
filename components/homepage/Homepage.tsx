@@ -9,13 +9,15 @@ import {
   StatusBar,
 } from "react-native";
 import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import Title from "../Title";
 import { color, size } from "../../styles/Variables";
 import TouchableContainer from "../button/TouchableContainer";
 import { useState } from "react";
 import TextTranslated from "../../localization/TextTranslated";
 import ChooseLanguage from "../../localization/ChooseLanguage";
+import { StackParamList } from "../../types";
+import Menu from "../menu/Menu";
 
 /*
 const Component = Platform.select({
@@ -27,9 +29,7 @@ const Component = Platform.select({
 const ViewHome = styled(View)`
   background: green;
 `;
-const ViewMenu = styled(View)<{ visible: string }>`
-  background: red;
-`;
+
 const ViewHeader = styled(View)`
   background: lightblue;
   display: flex;
@@ -55,23 +55,9 @@ const ViewFilters = styled(View)`
   background: yellow;
 `;
 
-const Menu = () => {
-  return (
-    <ViewMenu>
-      <ScrollView>
-        <Text>menu</Text>
-        <TouchableContainer route="Menu">Menu</TouchableContainer>
-        <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <Text>User page</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </ViewMenu>
-  );
-};
-
 function Homepage() {
   const os = Platform.OS;
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<StackParamList>>();
 
   const [menuVisible, setMenuVisible] = useState(false);
 

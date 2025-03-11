@@ -1,11 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Homepage from "./components/homepage/Homepage";
 import User from "./components/user/User";
+import { StackParamList } from "./types";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 const RootStack = () => {
   return (
