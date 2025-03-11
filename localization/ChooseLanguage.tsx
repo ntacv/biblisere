@@ -8,10 +8,10 @@ const ChooseLanguage = () => {
   return (
     <View>
       <TouchableOpacity onPress={() => i18next.changeLanguage("en")}>
-        <Text style={{ color: "green" }}>EN</Text>
+        <Text style={{ color: "green", backgroundColor: "red" }}>EN</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => i18next.changeLanguage("fr")}>
-        <Text style={{ color: "green" }}>FR</Text>
+        <Text style={{ color: "green", backgroundColor: "red" }}>FR</Text>
       </TouchableOpacity>
     </View>
   );

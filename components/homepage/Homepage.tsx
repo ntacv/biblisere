@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   Platform,
+  StatusBar,
 } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +14,8 @@ import Title from "../Title";
 import { color, size } from "../../styles/Variables";
 import TouchableContainer from "../button/TouchableContainer";
 import { useState } from "react";
+import TextTranslated from "../../localization/TextTranslated";
+import ChooseLanguage from "../../localization/ChooseLanguage";
 
 /*
 const Component = Platform.select({
@@ -97,6 +100,12 @@ function Homepage() {
         <ScrollView>
           <Text>IMAGE</Text>
           <TextInput placeholder="Rechercher..."></TextInput>
+          <View>
+            <Text>Plongeoir Nathan;</Text>
+            <TextTranslated>config:language</TextTranslated>
+            <TextTranslated>translation:intro</TextTranslated>
+            <ChooseLanguage />
+          </View>
           <Text>MAIN APP</Text>
           <Text style={{ fontSize: 20 }}>
             What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
