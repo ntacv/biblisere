@@ -3,14 +3,16 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 
 import { StackParamList } from "types";
-import { size } from "../../styles/Variables";
-import TextTranslated from "../../localization/TextTranslated";
+import { colors, size } from "styles/Variables";
+import TextTranslated from "localization/TextTranslated";
 import TouchableContainer from "components/button/TouchableContainer";
 
 const ViewMenu = styled(View)<{ visible: string }>`
-  background: red;
+  background: ${colors.footer};
   position: absolute;
   top: 100px;
+  min-width: 50%;
+  min-height: 200px;
 `;
 
 const Menu = () => {

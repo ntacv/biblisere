@@ -1,20 +1,26 @@
-export const headerSizeIos = 60;
-export const headerSizeAndroid = 30;
-
 export const size = {
   title: {
     main: 30,
   },
   header: {
-    ios: headerSizeIos,
-    android: headerSizeAndroid,
+    top: {
+      ios: 0,
+      android: 30,
+    },
+    ios: 100,
+    android: 100,
   },
 };
 
-export const color = {
-  primary: "green",
-  secondary: "red",
-  header: "lightblue",
+export const colors = {
+  primary: "#34A6BD",
+  secondary: "#48EE5B",
+  background: "#FCFAFA",
+  header: "#9BF0FF",
   footer: "lightgrey",
   filters: "yellow",
+  danger: "red",
+  warning: "orange",
+  success: "green",
 };
+export const fonts = {};

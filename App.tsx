@@ -3,13 +3,23 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import Homepage from "components/homepage/Homepage";
 import User from "components/user/User";
 import { StackParamList } from "types";
 
 const Stack = createNativeStackNavigator<StackParamList>();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <SafeAreaProvider>
+        <RootStack />
+      </SafeAreaProvider>
+    </NavigationContainer>
+  );
+}
 
 const RootStack = () => {
   return (
@@ -23,11 +33,3 @@ const RootStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
-  );
-}

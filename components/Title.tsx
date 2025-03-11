@@ -1,14 +1,15 @@
 import React from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components";
+import { colors } from "styles/Variables";
 
 const TextTitle = styled(Text)`
+  color: ${colors.primary};
   font-size: 30px;
   font-weight: bold;
   text-align: center;
 `;
 const ViewTitle = styled(View)`
-  background: red;
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -18,7 +19,7 @@ const ViewTitle = styled(View)`
 const Title = ({ children }) => {
   return (
     <ViewTitle>
-      <Text>Logo</Text>
+      <Text></Text>
       <TextTitle>{children}</TextTitle>
     </ViewTitle>
   );

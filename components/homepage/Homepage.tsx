@@ -14,54 +14,21 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 
 import { StackParamList } from "types";
-import { color, size } from "styles/Variables";
+import { colors, size } from "styles/Variables";
 
 import TouchableContainer from "components/button/TouchableContainer";
 import TextTranslated from "localization/TextTranslated";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
-
-/*
-const Component = Platform.select({
-  ios: () => require("ComponentIOS"),
-  android: () => require("ComponentAndroid"),
-})();
-*/
-
-const ViewHome = styled(View)`
-  background: green;
-`;
-
-const ViewHeader = styled(View)`
-  background: lightblue;
-  display: flex;
-  flex-direction: row;
-
-  ${(props) =>
-    props.os === "ios"
-      ? `
-      margin: ` +
-        size.header.ios +
-        `px 0 0 0;`
-      : `
-      margin: ` +
-        size.header.android +
-        `px 0 0 0;`}
-`;
-const ViewFooter = styled(View)`
-  background: lightgrey;
-  text-align: center;
-`;
-const ViewFilters = styled(View)`
-  display: none;
-  background: yellow;
-`;
+import { TextCentered } from "styles/Styles";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Homepage() {
   const os = Platform.OS;
   const navigation = useNavigation<NavigationProp<StackParamList>>();
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -70,15 +37,12 @@ function Homepage() {
   };
 
   return (
-    <SafeAreaView>
-      <ViewHome>
+    <>
+      <ViewHome style={{ paddingTop: insets.top }}>
         <ViewFilters>
           <TextTranslated>components:filter:title</TextTranslated>
         </ViewFilters>
         <ViewHeader os={os}>
-          <TouchableOpacity onPress={() => navigation.navigate("User")}>
-            <TextTranslated>user:title</TextTranslated>
-          </TouchableOpacity>
           <TouchableOpacity onPress={() => toggleMenu()}>
             <TextTranslated>menu:title</TextTranslated>
           </TouchableOpacity>
@@ -98,17 +62,48 @@ function Homepage() {
             <ChooseLanguage />
           </View>
           <Text>MAIN APP</Text>
-          <TextTranslated style={{ fontSize: 20 }}>lorem:long</TextTranslated>
+          <TextTranslated>lorem:long</TextTranslated>
           <Text>footer</Text>
         </ScrollView>
         <ViewFooter>
-          <TextTranslated>footer:contact</TextTranslated>
-          <TextTranslated>footer:privacy</TextTranslated>
-          <TextTranslated>footer:terms</TextTranslated>
+          <TextCentered>
+            <TextTranslated>footer:contact</TextTranslated>
+            <TextTranslated>footer:privacy</TextTranslated>
+            <TextTranslated>footer:terms</TextTranslated>
+          </TextCentered>
         </ViewFooter>
         {menuVisible ? <Menu /> : null}
       </ViewHome>
-    </SafeAreaView>
+    </>
   );
 }
 export default Homepage;
+
+const ViewHome = styled(View)`
+  background-color: ${colors.background};
+  color: ${colors.primary};
+`;
+
+const ViewHeader = styled(View)`
+  display: flex;
+  flex-direction: row;
+
+  ${(props) =>
+    props.os === "ios"
+      ? `
+      margin: ` +
+        size.header.top.ios +
+        `px 0 0 0;`
+      : `
+      margin: ` +
+        size.header.top.android +
+        `px 0 0 0;`}
+`;
+const ViewFooter = styled(View)`
+  background: ${colors.footer};
+  display: flex;
+`;
+const ViewFilters = styled(View)`
+  display: none;
+  background: ${colors.filters};
+`;
