@@ -5,9 +5,9 @@ import {
 } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Homepage from "./components/homepage/Homepage";
-import User from "./components/user/User";
-import { StackParamList } from "./types";
+import Homepage from "components/homepage/Homepage";
+import User from "components/user/User";
+import { StackParamList } from "types";
 
 const Stack = createNativeStackNavigator<StackParamList>();
 

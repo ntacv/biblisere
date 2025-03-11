@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   TouchableOpacity,
   View,
@@ -8,17 +9,18 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import styled from "styled-components/native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import Title from "../Title";
-import { color, size } from "../../styles/Variables";
-import TouchableContainer from "../button/TouchableContainer";
-import { useState } from "react";
-import TextTranslated from "../../localization/TextTranslated";
-import ChooseLanguage from "../../localization/ChooseLanguage";
-import { StackParamList } from "../../types";
-import Menu from "../menu/Menu";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components/native";
+
+import { StackParamList } from "types";
+import { color, size } from "styles/Variables";
+
+import TouchableContainer from "components/button/TouchableContainer";
+import TextTranslated from "localization/TextTranslated";
+import ChooseLanguage from "localization/ChooseLanguage";
+import Title from "components/Title";
+import Menu from "components/menu/Menu";
 
 /*
 const Component = Platform.select({
