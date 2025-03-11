@@ -11,7 +11,7 @@ const ViewInside = styled(View)`
   background: lightblue;
 `;
 
-const TouchableContainer = ({ children, route }) => {
+const TouchableContainer = ({ children, route = undefined }) => {
   const navigation = useNavigation();
 
   return (

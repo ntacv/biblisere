@@ -3,6 +3,7 @@ import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { StackParamList } from "../../types";
 import TouchableContainer from "../button/TouchableContainer";
+import TextTranslated from "../../localization/TextTranslated";
 
 const ViewMenu = styled(View)<{ visible: string }>`
   background: red;
@@ -13,13 +14,14 @@ const Menu = () => {
   return (
     <ViewMenu>
       <ScrollView>
-        <Text>menu</Text>
-        <TouchableContainer route="Menu">Menu</TouchableContainer>
+        <TouchableContainer>
+          <TextTranslated>menu:title</TextTranslated>
+        </TouchableContainer>
         <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <Text>User page</Text>
+          <TextTranslated>user:title</TextTranslated>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <Text>User page</Text>
+          <TextTranslated>user:title</TextTranslated>
         </TouchableOpacity>
       </ScrollView>
     </ViewMenu>
