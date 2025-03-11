@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useTranslation } from "react-i18next";
-import i18next from "./localization/i18n";
+import TextTranslated from "./localization/TextTranslated";
+import ChooseLanguage from "./localization/ChooseLanguage";
 
 export default function App() {
-  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>Plongeoir Nathan; Langue: {t("language")}</Text>
+      <Text>Plongeoir Nathan;</Text>
+      <TextTranslated>config:language</TextTranslated>
+      <TextTranslated>translation:intro</TextTranslated>
+      <ChooseLanguage />
       <StatusBar style="auto" />
     </View>
   );
