@@ -4,29 +4,18 @@ import { colors } from "styles/Variables";
 import { TextCentered } from "styles/Styles";
 import TextTranslated from "localization/TextTranslated";
 import axios from "axios";
-import { useSSR } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ApiHealth } from "types";
+import { useUnit } from "effector-react";
+import { $storeHealth } from "store";
+import { getApiHealth } from "api/apiHealth";
 
 const Footer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [apiStatus, setApiStatus] = useState<"loading" | "ok" | "error">(
     "loading"
   );
-  const [health, setHealth] = useState<ApiHealth>();
-
-  axios
-    .get("http://localhost:8000/health")
-    .then((response) => {
-      setHealth(response.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      health ? setIsLoading(false) : setIsLoading(true);
-      health ? setApiStatus("ok") : setApiStatus("error"); // network error NOBRIDGE
-    });
+  const storeHealth = useUnit<{ data: ApiHealth }>($storeHealth);
 
   return (
     <ViewFooter>
@@ -36,8 +25,9 @@ const Footer = () => {
         <TextTranslated>footer:terms</TextTranslated>
       </TextCentered>
       <TextTranslated>config:status</TextTranslated>
-      {health ? (
-        <TextStatus health={health}>{health.status}</TextStatus>
+
+      {storeHealth.data ? (
+        <Text>{storeHealth.data.status}</Text>
       ) : (
         <Text>{apiStatus}</Text>
       )}
