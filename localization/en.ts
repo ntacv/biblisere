@@ -1,6 +1,7 @@
 export default {
   config: {
     language: "English",
+    status: "Status",
   },
   menu: {
     title: "Menu",

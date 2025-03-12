@@ -23,6 +23,7 @@ import Title from "components/Title";
 import Menu from "components/menu/Menu";
 import { TextCentered } from "styles/Styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Footer from "components/footer/Footer";
 
 function Homepage() {
   const os = Platform.OS;
@@ -65,13 +66,7 @@ function Homepage() {
           <TextTranslated>lorem:long</TextTranslated>
           <Text>footer</Text>
         </ScrollView>
-        <ViewFooter>
-          <TextCentered>
-            <TextTranslated>footer:contact</TextTranslated>
-            <TextTranslated>footer:privacy</TextTranslated>
-            <TextTranslated>footer:terms</TextTranslated>
-          </TextCentered>
-        </ViewFooter>
+        <Footer />
         {menuVisible ? <Menu /> : null}
       </ViewHome>
     </>
@@ -98,10 +93,6 @@ const ViewHeader = styled(View)`
       margin: ` +
         size.header.top.android +
         `px 0 0 0;`}
-`;
-const ViewFooter = styled(View)`
-  background: ${colors.footer};
-  display: flex;
 `;
 const ViewFilters = styled(View)`
   display: none;
