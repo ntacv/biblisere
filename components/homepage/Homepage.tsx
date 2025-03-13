@@ -2,22 +2,17 @@ import { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   View,
-  SafeAreaView,
   Text,
   ScrollView,
   TextInput,
   Platform,
-  StatusBar,
 } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { StackParamList } from "types";
 import { colors, size } from "styles/Variables";
-
-import TouchableContainer from "components/button/TouchableContainer";
+import Button from "components/button/Button";
 import TextTranslated from "localization/TextTranslated";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
@@ -31,10 +26,11 @@ import { useStoreMap } from "node_modules/effector-react";
 import { Api } from "api/apiSwagger";
 
 const api = new Api();
+import { useNav } from "utils/navigation";
 
 function Homepage() {
   const os = Platform.OS;
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const navigation = useNav();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -71,49 +67,45 @@ function Homepage() {
   };
 
   return (
-    <>
-      <ViewHome insets={insets}>
-        <ViewFilters>
-          <TextTranslated>components:filter:title</TextTranslated>
-        </ViewFilters>
-        <ViewHeader os={os}>
-          <TouchableOpacity onPress={() => toggleMenu()}>
-            <TextTranslated>menu:title</TextTranslated>
-          </TouchableOpacity>
-          <Title>
-            <TextTranslated>home:name</TextTranslated>
-          </Title>
-          <TouchableContainer route="User">
-            <TextTranslated>menu:login</TextTranslated>
-          </TouchableContainer>
-        </ViewHeader>
-        <ScrollView>
-          <TextInput
-            placeholder={t("components:input:placeholder")}
-          ></TextInput>
+    <ViewHome insets={insets}>
+      <ViewFilters>
+        <TextTranslated>components:filter:title</TextTranslated>
+      </ViewFilters>
+      <ViewHeader os={os}>
+        <TouchableOpacity onPress={() => toggleMenu()}>
+          <TextTranslated>menu:title</TextTranslated>
+        </TouchableOpacity>
+        <Title>
+          <TextTranslated>home:name</TextTranslated>
+        </Title>
+        <Button onPress={() => navigation.navigate("User")}>
+          <TextTranslated>menu:login</TextTranslated>
+        </Button>
+      </ViewHeader>
+      <ScrollView>
+        <TextInput placeholder={t("components:input:placeholder")}></TextInput>
 
-          <ChooseLanguage />
+        <ChooseLanguage />
 
-          {schedules.data?.map((schedule) => (
-            <Text key={schedule.id}>
-              {schedule.title} | {schedule.openingTime.hours}:
-              {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
-              {schedule.closingTime.minutes}
-            </Text>
-          ))}
-
-          <Text>
-            {t("menu:login")}: {isConnected()}
+        {schedules.data?.map((schedule) => (
+          <Text key={schedule.id}>
+            {schedule.title} | {schedule.openingTime.hours}:
+            {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
+            {schedule.closingTime.minutes}
           </Text>
+        ))}
 
-          {books.data?.map((book) => (
-            <Text key={book.id}>{book.title}</Text>
-          ))}
-        </ScrollView>
-        <Footer />
-        {menuVisible && <Menu />}
-      </ViewHome>
-    </>
+        <Text>
+          {t("menu:login")}: {isConnected()}
+        </Text>
+
+        {books.data?.map((book) => (
+          <Text key={book.id}>{book.title}</Text>
+        ))}
+      </ScrollView>
+      <Footer />
+      {menuVisible && <Menu />}
+    </ViewHome>
   );
 }
 export default Homepage;
@@ -129,16 +121,9 @@ const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
 
-  ${(props) =>
-    props.os === "ios"
-      ? `
-      margin: ` +
-        size.header.top.ios +
-        `px 0 0 0;`
-      : `
-      margin: ` +
-        size.header.top.android +
-        `px 0 0 0;`}
+  margin: ${(props) =>
+      props.os === "ios" ? size.header.top.ios : size.header.top.android}px
+    0 0 0;
 `;
 const ViewFilters = styled(View)`
   display: none;
