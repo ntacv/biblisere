@@ -22,4 +22,7 @@ const TextInside = styled(Text)`
 `;
 const TouchableButton = styled(TouchableOpacity)`
   background-color: ${colors.secondary};
+  padding: 8px 15px;
+  margin: 0 10px;
+  border-radius: 15px;
 `;

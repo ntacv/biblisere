@@ -23,4 +23,8 @@ export const colors = {
   warning: "orange",
   success: "green",
 };
-export const fonts = {};
+
+export const fonts = {
+  title: "32px Arial black",
+  content: "15px Arial black",
+};
