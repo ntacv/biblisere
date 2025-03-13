@@ -3,6 +3,15 @@ import { Text, View } from "react-native";
 import styled from "styled-components";
 import { colors } from "styles/Variables";
 
+const Title = ({ children }) => {
+  return (
+    <ViewTitle>
+      <TextTitle>{children}</TextTitle>
+    </ViewTitle>
+  );
+};
+export default Title;
+
 const TextTitle = styled(Text)`
   color: ${colors.primary};
   font-size: 30px;
@@ -15,13 +24,3 @@ const ViewTitle = styled(View)`
   flex-direction: row;
   justify-content: center;
 `;
-
-const Title = ({ children }) => {
-  return (
-    <ViewTitle>
-      <Text></Text>
-      <TextTitle>{children}</TextTitle>
-    </ViewTitle>
-  );
-};
-export default Title;
