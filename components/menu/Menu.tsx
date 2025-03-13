@@ -1,18 +1,18 @@
-import { ScrollView, View, TouchableOpacity } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
 import { useNav } from "utils/navigation";
 import { colors } from "styles/Variables";
-import TextTranslated from "localization/TextTranslated";
-import Button from "components/button/Button";
+import { useTranslation } from "react-i18next";
 
 const Menu = () => {
   const navigation = useNav();
+  const { t } = useTranslation();
   return (
     <ViewMenu>
       <ScrollView>
         <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <TextTranslated>user:title</TextTranslated>
+          <Text>{t("user:title")}</Text>
         </TouchableOpacity>
       </ScrollView>
     </ViewMenu>

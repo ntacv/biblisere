@@ -9,15 +9,13 @@ import {
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors, size } from "styles/Variables";
 import Button from "components/button/Button";
-import TextTranslated from "localization/TextTranslated";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
-import { TextCentered } from "styles/Styles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNav } from "utils/navigation";
 
 function Homepage() {
@@ -35,20 +33,20 @@ function Homepage() {
   return (
     <ViewHome style={{ paddingTop: insets.top }}>
       <ViewFilters>
-        <TextTranslated>components:filter:title</TextTranslated>
+        <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
 
       <ViewHeader os={os}>
         <TouchableOpacity onPress={() => toggleMenu()}>
-          <TextTranslated>menu:title</TextTranslated>
+          <Text>{t("menu:title")}</Text>
         </TouchableOpacity>
 
         <Title>
-          <TextTranslated>home:name</TextTranslated>
+          <Text>{t("home:name")}</Text>
         </Title>
 
         <Button onPress={() => navigation.navigate("User")}>
-          <TextTranslated>menu:login</TextTranslated>
+          <Text>{t("menu:login")}</Text>
         </Button>
       </ViewHeader>
 
@@ -61,13 +59,13 @@ function Homepage() {
         </View>
 
         <Text>MAIN APP</Text>
-        <TextTranslated>lorem:long</TextTranslated>
+        <Text>{t("lorem:long")}</Text>
       </ScrollView>
 
       <ViewFooter>
-        <TextTranslated>footer:contact</TextTranslated>
-        <TextTranslated>footer:privacy</TextTranslated>
-        <TextTranslated>footer:terms</TextTranslated>
+        <Text>{t("footer:contact")}</Text>
+        <Text>{t("footer:privacy")}</Text>
+        <Text>{t("footer:terms")}</Text>
       </ViewFooter>
 
       {menuVisible ? <Menu /> : null}
