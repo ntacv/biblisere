@@ -1,21 +1,27 @@
 import { View, Text } from "react-native";
 import { styled } from "styled-components/native";
-import { colors } from "styles/Variables";
+
 import { TextCentered } from "styles/Styles";
 import TextTranslated from "localization/TextTranslated";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { ApiHealth } from "types";
-import { useUnit } from "effector-react";
-import { $storeHealth } from "store";
+
+import { useEffect } from "react";
+
+import { useStoreMap } from "effector-react";
+import * as StoreHealth from "stores/health";
 import { getApiHealth } from "api/apiHealth";
+import { colors } from "styles/Variables";
 
 const Footer = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [apiStatus, setApiStatus] = useState<"loading" | "ok" | "error">(
-    "loading"
+  const status = useStoreMap(
+    StoreHealth.store,
+    (store) => store.status?.status
   );
-  const storeHealth = useUnit<{ data: ApiHealth }>($storeHealth);
+
+  useEffect(() => {
+    getApiHealth().then((response) => {
+      StoreHealth.actions.setHealth(response);
+    });
+  }, []);
 
   return (
     <ViewFooter>
@@ -26,11 +32,7 @@ const Footer = () => {
       </TextCentered>
       <TextTranslated>config:status</TextTranslated>
 
-      {storeHealth.data ? (
-        <Text>{storeHealth.data.status}</Text>
-      ) : (
-        <Text>{apiStatus}</Text>
-      )}
+      {status ? <Text>{status}</Text> : <Text>loading...</Text>}
     </ViewFooter>
   );
 };
