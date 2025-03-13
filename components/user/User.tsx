@@ -1,8 +1,9 @@
 import { TouchableOpacity, View, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+
+import { useNav } from "utils/navigation";
 
 const User = () => {
-  const navigation = useNavigation();
+  const navigation = useNav();
   return (
     <View>
       <Text>User</Text>
