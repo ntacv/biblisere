@@ -1,31 +1,16 @@
-import { ScrollView, View, Text, TouchableOpacity } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { ScrollView, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
-import { StackParamList } from "types";
-import { colors, size } from "styles/Variables";
+import { useNav } from "utils/navigation";
+import { colors } from "styles/Variables";
 import TextTranslated from "localization/TextTranslated";
-import TouchableContainer from "components/button/TouchableContainer";
-
-const ViewMenu = styled(View)<{ visible: string }>`
-  background: ${colors.footer};
-  position: absolute;
-  top: 100px;
-  min-width: 50%;
-  min-height: 200px;
-`;
+import Button from "components/button/Button";
 
 const Menu = () => {
-  const navigation = useNavigation<NavigationProp<StackParamList>>();
+  const navigation = useNav();
   return (
     <ViewMenu>
       <ScrollView>
-        <TouchableContainer>
-          <TextTranslated>menu:title</TextTranslated>
-        </TouchableContainer>
-        <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <TextTranslated>user:title</TextTranslated>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("User")}>
           <TextTranslated>user:title</TextTranslated>
         </TouchableOpacity>
@@ -33,5 +18,12 @@ const Menu = () => {
     </ViewMenu>
   );
 };
-
 export default Menu;
+
+const ViewMenu = styled(View)`
+  background: ${colors.footer};
+  position: absolute;
+  top: 100px;
+  min-width: 50%;
+  min-height: 200px;
+`;
