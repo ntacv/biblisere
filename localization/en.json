@@ -13,8 +13,8 @@
     "translate": {
       "title": "Translate",
       "text": "Choose a language",
-      "en": "EN",
-      "fr": "FR",
+      "en": "EN🇬🇧",
+      "fr": "FR🇫🇷",
       "english": "English",
       "french": "French"
     },
@@ -34,9 +34,24 @@
   "home": {
     "name": "📙 Library",
     "title": "Homepage",
-    "intro": "Welcome to our library",
-    "content": "Here you can find all the books you need",
+    "intro": "Municipal Library of Trou-perdu-en-Isère",
+    "content": {
+      "times": [
+        "- Monday to Friday: 6:00 AM - 10:00 PM",
+        "- Saturday: 10:00 AM - 5:00 PM",
+        "- Sunday: Closed"
+      ],
+      "services": [
+        "- Book and magazine lending",
+        "- Access to digital resources",
+        "- Reading and working spaces",
+        "- Activities and events"
+      ],
+      "outro": "We invite you to come and discover everything the Municipal Library of Trou-perdu-en-Isère has to offer. See you soon!",
+      "presentation": "Our library is a place of culture and knowledge, where you can explore a vast collection of books, magazines, and digital resources. Whether you are a reading enthusiast, a student seeking knowledge, or simply looking for a quiet place to relax, our library has something to offer everyone."
+    },
     "titles": {
+      "services": "Our Services",
       "news": "News",
       "popular": "Popular",
       "recommended": "Recommended",
@@ -51,7 +66,8 @@
   "footer": {
     "contact": "Contact us",
     "privacy": "Privacy policy",
-    "terms": "Terms of service"
+    "terms": "Terms of use",
+    "copyright": "Cardiweb © 2025"
   },
   "lorem": {
     "short": "What is Lorem Ipsum?",

@@ -5,6 +5,7 @@ import { styled } from "styled-components/native";
 import * as styles from "styles/Styles";
 import { useTranslation } from "react-i18next";
 import i18next from "localization/i18n";
+import { colors } from "styles/Variables";
 
 const ChooseLanguage = () => {
   const { t } = useTranslation();
@@ -36,5 +37,9 @@ const ViewContainer = styled(View)`
 const TextLanguage = styled(Text)`
   ${styles.fontContent}
   color: ${(props) =>
-    props.language === i18next.language ? "green" : "black"};
+    props.language === i18next.language ? "black" : "black"};
+  background-color: ${(props) =>
+    props.language === i18next.language ? colors.primary : "white"};
+  padding: 5px;
+  border-radius: 5px;
 `;

@@ -15,6 +15,7 @@ export default Title;
 
 const TextTitle = styled(Text)`
   ${styles.fontTitle}
+  ${styles.textOneLine}
   text-align: center;
 `;
 const ViewTitle = styled(View)`

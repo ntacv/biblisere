@@ -13,10 +13,10 @@ export const size = {
 };
 
 export const colors = {
-  primary: "#34A6BD",
-  secondary: "#48EE5B",
+  primary: "#2DAA9E",
+  secondary: "#66D2CE",
   background: "#FCFAFA",
-  header: "#9BF0FF",
+  header: "#E3D2C3",
   footer: "lightgrey",
   filters: "yellow",
   danger: "red",

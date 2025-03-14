@@ -1,21 +1,30 @@
-import { Text } from "react-native";
-import { styled } from "styled-components/native";
 import { colors } from "./Variables";
 
-export const TextCentered = styled(Text)`
+export const textCentered = `
   text-align: center;
 `;
 
 export const fontTitle = `
-  font-size: 35px;
-  font-weight: 700;
-  font-family: sans-serif;
   color: ${colors.primary};
+  font: 35px sans-serif;
+  font-weight: 700;
   `;
-
+export const fontSubTitle = `
+  font: 26px sans-serif black;
+  font-weight: 700;
+  `;
 export const fontContent = `
   font-size: 20px;
   font-weight: 400;
   font-family: sans-serif;
   color: #333;
   `;
+
+export const textOneLine = `
+  line-break: strict;
+  word-break: keep-all;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  `;
+
+export default { textCentered, fontTitle, fontContent, textOneLine };

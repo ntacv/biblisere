@@ -1,13 +1,25 @@
 import React from "react";
-import { ScrollView, TextInput, View, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { styled } from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
 import { fonts, colors } from "styles/Variables";
+import * as styles from "styles/Styles";
 
 const Content = () => {
   const { t } = useTranslation();
+
+  const times = t("home:content:times", { returnObjects: true });
+  const services = t("home:content:services", { returnObjects: true });
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -15,27 +27,57 @@ const Content = () => {
         <ImageMainHome source={require("assets/adaptive-icon.png")} />
       </ViewMainImage>
 
-      <TextInputContent
-        placeholder={t("components:input:placeholder")}
-      ></TextInputContent>
-
       <ViewContentColumn>
+        <ViewFilterMenu>
+          <InputContent
+            placeholder={t("components:input:placeholder")}
+          ></InputContent>
+
+          <TouchableOpacity onPress={() => alert(t("components:button:click"))}>
+            <Ionicons name="arrow-down-outline" size={30} color="black" />
+          </TouchableOpacity>
+        </ViewFilterMenu>
+
         <ChooseLanguage />
 
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
-        <Text>{t("lorem:long")}</Text>
+        <TitleContent>{t("home:intro")}</TitleContent>
+        <TextContent>{t("home:content:presentation")}</TextContent>
+        <TitleContent>{t("home:titles:services")}</TitleContent>
+        <View>
+          {services.map((service, index) => (
+            <TextContent key={index}>{service}</TextContent>
+          ))}
+        </View>
+        <TitleContent>{t("home:titles:times")}</TitleContent>
+        <View>
+          {times.map((time, index) => (
+            <TextContent key={index}>{time}</TextContent>
+          ))}
+        </View>
+
+        <TextContent>{t("home:content:outro")}</TextContent>
       </ViewContentColumn>
 
       <ViewFooter>
-        <Text>{t("footer:contact")}</Text>
-        <Text>{t("footer:privacy")}</Text>
-        <Text>{t("footer:terms")}</Text>
+        <TouchableOpacity
+          onPress={() => Linking.openURL("https://www.cardiweb.com/contact")}
+        >
+          <TextContent>{t("footer:contact")}</TextContent>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL("https://www.cardiweb.com/mentions-legales")
+          }
+        >
+          <TextContent>{t("footer:terms")}</TextContent>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL("https://www.cardiweb.com/mentions-legales")
+          }
+        >
+          <TextContent>{t("footer:privacy")}</TextContent>
+        </TouchableOpacity>
       </ViewFooter>
     </ScrollView>
   );
@@ -50,18 +92,29 @@ const ImageMainHome = styled.Image`
   width: 100%;
   height: 100%;
 `;
-
-const TextInputContent = styled.TextInput`
+const ViewFilterMenu = styled(View)`
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+  justify-content: space-between;
+  align-items: bottom;
+`;
+const InputContent = styled(TextInput)`
   border-bottom-color: black;
   border-bottom-width: 1px;
   font: ${fonts.content};
-  padding: 10px;
-  margin: 10px;
+  flex: 0.9;
 `;
-
+const TitleContent = styled(Text)`
+  ${styles.fontSubTitle}
+`;
+const TextContent = styled(Text)`
+  font: ${fonts.content};
+`;
 const ViewContentColumn = styled(View)`
   width: 90%;
-  margin: 10px auto;
+  margin: 10px auto 40px;
+  gap: 10px;
 `;
 
 const ViewFooter = styled(View)`
