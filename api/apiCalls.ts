@@ -13,4 +13,15 @@ const getApiHealth = () => {
     });
 };
 
-export { getApiHealth };
+const getApiSchedules = () => {
+  return axios
+    .get("http://localhost:8000/schedules")
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export { getApiHealth, getApiSchedules };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   View,
@@ -21,9 +21,11 @@ import TextTranslated from "localization/TextTranslated";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
-import { TextCentered } from "styles/Styles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Footer from "components/footer/Footer";
+import { getApiSchedules } from "api/apiCalls";
+import * as StoreSchedules from "stores/schedules";
+import { useStoreMap } from "node_modules/effector-react";
 
 function Homepage() {
   const os = Platform.OS;
@@ -36,6 +38,15 @@ function Homepage() {
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
+
+  const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+
+  useEffect(() => {
+    getApiSchedules().then((response) => {
+      StoreSchedules.actions.setSchedules(response);
+      console.log(response);
+    });
+  }, []);
 
   return (
     <>
@@ -62,7 +73,11 @@ function Homepage() {
           <View>
             <ChooseLanguage />
           </View>
+
           <Text>MAIN APP</Text>
+
+          <Text>Schedules: {schedules.status?.title}.</Text>
+
           <TextTranslated>lorem:long</TextTranslated>
           <Text>footer</Text>
         </ScrollView>

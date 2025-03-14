@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 import { useStoreMap } from "effector-react";
 import * as StoreHealth from "stores/health";
-import { getApiHealth } from "api/apiHealth";
+import { getApiHealth } from "api/apiCalls";
 import { colors } from "styles/Variables";
 
 const Footer = () => {
