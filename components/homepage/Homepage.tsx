@@ -48,8 +48,6 @@ function Homepage() {
   const books = useStoreMap(StoreBooks.store, (store) => store);
   const user = useStoreMap(StoreUsers.store, (store) => store);
 
-  console.log(user);
-
   useEffect(() => {
     getApiSchedules().then((response) => {
       StoreSchedules.actions.setSchedules(response);
@@ -57,6 +55,10 @@ function Homepage() {
 
     const bookApi = api.books?.booksControllerFindAll().then((response) => {
       StoreBooks.actions.setBooks(response.data);
+    });
+
+    const userApi = api.users?.usersControllerGetMe().then((response) => {
+      StoreUsers.actions.setUsers(response.data);
     });
   }, []);
 
@@ -88,13 +90,20 @@ function Homepage() {
 
           <Text>MAIN APP</Text>
 
-          {schedules.status?.map((schedule) => (
+          {schedules.data?.map((schedule) => (
             <Text key={schedule.id}>
               {schedule.title} | {schedule.openingTime.hours}:
               {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
               {schedule.closingTime.minutes}
             </Text>
           ))}
+
+          <Text>
+            Users connected:
+            {user.data?.email ? user.data?.email : "Not connected"}
+          </Text>
+
+          <Text>Admin users</Text>
 
           <Text>Books</Text>
           {books.data?.map((book) => (
