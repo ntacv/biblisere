@@ -1,20 +1,32 @@
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import Homepage from "components/homepage/Homepage";
+import User from "components/user/User";
+import { routesType } from "types";
+
+const Stack = createNativeStackNavigator<routesType>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Plongeoir Nathan</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <SafeAreaProvider>
+        <RootStack />
+      </SafeAreaProvider>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const RootStack = () => {
+  return (
+    <Stack.Navigator
+      id={undefined}
+      initialRouteName="Homepage"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Homepage" component={Homepage} />
+      <Stack.Screen name="User" component={User} />
+    </Stack.Navigator>
+  );
+};
