@@ -10,6 +10,7 @@ import {
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { DrawerActions } from "@react-navigation/native";
 
 import { colors, size } from "styles/Variables";
 import Button from "components/button/Button";
@@ -64,7 +65,9 @@ function Homepage() {
       </ViewFilters>
 
       <ViewHeader os={os}>
-        <TouchableOpacity onPress={() => toggleMenu()}>
+        <TouchableOpacity
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+        >
           <Text>{t("menu:title")}</Text>
         </TouchableOpacity>
 
