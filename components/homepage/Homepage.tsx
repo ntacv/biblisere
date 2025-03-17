@@ -12,6 +12,7 @@ import {
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { StackParamList } from "types";
 import { colors, size } from "styles/Variables";
@@ -21,11 +22,15 @@ import TextTranslated from "localization/TextTranslated";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Footer from "components/footer/Footer";
 import { getApiSchedules } from "api/apiCalls";
 import * as StoreSchedules from "stores/schedules";
+import * as StoreBooks from "stores/books";
+import * as StoreUsers from "stores/user";
 import { useStoreMap } from "node_modules/effector-react";
+import { Api } from "api/apiSwagger";
+
+const api = new Api();
 
 function Homepage() {
   const os = Platform.OS;
@@ -40,11 +45,18 @@ function Homepage() {
   };
 
   const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+  const books = useStoreMap(StoreBooks.store, (store) => store);
+  const user = useStoreMap(StoreUsers.store, (store) => store);
+
+  console.log(user);
 
   useEffect(() => {
     getApiSchedules().then((response) => {
       StoreSchedules.actions.setSchedules(response);
-      console.log(response);
+    });
+
+    const bookApi = api.books?.booksControllerFindAll().then((response) => {
+      StoreBooks.actions.setBooks(response.data);
     });
   }, []);
 
@@ -76,7 +88,18 @@ function Homepage() {
 
           <Text>MAIN APP</Text>
 
-          <Text>Schedules: {schedules.status?.title}.</Text>
+          {schedules.status?.map((schedule) => (
+            <Text key={schedule.id}>
+              {schedule.title} | {schedule.openingTime.hours}:
+              {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
+              {schedule.closingTime.minutes}
+            </Text>
+          ))}
+
+          <Text>Books</Text>
+          {books.data?.map((book) => (
+            <Text key={book.id}>{book.title}</Text>
+          ))}
 
           <TextTranslated>lorem:long</TextTranslated>
           <Text>footer</Text>
