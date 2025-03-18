@@ -1,8 +1,10 @@
-import { Search } from "react-native-feather";
-
-export const size = {
+export const sizes = {
   title: {
     main: 30,
+  },
+  text: {
+    content: 20,
+    input: 25,
   },
   header: {
     top: {
@@ -15,12 +17,20 @@ export const size = {
   icon: 35,
   icons: {
     search: 27,
+    title: 26,
+  },
+  radius: {
+    in: "15px",
+    out: "25px", // sum of padding
+  },
+  padding: {
+    main: 10,
   },
 };
 
 export const colors = {
   primary: "#2DAA9E",
-  secondary: "#66D2CE",
+  secondary: "#c3d6d4",
   content: "black",
   background: "#FCFAFA",
   header: "#E3D2C3",
@@ -29,6 +39,8 @@ export const colors = {
   danger: "red",
   warning: "orange",
   success: "green",
+  locked: "lightgrey",
+  clickable: "#E5E5E5",
 };
 
 export const fonts = {

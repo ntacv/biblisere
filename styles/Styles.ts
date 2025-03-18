@@ -7,7 +7,7 @@ export const textCentered = `
 export const fontTitle = `
   color: ${colors.primary};
   font: 35px sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   `;
 export const fontSubTitle = `
   font: 26px sans-serif black;

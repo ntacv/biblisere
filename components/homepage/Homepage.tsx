@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Icon from "react-native-feather";
 
-import { colors, size } from "styles/Variables";
+import { colors, sizes } from "styles/Variables";
 import Button from "components/button/Button";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
@@ -31,22 +31,31 @@ function Homepage() {
       </ViewFilters>
 
       <ViewHeader os={os}>
-        <TouchableOpacity onPress={() => toggleMenu()}>
+        <Button
+          options={{ background: colors.clickable }}
+          onPress={() => toggleMenu()}
+        >
           <Icon.Menu
-            width={size.icon}
-            height={size.icon}
+            width={sizes.icon}
+            height={sizes.icon}
             stroke={colors.content}
           />
-        </TouchableOpacity>
+        </Button>
 
         <Title>
+          <Icon.Book
+            width={sizes.icons.title}
+            height={sizes.icons.title}
+            stroke={colors.primary}
+            strokeWidth={3}
+          />
           <Text>{t("home:name")}</Text>
         </Title>
 
         <Button onPress={() => navigation.navigate("User")}>
           <Icon.User
-            width={size.icon}
-            height={size.icon}
+            width={sizes.icon}
+            height={sizes.icon}
             stroke={colors.content}
           />
         </Button>
@@ -72,8 +81,9 @@ const ViewHome = styled(View)`
 const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
+  padding: 0 10px;
   margin: ${(props) =>
-      props.os === "ios" ? size.header.top.ios : size.header.top.android}px
+      props.os === "ios" ? sizes.header.top.ios : sizes.header.top.android}px
     0 0 0;
 `;
 const ViewFilters = styled(View)`

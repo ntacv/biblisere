@@ -13,8 +13,8 @@
     "translate": {
       "title": "Traduire",
       "text": "Choisissez une langue",
-      "en": "EN🇬🇧",
-      "fr": "FR🇫🇷",
+      "en": "EN",
+      "fr": "FR",
       "english": "Anglais",
       "french": "Français"
     },
@@ -32,7 +32,7 @@
     }
   },
   "home": {
-    "name": "📙 Bibliothèque",
+    "name": "Biblisère",
     "title": "Page d'accueil",
     "intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
     "content": {

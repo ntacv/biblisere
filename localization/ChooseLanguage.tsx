@@ -4,24 +4,28 @@ import { styled } from "styled-components/native";
 
 import * as styles from "styles/Styles";
 import { useTranslation } from "react-i18next";
-import i18next from "localization/i18n";
+import i18next, { languages } from "localization/i18n";
 import { colors } from "styles/Variables";
+import Button from "components/button/Button";
+import { lang } from "moment";
 
 const ChooseLanguage = () => {
   const { t } = useTranslation();
 
   return (
     <ViewContainer>
-      <TouchableOpacity onPress={() => i18next.changeLanguage("en")}>
-        <TextLanguage language="en">
-          {t("components:translate:en")}
-        </TextLanguage>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => i18next.changeLanguage("fr")}>
-        <TextLanguage language="fr">
-          {t("components:translate:fr")}
-        </TextLanguage>
-      </TouchableOpacity>
+      {languages.map((language) => (
+        <Button
+          key={language}
+          options={{
+            background:
+              i18next.language !== language ? colors.clickable : colors.primary,
+          }}
+          onPress={() => i18next.changeLanguage(language)}
+        >
+          {t("components:translate:" + language)}
+        </Button>
+      ))}
     </ViewContainer>
   );
 };
@@ -31,15 +35,4 @@ const ViewContainer = styled(View)`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  margin: 10px;
-`;
-
-const TextLanguage = styled(Text)`
-  ${styles.fontContent}
-  color: ${(props) =>
-    props.language === i18next.language ? "black" : "black"};
-  background-color: ${(props) =>
-    props.language === i18next.language ? colors.primary : "white"};
-  padding: 5px;
-  border-radius: 5px;
 `;

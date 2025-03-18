@@ -13,8 +13,10 @@ import * as Icon from "react-native-feather";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
-import { fonts, colors, size } from "styles/Variables";
+import { fonts, colors, sizes } from "styles/Variables";
 import * as styles from "styles/Styles";
+import Button from "components/button/Button";
+import ContainerZone from "components/ContainerZone";
 
 const Content = () => {
   const { t } = useTranslation();
@@ -29,19 +31,21 @@ const Content = () => {
       </ViewMainImage>
 
       <ViewContentColumn>
-        <ViewFilterMenu>
-          <InputContent
-            placeholder={t("components:input:placeholder")}
-          ></InputContent>
+        <ContainerZone>
+          <ViewFilterMenu>
+            <InputContent
+              placeholder={t("components:input:placeholder")}
+            ></InputContent>
 
-          <TouchableOpacity onPress={() => alert(t("components:button:click"))}>
-            <Icon.Search
-              width={size.icons.search}
-              height={size.icons.search}
-              stroke={colors.content}
-            />
-          </TouchableOpacity>
-        </ViewFilterMenu>
+            <Button onPress={() => alert(t("components:button:click"))}>
+              <Icon.Search
+                width={sizes.icons.search}
+                height={sizes.icons.search}
+                stroke={colors.content}
+              />
+            </Button>
+          </ViewFilterMenu>
+        </ContainerZone>
 
         <ChooseLanguage />
 
@@ -100,14 +104,14 @@ const ImageMainHome = styled.Image`
 const ViewFilterMenu = styled(View)`
   display: flex;
   flex-direction: row;
-  padding: 10px 0;
   justify-content: space-between;
-  align-items: bottom;
+  align-items: center;
 `;
 const InputContent = styled(TextInput)`
-  border-bottom-color: black;
-  border-bottom-width: 1px;
+  border-bottom-color: ${colors.primary};
+  border-bottom-width: 2px;
   font: ${fonts.content};
+  height: ${sizes.text.input};
   flex: 0.9;
 `;
 const TitleContent = styled(Text)`
