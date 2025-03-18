@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import { styled } from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import * as Icon from "react-native-feather";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
-import { fonts, colors } from "styles/Variables";
+import { fonts, colors, size } from "styles/Variables";
 import * as styles from "styles/Styles";
 
 const Content = () => {
@@ -34,7 +35,11 @@ const Content = () => {
           ></InputContent>
 
           <TouchableOpacity onPress={() => alert(t("components:button:click"))}>
-            <Ionicons name="arrow-down-outline" size={30} color="black" />
+            <Icon.Search
+              width={size.icons.search}
+              height={size.icons.search}
+              stroke={colors.content}
+            />
           </TouchableOpacity>
         </ViewFilterMenu>
 

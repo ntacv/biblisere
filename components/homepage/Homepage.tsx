@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text, Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import * as Icon from "react-native-feather";
 
 import { colors, size } from "styles/Variables";
 import Button from "components/button/Button";
@@ -32,7 +32,11 @@ function Homepage() {
 
       <ViewHeader os={os}>
         <TouchableOpacity onPress={() => toggleMenu()}>
-          <Ionicons name="menu" size={40} color="" />
+          <Icon.Menu
+            width={size.icon}
+            height={size.icon}
+            stroke={colors.content}
+          />
         </TouchableOpacity>
 
         <Title>
@@ -40,7 +44,11 @@ function Homepage() {
         </Title>
 
         <Button onPress={() => navigation.navigate("User")}>
-          <Ionicons name="body" size={35} color="" />
+          <Icon.User
+            width={size.icon}
+            height={size.icon}
+            stroke={colors.content}
+          />
         </Button>
       </ViewHeader>
 
@@ -51,6 +59,10 @@ function Homepage() {
   );
 }
 export default Homepage;
+
+const iconStyle = `
+  width = "40",
+`;
 
 const ViewHome = styled(View)`
   background-color: ${colors.background};
