@@ -36,7 +36,7 @@ const DrawerMenu = () => {
         options={{ title: t("catalog:title") }}
       />
       <Drawer.Screen
-        name="Profile"
+        name="User"
         component={User}
         options={{ title: !isAdmin ? t("user:title") : t("admin:title") }}
       />
