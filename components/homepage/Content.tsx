@@ -113,6 +113,7 @@ const InputContent = styled(TextInput)`
   font: ${fonts.content};
   height: ${sizes.text.input};
   flex: 0.9;
+  margin: 0 ${sizes.padding.main}px;
 `;
 const TitleContent = styled(Text)`
   ${styles.fontSubTitle}
