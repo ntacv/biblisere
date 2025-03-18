@@ -54,9 +54,26 @@
       "times": "Opening times"
     }
   },
+  "catalog": {
+    "title": "Catalog",
+    "books": "Books",
+    "authors": "Authors",
+    "genres": "Genres",
+    "categories": "Categories",
+    "view": "View",
+    "read": "Read",
+    "add": "Add",
+    "remove": "Remove",
+    "update": "Update",
+    "create": "Create"
+  },
   "user": {
     "title": "User",
     "name": "John Doe"
+  },
+  "admin": {
+    "title": "Admin",
+    "name": "Admin"
   },
   "footer": {
     "contact": "Contact us",

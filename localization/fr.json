@@ -54,9 +54,26 @@
       "times": "Horaires d'ouverture"
     }
   },
+  "catalog": {
+    "title": "Catalogue",
+    "books": "Livres",
+    "authors": "Auteurs",
+    "genres": "Genres",
+    "categories": "Catégories",
+    "view": "Voir",
+    "read": "Lire",
+    "add": "Ajouter",
+    "remove": "Retirer",
+    "update": "Mettre à jour",
+    "delete": "Supprimer"
+  },
   "user": {
     "title": "Utilisateur",
     "name": "John Doe"
+  },
+  "admin": {
+    "title": "Admin",
+    "name": "Admin"
   },
   "footer": {
     "contact": "Contactez-nous",
