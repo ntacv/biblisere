@@ -1,6 +1,10 @@
 export default {
   config: {
     language: "Français",
+    status: "Statut",
+    loading: "Chargement...",
+    connected: "Connecté",
+    notConnected: "Non connecté",
   },
   menu: {
     title: "Menu",

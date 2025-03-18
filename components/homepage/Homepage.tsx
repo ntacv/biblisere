@@ -58,13 +58,21 @@ function Homepage() {
     });
 
     const userApi = api.users?.usersControllerGetMe().then((response) => {
-      StoreUsers.actions.setUsers(response.data);
+      StoreUsers.actions.setUser(response.data);
     });
   }, []);
 
+  const isConnected = (
+    condition = user.data?.email,
+    ifTrue = user.data?.email,
+    ifFalse = t("config:notConnected")
+  ) => {
+    return condition ? ifTrue : ifFalse;
+  };
+
   return (
     <>
-      <ViewHome style={{ paddingTop: insets.top }}>
+      <ViewHome insets={insets}>
         <ViewFilters>
           <TextTranslated>components:filter:title</TextTranslated>
         </ViewFilters>
@@ -80,15 +88,11 @@ function Homepage() {
           </TouchableContainer>
         </ViewHeader>
         <ScrollView>
-          <Text>IMAGE</Text>
           <TextInput
             placeholder={t("components:input:placeholder")}
           ></TextInput>
-          <View>
-            <ChooseLanguage />
-          </View>
 
-          <Text>MAIN APP</Text>
+          <ChooseLanguage />
 
           {schedules.data?.map((schedule) => (
             <Text key={schedule.id}>
@@ -99,22 +103,15 @@ function Homepage() {
           ))}
 
           <Text>
-            Users connected:
-            {user.data?.email ? user.data?.email : "Not connected"}
+            {t("menu:login")}: {isConnected()}
           </Text>
 
-          <Text>Admin users</Text>
-
-          <Text>Books</Text>
           {books.data?.map((book) => (
             <Text key={book.id}>{book.title}</Text>
           ))}
-
-          <TextTranslated>lorem:long</TextTranslated>
-          <Text>footer</Text>
         </ScrollView>
         <Footer />
-        {menuVisible ? <Menu /> : null}
+        {menuVisible && <Menu />}
       </ViewHome>
     </>
   );
@@ -122,6 +119,8 @@ function Homepage() {
 export default Homepage;
 
 const ViewHome = styled(View)`
+  padding-top: ${(props) =>
+    props.insets.top}; //  style={{ paddingTop: insets.top }}
   background-color: ${colors.background};
   color: ${colors.primary};
 `;

@@ -2,6 +2,9 @@ export default {
   config: {
     language: "English",
     status: "Status",
+    loading: "Loading...",
+    connected: "Connected",
+    notConnected: "Not connected",
   },
   menu: {
     title: "Menu",

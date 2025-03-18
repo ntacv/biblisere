@@ -2,20 +2,20 @@ import { createEvent, createStore } from "effector";
 
 import { User } from "api/apiSwagger";
 
-interface UsersState {
+interface UserState {
   data?: User;
 }
 
-const initialState: UsersState = {
+const initialState: UserState = {
   data: undefined,
 };
 
 export const actions = {
-  setUsers: createEvent<User>("SET_USERS"),
+  setUser: createEvent<User>("SET_USERS"),
 };
 
-export const store = createStore(initialState, { name: "Users_v1" }).on(
-  actions.setUsers,
+export const store = createStore(initialState, { name: "User_v1" }).on(
+  actions.setUser,
   (store, data) => ({
     ...store,
     data,

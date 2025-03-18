@@ -2,12 +2,12 @@ import axios from "axios";
 
 import { ApiHealth } from "types";
 
+const domain = process.env.NODE_ENV == "dev" ? "http://localhost:8000" : "";
+
 const getApiHealth = () => {
   return axios
-    .get<ApiHealth>("http://localhost:8000/health")
-    .then((response) => {
-      return response.data;
-    })
+    .get<ApiHealth>(domain + "/health")
+    .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
@@ -15,10 +15,8 @@ const getApiHealth = () => {
 
 const getApiSchedules = () => {
   return axios
-    .get("http://localhost:8000/schedules")
-    .then((response) => {
-      return response.data;
-    })
+    .get(domain + "/schedules")
+    .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
