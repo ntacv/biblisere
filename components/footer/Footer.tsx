@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { styled } from "styled-components/native";
 
 import { TextCentered } from "styles/Styles";
-import TextTranslated from "localization/TextTranslated";
 
 import { useEffect } from "react";
 
@@ -29,11 +28,11 @@ const Footer = () => {
   return (
     <ViewFooter>
       <TextCentered>
-        <TextTranslated>footer:contact</TextTranslated>
-        <TextTranslated>footer:privacy</TextTranslated>
-        <TextTranslated>footer:terms</TextTranslated>
+        <Text>footer:contact</Text>
+        <Text>footer:privacy</Text>
+        <Text>footer:terms</Text>
       </TextCentered>
-      <TextTranslated>config:status</TextTranslated>
+      <Text>config:status</Text>
       <Text>{status ? status : t("config:loading")}</Text>
     </ViewFooter>
   );

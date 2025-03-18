@@ -2,6 +2,12 @@
   "config": {
     "language": "English"
   },
+  "errors": {
+    "404": "Page not found",
+    "500": "Internal server error",
+    "noResults": "No results found",
+    "notConnected": "You are not connected"
+  },
   "menu": {
     "title": "Menu",
     "signup": "Sign up",

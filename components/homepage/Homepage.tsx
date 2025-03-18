@@ -10,7 +10,6 @@ import {
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors, size } from "styles/Variables";
 import Button from "components/button/Button";
@@ -61,7 +60,7 @@ function Homepage() {
   const isConnected = (
     condition = user.data?.email,
     ifTrue = user.data?.email,
-    ifFalse = t("config:notConnected")
+    ifFalse = t("errors:notConnected")
   ) => {
     return condition ? ifTrue : ifFalse;
   };
