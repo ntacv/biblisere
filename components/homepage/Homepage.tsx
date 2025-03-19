@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import {
   TouchableOpacity,
   View,
@@ -33,7 +33,7 @@ function Homepage() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
-  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = React.useState(false);
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -43,7 +43,7 @@ function Homepage() {
   const books = useStoreMap(StoreBooks.store, (store) => store);
   const user = useStoreMap(StoreUsers.store, (store) => store);
 
-  useEffect(() => {
+  React.useEffect(() => {
     getApiSchedules().then((response) => {
       StoreSchedules.actions.setSchedules(response);
     });
@@ -70,17 +70,19 @@ function Homepage() {
       <ViewFilters>
         <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
+
       <ViewHeader os={os}>
         <TouchableOpacity onPress={() => toggleMenu()}>
           <Text>{t("menu:title")}</Text>
         </TouchableOpacity>
-        <Title>
-          <Text>{t("home:name")}</Text>
-        </Title>
+
+        <Title>{t("home:name")}</Title>
+
         <Button onPress={() => navigation.navigate("User")}>
           <Text>{t("menu:login")}</Text>
         </Button>
       </ViewHeader>
+
       <ScrollView>
         <TextInput placeholder={t("components:input:placeholder")}></TextInput>
 
@@ -95,7 +97,8 @@ function Homepage() {
         ))}
 
         <Text>
-          {t("menu:login")}: {isConnected()}
+          {t("menu:login")}:
+          {" " + user.data?.email ? user.data?.email : t("errors:notConnected")}
         </Text>
 
         {books.data?.map((book) => (
@@ -110,8 +113,7 @@ function Homepage() {
 export default Homepage;
 
 const ViewHome = styled(View)`
-  padding-top: ${(props) =>
-    props.insets.top}; //  style={{ paddingTop: insets.top }}
+  padding-top: ${(props) => props.insets.top}px;
   background-color: ${colors.background};
   color: ${colors.primary};
 `;
