@@ -3,7 +3,6 @@ import { View, SafeAreaView, Text, Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as Icon from "react-native-feather";
 
 import { colors, sizes } from "styles/Variables";
 import Button from "components/button/Button";
@@ -11,6 +10,10 @@ import Title from "components/Title";
 import Menu from "components/menu/Menu";
 import { useNav } from "utils/navigation";
 import Content from "components/homepage/Content";
+
+import IconBook from "assets/icons/book.svg";
+import IconUser from "assets/icons/user.svg";
+import IconMenu from "assets/icons/menu.svg";
 
 function Homepage() {
   const os = Platform.OS;
@@ -32,7 +35,7 @@ function Homepage() {
 
       <ViewHeader os={os}>
         <Button options={{ background: colors.clickable }} onPress={toggleMenu}>
-          <Icon.Menu
+          <IconMenu
             width={sizes.icon}
             height={sizes.icon}
             stroke={colors.content}
@@ -40,7 +43,7 @@ function Homepage() {
         </Button>
 
         <Title>
-          <Icon.Book
+          <IconBook
             width={sizes.icons.title}
             height={sizes.icons.title}
             stroke={colors.primary}
@@ -50,7 +53,7 @@ function Homepage() {
         </Title>
 
         <Button onPress={() => navigation.navigate("User")}>
-          <Icon.User
+          <IconUser
             width={sizes.icon}
             height={sizes.icon}
             stroke={colors.content}

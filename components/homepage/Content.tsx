@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text, TextInput, Image } from "react-native";
 import { styled } from "styled-components/native";
-import * as Icon from "react-native-feather";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
@@ -9,6 +8,9 @@ import { fonts, colors, sizes } from "styles/Variables";
 import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
+
+import IconSearch from "assets/icons/search.svg";
+import IconMapPin from "assets/icons/map-pin.svg";
 
 const Content = () => {
   const { t } = useTranslation();
@@ -29,7 +31,7 @@ const Content = () => {
           ></InputContent>
 
           <Button onPress={() => alert(t("components:button:click"))}>
-            <Icon.Search
+            <IconSearch
               width={sizes.icons.search}
               height={sizes.icons.search}
               stroke={colors.content}
@@ -56,7 +58,7 @@ const Content = () => {
 
         <ViewAccess>
           <Text>{t("home:titles:access")}</Text>
-          <Icon.MapPin
+          <IconMapPin
             width={sizes.icon}
             height={sizes.icon}
             stroke={colors.primary}

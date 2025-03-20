@@ -11,5 +11,6 @@
       "@utils/*": ["utils/*"]
     }
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "include": ["./", "custom.d.ts"]
 }
