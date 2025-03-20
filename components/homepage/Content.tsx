@@ -25,9 +25,7 @@ const Content = () => {
 
       <ContentColumn>
         <ViewSearchBar>
-          <InputContent
-            placeholder={t("components:input:placeholder")}
-          ></InputContent>
+          <InputContent placeholder={t("components:input:placeholder")} />
 
           <Button
             label="Search"
