@@ -9,7 +9,6 @@ import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
 
-import IconSearch from "assets/icons/search.svg";
 import IconMapPin from "assets/icons/map-pin.svg";
 
 const Content = () => {
@@ -30,13 +29,11 @@ const Content = () => {
             placeholder={t("components:input:placeholder")}
           ></InputContent>
 
-          <Button onPress={() => alert(t("components:button:click"))}>
-            <IconSearch
-              width={sizes.icons.search}
-              height={sizes.icons.search}
-              stroke={colors.content}
-            />
-          </Button>
+          <Button
+            label="Search"
+            iconName="search"
+            onPress={() => alert(t("components:button:click"))}
+          />
         </ViewSearchBar>
 
         <ChooseLanguage />

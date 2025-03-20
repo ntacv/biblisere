@@ -12,8 +12,6 @@ import { useNav } from "utils/navigation";
 import Content from "components/homepage/Content";
 
 import IconBook from "assets/icons/book.svg";
-import IconUser from "assets/icons/user.svg";
-import IconMenu from "assets/icons/menu.svg";
 
 function Homepage() {
   const os = Platform.OS;
@@ -34,13 +32,11 @@ function Homepage() {
       </ViewFilters>
 
       <ViewHeader os={os}>
-        <Button options={{ background: colors.clickable }} onPress={toggleMenu}>
-          <IconMenu
-            width={sizes.icon}
-            height={sizes.icon}
-            stroke={colors.content}
-          />
-        </Button>
+        <Button
+          iconName="menu"
+          background={colors.clickable}
+          onPress={toggleMenu}
+        />
 
         <Title>
           <IconBook
@@ -52,13 +48,7 @@ function Homepage() {
           <Text>{t("home:name")}</Text>
         </Title>
 
-        <Button onPress={() => navigation.navigate("User")}>
-          <IconUser
-            width={sizes.icon}
-            height={sizes.icon}
-            stroke={colors.content}
-          />
-        </Button>
+        <Button iconName="user" onPress={() => navigation.navigate("User")} />
       </ViewHeader>
 
       <Content />
