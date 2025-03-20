@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { ScrollView, View, Text, TextInput, Image } from "react-native";
 import { styled } from "styled-components/native";
-import { Ionicons } from "@expo/vector-icons";
 import * as Icon from "react-native-feather";
 
 import { useTranslation } from "react-i18next";
@@ -16,7 +8,7 @@ import ChooseLanguage from "localization/ChooseLanguage";
 import { fonts, colors, sizes } from "styles/Variables";
 import * as styles from "styles/Styles";
 import Button from "components/button/Button";
-import ContainerZone from "components/ContainerZone";
+import TextLink from "components/button/TextLink";
 
 const Content = () => {
   const { t } = useTranslation();
@@ -25,27 +17,25 @@ const Content = () => {
   const services = t("home:content:services", { returnObjects: true });
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <ViewMainImage>
-        <ImageMainHome source={require("assets/adaptive-icon.png")} />
-      </ViewMainImage>
+    <ScrollViewContent>
+      <ImageMainHome
+        source={require("assets/images/mediatheque_espace_lecture.jpg")}
+      />
 
-      <ViewContentColumn>
-        <ContainerZone>
-          <ViewFilterMenu>
-            <InputContent
-              placeholder={t("components:input:placeholder")}
-            ></InputContent>
+      <ContentColumn>
+        <ViewSearchBar>
+          <InputContent
+            placeholder={t("components:input:placeholder")}
+          ></InputContent>
 
-            <Button onPress={() => alert(t("components:button:click"))}>
-              <Icon.Search
-                width={sizes.icons.search}
-                height={sizes.icons.search}
-                stroke={colors.content}
-              />
-            </Button>
-          </ViewFilterMenu>
-        </ContainerZone>
+          <Button onPress={() => alert(t("components:button:click"))}>
+            <Icon.Search
+              width={sizes.icons.search}
+              height={sizes.icons.search}
+              stroke={colors.content}
+            />
+          </Button>
+        </ViewSearchBar>
 
         <ChooseLanguage />
 
@@ -64,56 +54,62 @@ const Content = () => {
           ))}
         </View>
 
+        <ViewAccess>
+          <Text>{t("home:titles:access")}</Text>
+          <Icon.MapPin
+            width={sizes.icon}
+            height={sizes.icon}
+            stroke={colors.primary}
+          />
+        </ViewAccess>
+
         <TextContent>{t("home:content:outro")}</TextContent>
-      </ViewContentColumn>
+      </ContentColumn>
 
       <ViewFooter>
-        <TouchableOpacity
-          onPress={() => Linking.openURL("https://www.cardiweb.com/contact")}
-        >
-          <TextContent>{t("footer:contact")}</TextContent>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            Linking.openURL("https://www.cardiweb.com/mentions-legales")
-          }
-        >
-          <TextContent>{t("footer:terms")}</TextContent>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            Linking.openURL("https://www.cardiweb.com/mentions-legales")
-          }
-        >
-          <TextContent>{t("footer:privacy")}</TextContent>
-        </TouchableOpacity>
+        <TextLink url="https://www.cardiweb.com/contact">
+          {t("footer:contact")}
+        </TextLink>
+
+        <TextLink url="https://www.cardiweb.com/mentions-legales">
+          {t("footer:terms")}
+        </TextLink>
+
+        <TextLink url="https://www.cardiweb.com/mentions-legales">
+          {t("footer:privacy")}
+        </TextLink>
       </ViewFooter>
-    </ScrollView>
+    </ScrollViewContent>
   );
 };
 export default Content;
 
-const ViewMainImage = styled(View)`
-  overflow: hidden;
+const ScrollViewContent = styled(ScrollView)`
+  flex: 1;
+`;
+const ImageMainHome = styled(Image)`
   height: 200px;
-`;
-const ImageMainHome = styled.Image`
   width: 100%;
-  height: 100%;
+  object-fit: cover;
+  opacity: 0.87;
 `;
-const ViewFilterMenu = styled(View)`
-  display: flex;
+const ViewSearchBar = styled(View)`
+  ${styles.PrimaryContainer}
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  max-width: 400px;
 `;
 const InputContent = styled(TextInput)`
   border-bottom-color: ${colors.primary};
   border-bottom-width: 2px;
   font: ${fonts.content};
-  height: ${sizes.text.input};
-  flex: 0.9;
+  height: ${sizes.text.input}px;
+  flex: 1;
   margin: 0 ${sizes.padding.main}px;
+`;
+const ViewAccess = styled(View)`
+  ${styles.PrimaryContainer}
 `;
 const TitleContent = styled(Text)`
   ${styles.fontSubTitle}
@@ -121,15 +117,15 @@ const TitleContent = styled(Text)`
 const TextContent = styled(Text)`
   font: ${fonts.content};
 `;
-const ViewContentColumn = styled(View)`
-  width: 90%;
-  margin: 10px auto 40px;
-  gap: 10px;
+const ContentColumn = styled(View)`
+  margin: ${sizes.padding.main}px ${sizes.padding.main}px
+    ${sizes.padding.bottom}px;
+  gap: ${sizes.padding.main}px;
 `;
 
 const ViewFooter = styled(View)`
   background: ${colors.footer};
   display: grid;
   align-items: center;
-  padding: 15px 0;
+  padding: ${sizes.padding.main}px 0;
 `;

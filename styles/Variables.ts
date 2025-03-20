@@ -25,6 +25,7 @@ export const sizes = {
   },
   padding: {
     main: 10,
+    bottom: 40,
   },
 };
 

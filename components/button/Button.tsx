@@ -2,26 +2,35 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 
-import { useNav } from "utils/navigation";
 import { colors, sizes } from "styles/Variables";
 
-const Button = ({ children, onPress = undefined, ...props }) => {
-  const navigation = useNav();
+interface Props {
+  children: JSX.Element | string;
+  onPress?: () => void;
+  options?: {
+    background?: string;
+  };
+}
 
+const Button = ({ children, onPress, options }: Props) => {
   return (
-    <TouchableButton onPress={onPress} background={props.options?.background}>
+    <Container
+      onPress={onPress}
+      background={options?.background}
+      activeOpacity={0.8}
+    >
       <TextInside>{children}</TextInside>
-    </TouchableButton>
+    </Container>
   );
 };
 export default Button;
 
 const TextInside = styled(Text)`
-  font-size: 20px;
+  font-size: ${sizes.text.content}px;
   text-align: center;
 `;
 
-const TouchableButton = styled(TouchableOpacity)<{ background?: string }>`
+const Container = styled(TouchableOpacity)<{ background?: string }>`
   background-color: ${(props) =>
     props.background ? props.background : colors.primary};
   padding: 8px 15px;

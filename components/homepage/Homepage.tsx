@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Platform } from "react-native";
+import { View, SafeAreaView, Text, Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -25,16 +25,13 @@ function Homepage() {
   };
 
   return (
-    <ViewHome style={{ paddingTop: insets.top, flex: 1 }}>
+    <ViewHome>
       <ViewFilters>
         <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
 
       <ViewHeader os={os}>
-        <Button
-          options={{ background: colors.clickable }}
-          onPress={() => toggleMenu()}
-        >
+        <Button options={{ background: colors.clickable }} onPress={toggleMenu}>
           <Icon.Menu
             width={sizes.icon}
             height={sizes.icon}
@@ -69,11 +66,8 @@ function Homepage() {
 }
 export default Homepage;
 
-const iconStyle = `
-  width = "40",
-`;
-
-const ViewHome = styled(View)`
+const ViewHome = styled(SafeAreaView)`
+  flex: 1;
   background-color: ${colors.background};
   color: ${colors.primary};
 `;
@@ -81,7 +75,7 @@ const ViewHome = styled(View)`
 const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
-  padding: 0 10px;
+  padding: ${sizes.padding.main}px ${sizes.padding.main}px;
   margin: ${(props) =>
       props.os === "ios" ? sizes.header.top.ios : sizes.header.top.android}px
     0 0 0;

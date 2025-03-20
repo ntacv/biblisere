@@ -1,4 +1,4 @@
-import { colors } from "./Variables";
+import { colors, sizes } from "styles/Variables";
 
 export const textCentered = `
   text-align: center;
@@ -27,4 +27,8 @@ export const textOneLine = `
   text-overflow: ellipsis;
   `;
 
-export default { textCentered, fontTitle, fontContent, textOneLine };
+export const PrimaryContainer = `
+  background-color: ${colors.secondary};
+  padding: ${sizes.padding.main}px;
+  border-radius: ${sizes.radius.out};
+`;
