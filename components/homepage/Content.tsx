@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text, TextInput, Image } from "react-native";
 import { styled } from "styled-components/native";
-import * as Icon from "react-native-feather";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
@@ -9,6 +8,8 @@ import { fonts, colors, sizes } from "styles/Variables";
 import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
+
+import Icon from "assets/icons/Icons";
 
 const Content = () => {
   const { t } = useTranslation();
@@ -24,17 +25,13 @@ const Content = () => {
 
       <ContentColumn>
         <ViewSearchBar>
-          <InputContent
-            placeholder={t("components:input:placeholder")}
-          ></InputContent>
+          <InputContent placeholder={t("components:input:placeholder")} />
 
-          <Button onPress={() => alert(t("components:button:click"))}>
-            <Icon.Search
-              width={sizes.icons.search}
-              height={sizes.icons.search}
-              stroke={colors.content}
-            />
-          </Button>
+          <Button
+            label="Search"
+            iconName="search"
+            onPress={() => alert(t("components:button:click"))}
+          />
         </ViewSearchBar>
 
         <ChooseLanguage />
@@ -56,7 +53,8 @@ const Content = () => {
 
         <ViewAccess>
           <Text>{t("home:titles:access")}</Text>
-          <Icon.MapPin
+          <Icon
+            iconName="mapPin"
             width={sizes.icon}
             height={sizes.icon}
             stroke={colors.primary}

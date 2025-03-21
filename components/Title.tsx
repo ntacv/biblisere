@@ -1,6 +1,5 @@
 import { Text, View } from "react-native";
 import styled from "styled-components";
-import { colors, fonts } from "styles/Variables";
 import * as styles from "styles/Styles";
 
 const Title = ({ children }) => {

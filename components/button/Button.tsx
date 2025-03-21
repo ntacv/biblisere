@@ -2,23 +2,27 @@ import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 
 import { colors, sizes } from "styles/Variables";
+import Icon, { iconType } from "assets/icons/Icons";
 
 interface Props {
-  children: JSX.Element | string;
+  label?: string;
+  iconName?: iconType;
+  background?: string;
   onPress?: () => void;
-  options?: {
-    background?: string;
-  };
 }
 
-const Button = ({ children, onPress, options }: Props) => {
+const Button = ({ onPress, label, iconName, background }: Props) => {
   return (
-    <Container
-      onPress={onPress}
-      background={options?.background}
-      activeOpacity={0.8}
-    >
-      <TextInside>{children}</TextInside>
+    <Container onPress={onPress} background={background} activeOpacity={0.8}>
+      {iconName && (
+        <Icon
+          iconName={iconName}
+          width={sizes.icons.search}
+          height={sizes.icons.search}
+          stroke={colors.content}
+        />
+      )}
+      {label && <TextInside>{label}</TextInside>}
     </Container>
   );
 };
@@ -34,4 +38,6 @@ const Container = styled(TouchableOpacity)<{ background?: string }>`
     props.background ? props.background : colors.primary};
   padding: 8px 15px;
   border-radius: ${sizes.radius.in};
+  flex-direction: row;
+  gap: ${sizes.padding.main}px;
 `;
