@@ -15,12 +15,14 @@ interface Props {
 const Button = ({ onPress, label, iconName, background }: Props) => {
   return (
     <Container onPress={onPress} background={background} activeOpacity={0.8}>
-      <Icon
-        iconName={iconName}
-        width={sizes.icons.search}
-        height={sizes.icons.search}
-        stroke={colors.content}
-      />
+      {iconName && (
+        <Icon
+          iconName={iconName}
+          width={sizes.icons.search}
+          height={sizes.icons.search}
+          stroke={colors.content}
+        />
+      )}
       {label && <TextInside>{label}</TextInside>}
     </Container>
   );

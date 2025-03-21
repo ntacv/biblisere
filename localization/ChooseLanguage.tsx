@@ -1,18 +1,21 @@
 import React from "react";
 import { View } from "react-native";
 import { styled } from "styled-components/native";
+import { useTranslation } from "react-i18next";
 
 import i18next, { languages } from "localization/i18n";
 import { colors, sizes } from "styles/Variables";
 import Button from "components/button/Button";
 
 const ChooseLanguage = () => {
+  const { t } = useTranslation();
+
   return (
     <Container>
       {languages.map((language) => (
         <Button
           key={language}
-          label={language.toUpperCase()}
+          label={t("components:translate:" + language)}
           background={
             i18next.language !== language ? colors.clickable : colors.primary
           }

@@ -2,18 +2,19 @@ import menu from "assets/icons/menu.svg";
 import mapPin from "assets/icons/map-pin.svg";
 import user from "assets/icons/user.svg";
 import search from "assets/icons/search.svg";
+import book from "assets/icons/book.svg";
 
-const Icons = {
+const IconSvgs = {
   menu: menu,
-  "map-pin": mapPin,
+  mapPin: mapPin,
   user: user,
   search: search,
-  none: () => null,
+  book: book,
 };
-export type iconType = keyof typeof Icons;
+export type iconType = keyof typeof IconSvgs;
 
 interface IconProps {
-  iconName?: iconType;
+  iconName: iconType;
   width?: number;
   height?: number;
   stroke?: string;
@@ -21,12 +22,12 @@ interface IconProps {
 }
 
 const Icon = ({
-  iconName = "none",
+  iconName = "user",
   width = 30,
   height = 30,
   stroke = "black",
   strokeWidth = 2,
 }: IconProps) => {
-  return Icons[iconName]({ width, height, stroke, strokeWidth });
+  return IconSvgs[iconName]({ width, height, stroke, strokeWidth });
 };
 export default Icon;

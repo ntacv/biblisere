@@ -9,7 +9,7 @@ import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
 
-import IconMapPin from "assets/icons/map-pin.svg";
+import Icon from "assets/icons/Icons";
 
 const Content = () => {
   const { t } = useTranslation();
@@ -53,7 +53,8 @@ const Content = () => {
 
         <ViewAccess>
           <Text>{t("home:titles:access")}</Text>
-          <IconMapPin
+          <Icon
+            iconName="mapPin"
             width={sizes.icon}
             height={sizes.icon}
             stroke={colors.primary}

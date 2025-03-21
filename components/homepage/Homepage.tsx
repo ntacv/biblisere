@@ -11,7 +11,7 @@ import Menu from "components/menu/Menu";
 import { useNav } from "utils/navigation";
 import Content from "components/homepage/Content";
 
-import IconBook from "assets/icons/book.svg";
+import Icon from "assets/icons/Icons";
 
 function Homepage() {
   const os = Platform.OS;
@@ -39,7 +39,8 @@ function Homepage() {
         />
 
         <Title>
-          <IconBook
+          <Icon
+            iconName="book"
             width={sizes.icons.title}
             height={sizes.icons.title}
             stroke={colors.primary}
