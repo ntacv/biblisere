@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import styled from "styled-components";
-import { colors } from "styles/Variables";
+import { colors, fonts } from "styles/Variables";
+import * as styles from "styles/Styles";
 
 const Title = ({ children }) => {
   return (
@@ -12,9 +13,8 @@ const Title = ({ children }) => {
 export default Title;
 
 const TextTitle = styled(Text)`
-  color: ${colors.primary};
-  font-size: 30px;
-  font-weight: bold;
+  ${styles.fontTitle}
+  ${styles.textOneLine}
   text-align: center;
 `;
 const ViewTitle = styled(View)`

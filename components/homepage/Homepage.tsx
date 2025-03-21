@@ -11,13 +11,16 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { DrawerActions } from "@react-navigation/native";
 
-import ViewPage from "components/ViewPage";
-import { colors } from "styles/Variables";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as Icon from "react-native-feather";
+
+import { colors, sizes } from "styles/Variables";
+
 import Button from "components/button/Button";
-import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
-import Menu from "components/menu/Menu";
 import Footer from "components/footer/Footer";
+import ViewPage from "components/ViewPage";
+
 import { getApiSchedules } from "api/apiCalls";
 import * as StoreSchedules from "stores/schedules";
 import * as StoreBooks from "stores/books";
@@ -28,6 +31,7 @@ import { Api } from "api/apiSwagger";
 const api = new Api();
 import { useNav } from "utils/navigation";
 import { RouteNames } from "types";
+import Content from "components/homepage/Content";
 
 function Homepage() {
   const os = Platform.OS;
@@ -65,46 +69,37 @@ function Homepage() {
       </ViewFilters>
 
       <ViewHeader os={os}>
-        <TouchableOpacity
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+        <Button
+          options={{ background: colors.clickable }}
+          onPress={() => DrawerActions.toggleDrawer()}
         >
-          <Text>{t("menu:title")}</Text>
-        </TouchableOpacity>
+          <Icon.Menu
+            width={sizes.icon}
+            height={sizes.icon}
+            stroke={colors.content}
+          />
+        </Button>
 
-        <Title>{t("home:name")}</Title>
+        <Title>
+          <Icon.Book
+            width={sizes.icons.title}
+            height={sizes.icons.title}
+            stroke={colors.primary}
+            strokeWidth={3}
+          />
+          <Text>{t("home:name")}</Text>
+        </Title>
 
         <Button onPress={() => navigation.navigate(RouteNames.User)}>
-          <Text>{t("menu:login")}</Text>
+          <Icon.User
+            width={sizes.icon}
+            height={sizes.icon}
+            stroke={colors.content}
+          />
         </Button>
       </ViewHeader>
 
-      <ScrollView>
-        <TextInput placeholder={t("components:input:placeholder")}></TextInput>
-
-        <ChooseLanguage />
-
-        {schedules.data?.map((schedule) => (
-          <Text key={schedule.id}>
-            {schedule.title} | {schedule.openingTime.hours}:
-            {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
-            {schedule.closingTime.minutes}
-          </Text>
-        ))}
-
-        <Text>
-          {t("menu:login") +
-            t("config:text:colon") +
-            (user.data?.email ? user.data?.email : t("errors:notConnected"))}
-        </Text>
-
-        {books.data?.map((book) => (
-          <Text key={book.id}>{book.title}</Text>
-        ))}
-      </ScrollView>
-
-      <Footer />
-
-      {menuVisible && <Menu />}
+      <Content />
     </ViewPage>
   );
 }
@@ -114,6 +109,7 @@ const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
 `;
+
 const ViewFilters = styled(View)`
   display: none;
   background: ${colors.filters};

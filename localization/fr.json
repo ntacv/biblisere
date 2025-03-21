@@ -42,11 +42,26 @@
     }
   },
   "home": {
-    "name": "Bibliothèque",
+    "name": "Biblisère",
     "title": "Page d'accueil",
-    "intro": "Bienvenue dans notre bibliothèque",
-    "content": "Ici, vous pouvez trouver tous les livres dont vous avez besoin",
+    "intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
+    "content": {
+      "times": [
+        "- Lundi à Vendredi : 9h00 - 18h00",
+        "- Samedi : 10h00 - 16h00",
+        "- Dimanche : Fermé"
+      ],
+      "services": [
+        "- Prêt de livres et de magazines",
+        "- Accès aux ressources numériques",
+        "- Espaces de lecture et de travail",
+        "- Activités et événements"
+      ],
+      "outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
+      "presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
+    },
     "titles": {
+      "services": "Nos Services",
       "news": "Nouvelles",
       "popular": "Populaire",
       "recommended": "Recommandé",
