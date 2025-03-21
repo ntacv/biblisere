@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { DrawerActions } from "@react-navigation/native";
 
-import { colors, size } from "styles/Variables";
+import ViewPage from "components/Page";
+import { colors } from "styles/Variables";
 import Button from "components/button/Button";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
@@ -27,12 +27,12 @@ import { Api } from "api/apiSwagger";
 
 const api = new Api();
 import { useNav } from "utils/navigation";
+import { RouteNames } from "types";
 
 function Homepage() {
   const os = Platform.OS;
   const navigation = useNav();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
 
   const [menuVisible, setMenuVisible] = React.useState(false);
 
@@ -59,7 +59,7 @@ function Homepage() {
   }, []);
 
   return (
-    <ViewHome insets={insets}>
+    <ViewPage>
       <ViewFilters>
         <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
@@ -73,7 +73,7 @@ function Homepage() {
 
         <Title>{t("home:name")}</Title>
 
-        <Button onPress={() => navigation.navigate("User")}>
+        <Button onPress={() => navigation.navigate(RouteNames.User)}>
           <Text>{t("menu:login")}</Text>
         </Button>
       </ViewHeader>
@@ -101,18 +101,14 @@ function Homepage() {
           <Text key={book.id}>{book.title}</Text>
         ))}
       </ScrollView>
+
       <Footer />
+
       {menuVisible && <Menu />}
-    </ViewHome>
+    </ViewPage>
   );
 }
 export default Homepage;
-
-const ViewHome = styled(View)`
-  padding-top: ${(props) => props.insets.top}px;
-  background-color: ${colors.background};
-  color: ${colors.primary};
-`;
 
 const ViewHeader = styled(View)`
   display: flex;

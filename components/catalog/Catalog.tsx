@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, SafeAreaView } from "react-native";
 import { useTranslation } from "react-i18next";
 
+import ViewPage from "components/Page";
 import { useNav } from "utils/navigation";
 import { DrawerActions } from "@react-navigation/native";
 
@@ -9,7 +10,7 @@ const User = () => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <ViewPage>
       <Text>{t("user:title")}</Text>
       <TouchableOpacity
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
@@ -19,7 +20,7 @@ const User = () => {
       <TouchableOpacity onPress={navigation.goBack}>
         <Text>{t("homepage:title")}</Text>
       </TouchableOpacity>
-    </>
+    </ViewPage>
   );
 };
 export default User;
