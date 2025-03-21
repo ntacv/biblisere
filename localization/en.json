@@ -65,6 +65,7 @@
     "add": "Add",
     "remove": "Remove",
     "update": "Update",
+    "delete": "Delete",
     "create": "Create"
   },
   "user": {

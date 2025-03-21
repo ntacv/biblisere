@@ -16,7 +16,7 @@ const User = () => {
       >
         <Text>{t("menu:title")}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={navigation.goBack}>
         <Text>{t("homepage:title")}</Text>
       </TouchableOpacity>
     </SafeAreaView>

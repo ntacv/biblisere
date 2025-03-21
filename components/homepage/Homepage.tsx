@@ -117,10 +117,6 @@ const ViewHome = styled(View)`
 const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
-
-  margin: ${(props) =>
-      props.os === "ios" ? size.header.top.ios : size.header.top.android}px
-    0 0 0;
 `;
 const ViewFilters = styled(View)`
   display: none;

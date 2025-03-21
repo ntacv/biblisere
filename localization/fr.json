@@ -65,7 +65,8 @@
     "add": "Ajouter",
     "remove": "Retirer",
     "update": "Mettre à jour",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "create": "Créer"
   },
   "user": {
     "title": "Utilisateur",

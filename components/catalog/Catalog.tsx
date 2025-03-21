@@ -9,17 +9,17 @@ const User = () => {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView>
+    <>
       <Text>{t("user:title")}</Text>
       <TouchableOpacity
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       >
         <Text>{t("menu:title")}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={navigation.goBack}>
         <Text>{t("homepage:title")}</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </>
   );
 };
 export default User;
