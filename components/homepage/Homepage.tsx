@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
 import { DrawerActions } from "@react-navigation/native";
 
-import ViewPage from "components/Page";
+import ViewPage from "components/ViewPage";
 import { colors } from "styles/Variables";
 import Button from "components/button/Button";
 import ChooseLanguage from "localization/ChooseLanguage";

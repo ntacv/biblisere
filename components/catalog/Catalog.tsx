@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, SafeAreaView } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import ViewPage from "components/Page";
+import ViewPage from "components/ViewPage";
 import { useNav } from "utils/navigation";
 import { DrawerActions } from "@react-navigation/native";
 
