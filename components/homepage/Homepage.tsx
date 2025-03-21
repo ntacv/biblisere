@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import {
   TouchableOpacity,
   View,
@@ -16,6 +16,15 @@ import Button from "components/button/Button";
 import ChooseLanguage from "localization/ChooseLanguage";
 import Title from "components/Title";
 import Menu from "components/menu/Menu";
+import Footer from "components/footer/Footer";
+import { getApiSchedules } from "api/apiCalls";
+import * as StoreSchedules from "stores/schedules";
+import * as StoreBooks from "stores/books";
+import * as StoreUsers from "stores/user";
+import { useStoreMap } from "node_modules/effector-react";
+import { Api } from "api/apiSwagger";
+
+const api = new Api();
 import { useNav } from "utils/navigation";
 
 function Homepage() {
@@ -24,14 +33,32 @@ function Homepage() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
-  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = React.useState(false);
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
+  const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+  const books = useStoreMap(StoreBooks.store, (store) => store);
+  const user = useStoreMap(StoreUsers.store, (store) => store);
+
+  React.useEffect(() => {
+    getApiSchedules().then((response) => {
+      StoreSchedules.actions.setSchedules(response);
+    });
+
+    const bookApi = api.books?.booksControllerFindAll().then((response) => {
+      StoreBooks.actions.setBooks(response.data);
+    });
+
+    const userApi = api.users?.usersControllerGetMe().then((response) => {
+      StoreUsers.actions.setUser(response.data);
+    });
+  }, []);
+
   return (
-    <ViewHome style={{ paddingTop: insets.top }}>
+    <ViewHome insets={insets}>
       <ViewFilters>
         <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
@@ -41,9 +68,7 @@ function Homepage() {
           <Text>{t("menu:title")}</Text>
         </TouchableOpacity>
 
-        <Title>
-          <Text>{t("home:name")}</Text>
-        </Title>
+        <Title>{t("home:name")}</Title>
 
         <Button onPress={() => navigation.navigate("User")}>
           <Text>{t("menu:login")}</Text>
@@ -51,30 +76,37 @@ function Homepage() {
       </ViewHeader>
 
       <ScrollView>
-        <Text>IMAGE</Text>
         <TextInput placeholder={t("components:input:placeholder")}></TextInput>
 
-        <View>
-          <ChooseLanguage />
-        </View>
+        <ChooseLanguage />
 
-        <Text>MAIN APP</Text>
-        <Text>{t("lorem:long")}</Text>
+        {schedules.data?.map((schedule) => (
+          <Text key={schedule.id}>
+            {schedule.title} | {schedule.openingTime.hours}:
+            {schedule.openingTime.minutes} - {schedule.closingTime.hours}:
+            {schedule.closingTime.minutes}
+          </Text>
+        ))}
+
+        <Text>
+          {t("menu:login") +
+            t("config:text:colon") +
+            (user.data?.email ? user.data?.email : t("errors:notConnected"))}
+        </Text>
+
+        {books.data?.map((book) => (
+          <Text key={book.id}>{book.title}</Text>
+        ))}
       </ScrollView>
-
-      <ViewFooter>
-        <Text>{t("footer:contact")}</Text>
-        <Text>{t("footer:privacy")}</Text>
-        <Text>{t("footer:terms")}</Text>
-      </ViewFooter>
-
-      {menuVisible ? <Menu /> : null}
+      <Footer />
+      {menuVisible && <Menu />}
     </ViewHome>
   );
 }
 export default Homepage;
 
 const ViewHome = styled(View)`
+  padding-top: ${(props) => props.insets.top}px;
   background-color: ${colors.background};
   color: ${colors.primary};
 `;
@@ -86,11 +118,6 @@ const ViewHeader = styled(View)`
   margin: ${(props) =>
       props.os === "ios" ? size.header.top.ios : size.header.top.android}px
     0 0 0;
-`;
-const ViewFooter = styled(View)`
-  background: ${colors.footer};
-  display: grid;
-  align-items: center;
 `;
 const ViewFilters = styled(View)`
   display: none;

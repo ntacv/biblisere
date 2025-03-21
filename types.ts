@@ -1,8 +1,29 @@
-import Homepage from "./components/homepage/Homepage";
+export type StackParamList = {
+  Homepage: undefined;
+  User: undefined;
+};
 
-export const routes = {
-  Homepage: undefined,
-  User: undefined,
-} as const;
+export type ApiHealth = {
+  status: string;
+  info: {
+    database: {
+      status: string;
+    };
+  };
+};
 
-export type routesType = typeof routes;
+export type ApiSchedules = {
+  id: number;
+  title: string; //"Monday";
+  dayNumber: number; //1-7
+  closingTime: {
+    hours: number;
+    minutes: number;
+  };
+  openingTime: {
+    hours: number;
+    minutes: number;
+  };
+  createdAt: string; //ISO8601
+  updatedAt: string;
+};

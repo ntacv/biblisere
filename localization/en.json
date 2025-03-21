@@ -1,6 +1,16 @@
 {
   "config": {
-    "language": "English"
+    "language": "English",
+    "text": {
+      "colon": ": ",
+      "separator": " | "
+    }
+  },
+  "errors": {
+    "404": "Page not found",
+    "500": "Internal server error",
+    "noResults": "No results found",
+    "notConnected": "You are not connected"
   },
   "menu": {
     "title": "Menu",

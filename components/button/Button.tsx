@@ -1,13 +1,9 @@
-import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 
-import { useNav } from "utils/navigation";
 import { colors } from "styles/Variables";
 
 const Button = ({ children, onPress = undefined }) => {
-  const navigation = useNav();
-
   return (
     <TouchableButton onPress={onPress}>
       <TextInside>{children}</TextInside>

@@ -1,4 +1,3 @@
-import React, { useTransition } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 
 import { useTranslation } from "react-i18next";

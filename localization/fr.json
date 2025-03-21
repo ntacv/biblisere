@@ -1,6 +1,16 @@
 {
   "config": {
-    "language": "Français"
+    "language": "Français",
+    "text": {
+      "colon": " : ",
+      "separator": " | "
+    }
+  },
+  "errors": {
+    "404": "Page non trouvée",
+    "500": "Erreur interne du serveur",
+    "noResults": "Aucun résultat trouvé",
+    "notConnected": "Vous n'êtes pas connecté"
   },
   "menu": {
     "title": "Menu",
