@@ -1,6 +1,10 @@
 {
   "config": {
-    "language": "Français"
+    "language": "Français",
+    "text": {
+      "colon": " : ",
+      "separator": " | "
+    }
   },
   "errors": {
     "404": "Page non trouvée",

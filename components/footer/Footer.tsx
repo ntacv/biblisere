@@ -25,12 +25,10 @@ const Footer = () => {
 
   return (
     <ViewFooter>
-      <TextCentered>
-        <Text>footer:contact</Text>
-        <Text>footer:privacy</Text>
-        <Text>footer:terms</Text>
-      </TextCentered>
-      <Text>config:status</Text>
+      <Text>{t("footer:contact")}</Text>
+      <Text>{t("footer:privacy")}</Text>
+      <Text>{t("footer:terms")}</Text>
+      <Text>{t("config:status")}</Text>
       <Text>{status ? status : t("config:loading")}</Text>
     </ViewFooter>
   );

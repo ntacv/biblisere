@@ -57,14 +57,6 @@ function Homepage() {
     });
   }, []);
 
-  const isConnected = (
-    condition = user.data?.email,
-    ifTrue = user.data?.email,
-    ifFalse = t("errors:notConnected")
-  ) => {
-    return condition ? ifTrue : ifFalse;
-  };
-
   return (
     <ViewHome insets={insets}>
       <ViewFilters>
@@ -97,8 +89,9 @@ function Homepage() {
         ))}
 
         <Text>
-          {t("menu:login")}:
-          {" " + user.data?.email ? user.data?.email : t("errors:notConnected")}
+          {t("menu:login") +
+            t("config:text:colon") +
+            (user.data?.email ? user.data?.email : t("errors:notConnected"))}
         </Text>
 
         {books.data?.map((book) => (
