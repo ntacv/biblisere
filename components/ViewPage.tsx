@@ -10,9 +10,9 @@ const ViewPage = ({ children }) => {
 export default ViewPage;
 
 const Container = styled(View)`
+  flex: 1;
   padding-top: ${(props) => props.insets.top}px;
   padding-bottom: ${(props) => props.insets.bottom}px;
   padding-left: ${(props) => props.insets.left}px;
   padding-right: ${(props) => props.insets.right}px;
-  background-color: "red";
 `;
