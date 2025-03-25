@@ -23,10 +23,18 @@ import * as StoreBooks from "stores/books";
 import { RouteNames } from "types";
 import { useNav } from "utils/navigation";
 
+import { Api } from "api/apiSwagger";
+const api = new Api();
+
 const Content = () => {
   const navigation = useNav();
   const { t } = useTranslation();
 
+  const newBooks = api.books
+    ?.booksControllerFindAll({ sort: "publicationDate", order: "desc" })
+    .then((response) => {
+      StoreBooks.actions.setBooks(response.data);
+    });
   const books = useStoreMap(StoreBooks.store, (store) => store);
 
   const times = t("home:content:times", { returnObjects: true });
@@ -65,10 +73,10 @@ const Content = () => {
           </TitleContent>
         </TouchableOpacity>
         <ViewNewBooks horizontal={true}>
-          {!books.data ? (
+          {!books.books ? (
             <TextContent>{t("config:loading")}</TextContent>
           ) : (
-            books.data?.map((book, index) => (
+            books.books?.map((book, index) => (
               <View key={index}>
                 <ImageBook source={{ uri: book.imageUrl }} />
               </View>

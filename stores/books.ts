@@ -3,11 +3,11 @@ import { createEvent, createStore } from "effector";
 import { Book } from "api/apiSwagger";
 
 interface BooksState {
-  data?: Book[];
+  books?: Book[];
 }
 
 const initialState: BooksState = {
-  data: undefined,
+  books: undefined,
 };
 
 export const actions = {
@@ -16,8 +16,12 @@ export const actions = {
 
 export const store = createStore(initialState, { name: "Books_v1" }).on(
   actions.setBooks,
-  (store, data) => ({
+  (store, books) => ({
     ...store,
-    data,
+    books,
+    bookMap: books.reduce((acc, book) => {
+      acc[book.id] = book;
+      return acc;
+    }, {} as Record<string, Book>),
   })
 );
