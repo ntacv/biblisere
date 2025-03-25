@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { View, SafeAreaView, Text, Platform } from "react-native";
+import * as React from "react";
+import { View, SafeAreaView, Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors, sizes } from "styles/Variables";
 import Button from "components/button/Button";
@@ -13,18 +12,27 @@ import Content from "components/homepage/Content";
 import Icon from "assets/icons/Icons";
 import { RouteNames } from "types";
 import { DrawerActions } from "@react-navigation/native";
+import { useStoreMap } from "effector-react";
+
+import * as StoreBooks from "stores/books";
+import * as StoreUsers from "stores/user";
+
+import { Api } from "api/apiSwagger";
+const api = new Api();
 
 function Homepage() {
-  const os = Platform.OS;
   const navigation = useNav();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
 
-  const [menuVisible, setMenuVisible] = useState(false);
+  const books = useStoreMap(StoreBooks.store, (store) => store);
+  const user = useStoreMap(StoreUsers.store, (store) => store);
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  React.useEffect(() => {
+
+    const bookApi = api.books?.booksControllerFindAll().then((response) => {
+      StoreBooks.actions.setBooks(response.data);
+    });
+	}, []);
 
   return (
     <ViewHome>
@@ -32,7 +40,7 @@ function Homepage() {
         <Text>{t("components:filter:title")}</Text>
       </ViewFilters>
 
-      <ViewHeader os={os}>
+      <ViewHeader>
         <Button
           iconName="menu"
           background={colors.clickable}
@@ -72,9 +80,6 @@ const ViewHeader = styled(View)`
   display: flex;
   flex-direction: row;
   padding: ${sizes.padding.main}px ${sizes.padding.main}px;
-  margin: ${(props) =>
-      props.os === "ios" ? sizes.header.top.ios : sizes.header.top.android}px
-    0 0 0;
 `;
 const ViewFilters = styled(View)`
   display: none;
