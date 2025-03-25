@@ -3,7 +3,6 @@ import { ScrollView, View, Text, TextInput, Image } from "react-native";
 import { styled } from "styled-components/native";
 
 import { useTranslation } from "react-i18next";
-import ChooseLanguage from "localization/ChooseLanguage";
 import { fonts, colors, sizes } from "styles/Variables";
 import * as styles from "styles/Styles";
 import Button from "components/button/Button";
@@ -97,7 +96,7 @@ const ScrollViewContent = styled(ScrollView)`
   flex: 1;
 `;
 const ImageMainHome = styled(Image)`
-  height: 200px;
+  height: ${sizes.height.image}px;
   width: 100%;
   object-fit: cover;
   opacity: 0.87;

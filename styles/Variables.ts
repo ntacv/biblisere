@@ -28,6 +28,9 @@ export const sizes = {
     main: 10,
     bottom: 40,
   },
+  height: {
+    image: 160,
+  },
 };
 
 export const colors = {
