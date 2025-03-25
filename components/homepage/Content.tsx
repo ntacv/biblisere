@@ -78,12 +78,10 @@ const Content = () => {
             books.books?.map((book, index) => (
               <View key={index}>
                 <ImageBook source={{ uri: book.imageUrl }} />
-                <TextContent
-                  style={{ textAlign: "center", fontWeight: "bold" }}
-                >
+                <TextContentDate>
                   {parseJSON(book.publicationDate).getFullYear() + " - "}
                   {format(parseJSON(book.publicationDate), "MM")}
-                </TextContent>
+                </TextContentDate>
               </View>
             ))
           )}
@@ -172,6 +170,11 @@ const TitleContent = styled(Text)`
 `;
 const TextContent = styled(Text)`
   font: ${fonts.content};
+`;
+const TextContentDate = styled(Text)`
+  font: ${fonts.content};
+  text-align: center;
+  font-weight: bold;
 `;
 const ContentColumn = styled(View)`
   margin: ${sizes.padding.main}px ${sizes.padding.main}px
