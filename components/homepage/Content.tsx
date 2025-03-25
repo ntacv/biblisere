@@ -1,5 +1,13 @@
 import React from "react";
-import { ScrollView, View, Text, TextInput, Image } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  Image,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import { styled } from "styled-components/native";
 
 import { useTranslation } from "react-i18next";
@@ -10,9 +18,16 @@ import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
 
 import Icon from "assets/icons/Icons";
+import { useStoreMap } from "effector-react";
+import * as StoreBooks from "stores/books";
+import { RouteNames } from "types";
+import { useNav } from "utils/navigation";
 
 const Content = () => {
+  const navigation = useNav();
   const { t } = useTranslation();
+
+  const books = useStoreMap(StoreBooks.store, (store) => store);
 
   const times = t("home:content:times", { returnObjects: true });
   const services = t("home:content:services", { returnObjects: true });
@@ -35,6 +50,31 @@ const Content = () => {
         </ViewSearchBar>
 
         <ChooseLanguage />
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate(RouteNames.Catalog)}
+        >
+          <TitleContent>
+            {t("home:titles:news")}
+            <Icon
+              iconName="arrowRight"
+              width={sizes.icons.title}
+              height={sizes.icons.title}
+              stroke={colors.primary}
+            />
+          </TitleContent>
+        </TouchableOpacity>
+        <ViewNewBooks horizontal={true}>
+          {!books.data ? (
+            <TextContent>{t("config:loading")}</TextContent>
+          ) : (
+            books.data?.map((book, index) => (
+              <View key={index}>
+                <ImageBook source={{ uri: book.imageUrl }} />
+              </View>
+            ))
+          )}
+        </ViewNewBooks>
 
         <TitleContent>{t("home:intro")}</TitleContent>
         <TextContent>{t("home:content:presentation")}</TextContent>
@@ -91,6 +131,11 @@ const ImageMainHome = styled(Image)`
   object-fit: cover;
   opacity: 0.87;
 `;
+const ImageBook = styled(Image)`
+  height: ${sizes.height.imageList}px;
+  aspect-ratio: 2/3;
+  object-fit: contain;
+`;
 const ViewSearchBar = styled(View)`
   ${styles.PrimaryContainer}
   flex-direction: row;
@@ -120,7 +165,9 @@ const ContentColumn = styled(View)`
     ${sizes.padding.bottom}px;
   gap: ${sizes.padding.main}px;
 `;
-
+const ViewNewBooks = styled(ScrollView)`
+  height: ${sizes.height.imageList}px;
+`;
 const ViewFooter = styled(View)`
   background: ${colors.footer};
   display: grid;

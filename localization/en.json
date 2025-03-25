@@ -4,7 +4,8 @@
     "text": {
       "colon": ": ",
       "separator": " | "
-    }
+    },
+    "loading": "Loading..."
   },
   "errors": {
     "404": "Page not found",

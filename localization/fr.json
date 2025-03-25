@@ -4,7 +4,8 @@
     "text": {
       "colon": " : ",
       "separator": " | "
-    }
+    },
+    "loading": "Chargement..."
   },
   "errors": {
     "404": "Page non trouvée",
