@@ -46,10 +46,14 @@
     "title": "Page d'accueil",
     "intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
     "content": {
-      "times": [
-        "- Lundi à Vendredi : 9h00 - 18h00",
-        "- Samedi : 10h00 - 16h00",
-        "- Dimanche : Fermé"
+      "days": [
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+        "Dimanche"
       ],
       "services": [
         "- Prêt de livres et de magazines",

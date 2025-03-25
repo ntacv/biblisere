@@ -10,11 +10,14 @@ import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
 
 import Icon from "assets/icons/Icons";
+import { useStoreMap } from "effector-react";
+import * as StoreSchedules from "stores/schedules";
 
 const Content = () => {
   const { t } = useTranslation();
 
-  const times = t("home:content:times", { returnObjects: true });
+  const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+
   const services = t("home:content:services", { returnObjects: true });
 
   return (
@@ -34,34 +37,42 @@ const Content = () => {
           />
         </ViewSearchBar>
 
-        <ChooseLanguage />
-
         <TitleContent>{t("home:intro")}</TitleContent>
         <TextContent>{t("home:content:presentation")}</TextContent>
+
         <TitleContent>{t("home:titles:services")}</TitleContent>
         <View>
           {services.map((service, index) => (
             <TextContent key={index}>{service}</TextContent>
           ))}
         </View>
-        <TitleContent>{t("home:titles:times")}</TitleContent>
-        <View>
-          {times.map((time, index) => (
-            <TextContent key={index}>{time}</TextContent>
-          ))}
-        </View>
 
         <ViewAccess>
-          <Text>{t("home:titles:access")}</Text>
-          <Icon
-            iconName="mapPin"
-            width={sizes.icon}
-            height={sizes.icon}
-            stroke={colors.primary}
-          />
-        </ViewAccess>
+          <TitleContent>
+            <Icon
+              iconName="mapPin"
+              width={sizes.icons.content}
+              height={sizes.icons.content}
+              stroke={colors.primary}
+            />
 
-        <TextContent>{t("home:content:outro")}</TextContent>
+            {t("home:titles:times")}
+          </TitleContent>
+
+          {schedules.data?.map((schedule) => (
+            <TextContent key={schedule.id}>
+              {t("home:content:days:" + [schedule.dayNumber - 1]) +
+                " - " +
+                schedule.openingTime.hours +
+                ":" +
+                schedule.openingTime.minutes +
+                " - " +
+                schedule.closingTime.hours +
+                ":" +
+                schedule.closingTime.minutes}
+            </TextContent>
+          ))}
+        </ViewAccess>
       </ContentColumn>
 
       <ViewFooter>

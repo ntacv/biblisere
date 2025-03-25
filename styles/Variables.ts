@@ -18,6 +18,7 @@ export const sizes = {
   icons: {
     search: 27,
     title: 26,
+    content: 24,
   },
   radius: {
     in: "15px",
