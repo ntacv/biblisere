@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { styled } from "styled-components/native";
+import { format, parseJSON } from "date-fns";
 
 import { useTranslation } from "react-i18next";
 import ChooseLanguage from "localization/ChooseLanguage";
@@ -57,8 +58,6 @@ const Content = () => {
           />
         </ViewSearchBar>
 
-        <ChooseLanguage />
-
         <TouchableOpacity
           onPress={() => navigation.navigate(RouteNames.Catalog)}
         >
@@ -79,6 +78,12 @@ const Content = () => {
             books.books?.map((book, index) => (
               <View key={index}>
                 <ImageBook source={{ uri: book.imageUrl }} />
+                <TextContent
+                  style={{ textAlign: "center", fontWeight: "bold" }}
+                >
+                  {parseJSON(book.publicationDate).getFullYear() + " - "}
+                  {format(parseJSON(book.publicationDate), "MM")}
+                </TextContent>
               </View>
             ))
           )}
@@ -141,7 +146,7 @@ const ImageMainHome = styled(Image)`
 `;
 const ImageBook = styled(Image)`
   height: ${sizes.height.imageList}px;
-  aspect-ratio: 2/3;
+  aspect-ratio: 3/4;
   object-fit: contain;
 `;
 const ViewSearchBar = styled(View)`
@@ -174,7 +179,7 @@ const ContentColumn = styled(View)`
   gap: ${sizes.padding.main}px;
 `;
 const ViewNewBooks = styled(ScrollView)`
-  height: ${sizes.height.imageList}px;
+  height: ${sizes.height.imageList + 30}px;
 `;
 const ViewFooter = styled(View)`
   background: ${colors.footer};
