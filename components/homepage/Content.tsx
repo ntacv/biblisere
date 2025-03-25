@@ -12,9 +12,17 @@ import Icon from "assets/icons/Icons";
 import { useStoreMap } from "effector-react";
 import * as StoreSchedules from "stores/schedules";
 
+import { Api } from "api/apiSwagger";
+const api = new Api();
+
 const Content = () => {
   const { t } = useTranslation();
 
+  const schedulesApi = api.schedules
+    ?.schedulesControllerFindAllSchedules()
+    .then((response) => {
+      StoreSchedules.actions.setSchedules(response.data);
+    });
   const schedules = useStoreMap(StoreSchedules.store, (store) => store);
 
   const services = t("home:content:services", { returnObjects: true });
@@ -64,11 +72,15 @@ const Content = () => {
                 " - " +
                 schedule.openingTime.hours +
                 ":" +
-                schedule.openingTime.minutes +
+                (schedule.openingTime.minutes == 0
+                  ? "00"
+                  : schedule.openingTime.minutes) +
                 " - " +
                 schedule.closingTime.hours +
                 ":" +
-                schedule.closingTime.minutes}
+                (schedule.closingTime.minutes == 0
+                  ? "00"
+                  : schedule.closingTime.minutes)}
             </TextContent>
           ))}
         </ViewAccess>
