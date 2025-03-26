@@ -12,6 +12,7 @@ module.exports = {
 		'<THIRD_PARTY_MODULES>',
 		'^core/(.*)$',
 		'^store/(.*)$',
+		'^api/(.*)$',
 		'^i18n/(.*)$',
 		'^theme/(.*)$',
 		'^components/(.*)$',

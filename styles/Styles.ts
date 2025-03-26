@@ -1,4 +1,4 @@
-import { colors, sizes } from "styles/Variables";
+import { colors, sizes } from 'styles/Variables';
 
 export const textCentered = `
   text-align: center;

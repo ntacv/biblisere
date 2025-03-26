@@ -1,15 +1,16 @@
-import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import * as React from 'react';
 
-import DrawerMenu from "./components/menu/Drawer";
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import DrawerMenu from 'components/menu/Drawer';
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <SafeAreaProvider>
-        <DrawerMenu />
-      </SafeAreaProvider>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+			<SafeAreaProvider>
+				<DrawerMenu />
+			</SafeAreaProvider>
+		</NavigationContainer>
+	);
 }

@@ -1,43 +1,42 @@
-import { Text, TouchableOpacity } from "react-native";
-import styled from "styled-components";
+import { Text, TouchableOpacity } from 'react-native';
 
-import { colors, sizes } from "styles/Variables";
-import Icon, { iconType } from "assets/icons/Icons";
+import Icon, { iconType } from 'assets/icons/Icons';
+import styled from 'styled-components';
+import { colors, sizes } from 'styles/Variables';
 
 interface Props {
-  label?: string;
-  iconName?: iconType;
-  background?: string;
-  onPress?: () => void;
+	label?: string;
+	iconName?: iconType;
+	background?: string;
+	onPress?: () => void;
 }
 
 const Button = ({ onPress, label, iconName, background }: Props) => {
-  return (
-    <Container onPress={onPress} background={background} activeOpacity={0.8}>
-      {iconName && (
-        <Icon
-          iconName={iconName}
-          width={sizes.icons.search}
-          height={sizes.icons.search}
-          stroke={colors.content}
-        />
-      )}
-      {label && <TextInside>{label}</TextInside>}
-    </Container>
-  );
+	return (
+		<Container onPress={onPress} background={background} activeOpacity={0.8}>
+			{iconName && (
+				<Icon
+					iconName={iconName}
+					width={sizes.icons.search}
+					height={sizes.icons.search}
+					stroke={colors.content}
+				/>
+			)}
+			{label && <TextInside>{label}</TextInside>}
+		</Container>
+	);
 };
 export default Button;
 
 const TextInside = styled(Text)`
-  font-size: ${sizes.text.content}px;
-  text-align: center;
+	font-size: ${sizes.text.content}px;
+	text-align: center;
 `;
 
 const Container = styled(TouchableOpacity)<{ background?: string }>`
-  background-color: ${(props) =>
-    props.background ? props.background : colors.primary};
-  padding: 8px 15px;
-  border-radius: ${sizes.radius.in};
-  flex-direction: row;
-  gap: ${sizes.padding.main}px;
+	background-color: ${(props) => (props.background ? props.background : colors.primary)};
+	padding: 8px 15px;
+	border-radius: ${sizes.radius.in};
+	flex-direction: row;
+	gap: ${sizes.padding.main}px;
 `;
