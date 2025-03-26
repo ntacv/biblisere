@@ -1,16 +1,16 @@
 {
-  "compilerOptions": {
-    "baseUrl": "",
-    "paths": {
-      "*": ["*"],
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@localization/*": ["localization/*"],
-      "@styles/*": ["styles/*"],
-      "@screens/*": ["screens/*"],
-      "@utils/*": ["utils/*"]
-    }
-  },
-  "extends": "expo/tsconfig.base",
-  "include": ["./", "custom.d.ts"]
+	"compilerOptions": {
+		"baseUrl": "",
+		"paths": {
+			"*": ["*"],
+			"@assets/*": ["assets/*"],
+			"@components/*": ["components/*"],
+			"@localization/*": ["localization/*"],
+			"@styles/*": ["styles/*"],
+			"@screens/*": ["screens/*"],
+			"@utils/*": ["utils/*"]
+		}
+	},
+	"extends": "expo/tsconfig.base",
+	"include": ["./", "custom.d.ts"]
 }

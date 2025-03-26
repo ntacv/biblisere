@@ -1,22 +1,21 @@
-import { createEvent, createStore } from "effector";
-
-import { ApiSchedules } from "types";
+import { createEvent, createStore } from 'effector';
+import { ApiSchedules } from 'types';
 
 interface SchedulesState {
-  data?: ApiSchedules[];
+	data?: ApiSchedules[];
 }
 const initialState: SchedulesState = {
-  data: undefined,
+	data: undefined,
 };
 
 export const actions = {
-  setSchedules: createEvent<ApiSchedules[]>("SET_Schedules"),
+	setSchedules: createEvent<ApiSchedules[]>('SET_Schedules'),
 };
 
-export const store = createStore(initialState, { name: "Schedules_v1" }).on(
-  actions.setSchedules,
-  (store, data) => ({
-    ...store,
-    data,
-  })
+export const store = createStore(initialState, { name: 'Schedules_v1' }).on(
+	actions.setSchedules,
+	(store, data) => ({
+		...store,
+		data,
+	}),
 );
