@@ -1,12 +1,12 @@
-import React from "react";
-import { ScrollView, View, Text, TextInput, Image } from "react-native";
+import * as React from "react";
+import { Image, ScrollView, Text, TextInput, View } from "react-native";
 import { styled } from "styled-components/native";
 
-import { useTranslation } from "react-i18next";
-import { fonts, colors, sizes } from "styles/Variables";
-import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
+import { useTranslation } from "react-i18next";
+import * as styles from "styles/Styles";
+import { colors, fonts, sizes } from "styles/Variables";
 
 import Icon from "assets/icons/Icons";
 import { useStoreMap } from "effector-react";
@@ -17,15 +17,18 @@ const api = new Api();
 
 const Content = () => {
   const { t } = useTranslation();
+	const services = t("home:content:services", { returnObjects: true });
 
-  const schedulesApi = api.schedules
-    ?.schedulesControllerFindAllSchedules()
-    .then((response) => {
-      StoreSchedules.actions.setSchedules(response.data);
-    });
-  const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
 
-  const services = t("home:content:services", { returnObjects: true });
+	React.useEffect(() => {
+		const schedulesApi = api.schedules
+			?.schedulesControllerFindAllSchedules()
+			
+		schedulesApi.then((response) => {
+				StoreSchedules.actions.setSchedules(response.data);
+			});
+	}, []);
 
   return (
     <ScrollViewContent>
