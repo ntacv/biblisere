@@ -24,16 +24,17 @@ const Content = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	api.books?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' }).then((response) => {
-		StoreBooks.actions.setBooks(response.data);
-	});
-	const books = useStoreMap(StoreBooks.store, (store) => store);
-
 	const services = t('home:content:services', { returnObjects: true });
 
+	const books = useStoreMap(StoreBooks.store, (store) => store);
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
 
 	React.useEffect(() => {
+		api.books
+			?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
+			.then((response) => {
+				StoreBooks.actions.setBooks(response.data);
+			});
 		api.schedules?.schedulesControllerFindAllSchedules().then((response) => {
 			StoreSchedules.actions.setSchedules(response.data);
 		});
