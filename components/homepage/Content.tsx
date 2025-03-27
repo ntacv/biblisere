@@ -21,24 +21,14 @@ import { useNav } from 'utils/navigation';
 const api = new Api();
 
 const Content = () => {
-  const navigation = useNav();
-  const { t } = useTranslation();
-
-  const newBooks = api.books
-    ?.booksControllerFindAll({ sort: "publicationDate", order: "desc" })
-    .then((response) => {
-      StoreBooks.actions.setBooks(response.data);
-    });
-  const books = useStoreMap(StoreBooks.store, (store) => store);
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	const newBooks = api.books
-		?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
-		.then((response) => {
-			StoreBooks.actions.setBooks(response.data);
-		});
+	api.books?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' }).then((response) => {
+		StoreBooks.actions.setBooks(response.data);
+	});
 	const books = useStoreMap(StoreBooks.store, (store) => store);
+
 	const services = t('home:content:services', { returnObjects: true });
 
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
