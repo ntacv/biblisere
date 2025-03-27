@@ -1,104 +1,104 @@
 {
-  "config": {
-    "language": "Français",
-    "text": {
-      "colon": " : ",
-      "separator": " | "
-    },
-    "loading": "Chargement..."
-  },
-  "errors": {
-    "404": "Page non trouvée",
-    "500": "Erreur interne du serveur",
-    "noResults": "Aucun résultat trouvé",
-    "notConnected": "Vous n'êtes pas connecté"
-  },
-  "menu": {
-    "title": "Menu",
-    "signup": "S'inscrire",
-    "login": "Se connecter",
-    "logout": "Se déconnecter",
-    "settings": "Paramètres"
-  },
-  "components": {
-    "translate": {
-      "title": "Traduire",
-      "text": "Choisissez une langue",
-      "en": "EN",
-      "fr": "FR",
-      "english": "Anglais",
-      "french": "Français"
-    },
-    "input": {
-      "placeholder": "Rechercher...",
-      "clear": "Effacer"
-    },
-    "filter": {
-      "title": "Filtres",
-      "filter": "Filtrer",
-      "advanced": "Avancé"
-    },
-    "button": {
-      "click": "Cliquez moi"
-    }
-  },
-  "home": {
-    "name": "Biblisère",
-    "title": "Page d'accueil",
-    "intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
-    "content": {
-      "times": [
-        "- Lundi à Vendredi : 9h00 - 18h00",
-        "- Samedi : 10h00 - 16h00",
-        "- Dimanche : Fermé"
-      ],
-      "services": [
-        "- Prêt de livres et de magazines",
-        "- Accès aux ressources numériques",
-        "- Espaces de lecture et de travail",
-        "- Activités et événements"
-      ],
-      "outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
-      "presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
-    },
-    "titles": {
-      "services": "Nos Services",
-      "news": "Nouvelles",
-      "popular": "Populaire",
-      "recommended": "Recommandé",
-      "access": "Accès",
-      "times": "Horaires d'ouverture"
-    }
-  },
-  "catalog": {
-    "title": "Catalogue",
-    "books": "Livres",
-    "authors": "Auteurs",
-    "genres": "Genres",
-    "categories": "Catégories",
-    "view": "Voir",
-    "read": "Lire",
-    "add": "Ajouter",
-    "remove": "Retirer",
-    "update": "Mettre à jour",
-    "delete": "Supprimer",
-    "create": "Créer"
-  },
-  "user": {
-    "title": "Utilisateur",
-    "name": "John Doe"
-  },
-  "admin": {
-    "title": "Admin",
-    "name": "Admin"
-  },
-  "footer": {
-    "contact": "Contactez-nous",
-    "privacy": "Politique de confidentialité",
-    "terms": "Conditions d'utilisation"
-  },
-  "lorem": {
-    "short": "Qu'est-ce que Lorem Ipsum?",
-    "long": "Qu'est-ce que Lorem Ipsum? Lorem Ipsum est simplement un texte factice de l'industrie de l'impression et de la composition. Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur inconnu a pris une galère de type et l'a brouillée pour en faire un spécimen de livre."
-  }
+	"config": {
+		"language": "Français",
+		"text": {
+			"colon": " : ",
+			"separator": " | "
+		},
+		"loading": "Chargement..."
+	},
+	"errors": {
+		"404": "Page non trouvée",
+		"500": "Erreur interne du serveur",
+		"noResults": "Aucun résultat trouvé",
+		"notConnected": "Vous n'êtes pas connecté"
+	},
+	"menu": {
+		"title": "Menu",
+		"signup": "S'inscrire",
+		"login": "Se connecter",
+		"logout": "Se déconnecter",
+		"settings": "Paramètres"
+	},
+	"components": {
+		"translate": {
+			"title": "Traduire",
+			"text": "Choisissez une langue",
+			"en": "EN",
+			"fr": "FR",
+			"english": "Anglais",
+			"french": "Français"
+		},
+		"input": {
+			"placeholder": "Rechercher...",
+			"clear": "Effacer"
+		},
+		"filter": {
+			"title": "Filtres",
+			"filter": "Filtrer",
+			"advanced": "Avancé"
+		},
+		"button": {
+			"click": "Cliquez moi"
+		}
+	},
+	"dates": {
+		"year-month": "{{val, datetime(year:'numeric'; month: 'numeric')}}",
+		"month-year": "{{val, datetime(month: 'short'; year:'numeric')}}"
+	},
+	"home": {
+		"name": "Biblisère",
+		"title": "Page d'accueil",
+		"intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
+		"content": {
+			"days": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+			"services": [
+				"- Prêt de livres et de magazines",
+				"- Accès aux ressources numériques",
+				"- Espaces de lecture et de travail",
+				"- Activités et événements"
+			],
+			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
+			"presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
+		},
+		"titles": {
+			"services": "Nos Services",
+			"news": "Nouvelles",
+			"popular": "Populaire",
+			"recommended": "Recommandé",
+			"access": "Accès",
+			"times": "Horaires d'ouverture"
+		}
+	},
+	"catalog": {
+		"title": "Catalogue",
+		"books": "Livres",
+		"authors": "Auteurs",
+		"genres": "Genres",
+		"categories": "Catégories",
+		"view": "Voir",
+		"read": "Lire",
+		"add": "Ajouter",
+		"remove": "Retirer",
+		"update": "Mettre à jour",
+		"delete": "Supprimer",
+		"create": "Créer"
+	},
+	"user": {
+		"title": "Utilisateur",
+		"name": "John Doe"
+	},
+	"admin": {
+		"title": "Admin",
+		"name": "Admin"
+	},
+	"footer": {
+		"contact": "Contactez-nous",
+		"privacy": "Politique de confidentialité",
+		"terms": "Conditions d'utilisation"
+	},
+	"lorem": {
+		"short": "Qu'est-ce que Lorem Ipsum?",
+		"long": "Qu'est-ce que Lorem Ipsum? Lorem Ipsum est simplement un texte factice de l'industrie de l'impression et de la composition. Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur inconnu a pris une galère de type et l'a brouillée pour en faire un spécimen de livre."
+	}
 }

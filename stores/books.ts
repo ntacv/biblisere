@@ -1,6 +1,6 @@
-import { createEvent, createStore } from "effector";
+import { createEvent, createStore } from 'effector';
 
-import { Book } from "api/apiSwagger";
+import { Book } from 'api/apiSwagger';
 
 interface BooksState {
   books?: Book[];
@@ -11,7 +11,7 @@ const initialState: BooksState = {
 };
 
 export const actions = {
-  setBooks: createEvent<Book[]>("SET_BOOKS"),
+	setBooks: createEvent<Book[]>('SET_BOOKS'),
 };
 
 export const store = createStore(initialState, { name: "Books_v1" }).on(

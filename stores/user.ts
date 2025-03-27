@@ -1,23 +1,23 @@
-import { createEvent, createStore } from "effector";
+import { createEvent, createStore } from 'effector';
 
-import { User } from "api/apiSwagger";
+import { User } from 'api/apiSwagger';
 
 interface UserState {
-  data?: User;
+	data?: User;
 }
 
 const initialState: UserState = {
-  data: undefined,
+	data: undefined,
 };
 
 export const actions = {
-  setUser: createEvent<User>("SET_USERS"),
+	setUser: createEvent<User>('SET_USERS'),
 };
 
-export const store = createStore(initialState, { name: "User_v1" }).on(
-  actions.setUser,
-  (store, data) => ({
-    ...store,
-    data,
-  })
+export const store = createStore(initialState, { name: 'User_v1' }).on(
+	actions.setUser,
+	(store, data) => ({
+		...store,
+		data,
+	}),
 );

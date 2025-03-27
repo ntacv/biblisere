@@ -1,20 +1,19 @@
-import { createEvent, createStore } from "effector";
-
-import { ApiHealth } from "types";
+import { createEvent, createStore } from 'effector';
+import { ApiHealth } from 'types';
 
 interface HealthState {
-  status?: ApiHealth;
+	status?: ApiHealth;
 }
 const initialState: HealthState = {
-  status: undefined,
+	status: undefined,
 };
 
-export const actions = { setHealth: createEvent<ApiHealth>("SET_HEALTH") };
+export const actions = { setHealth: createEvent<ApiHealth>('SET_HEALTH') };
 
-export const store = createStore(initialState, { name: "health_v1" }).on(
-  actions.setHealth,
-  (store, status) => ({
-    ...store,
-    status,
-  })
+export const store = createStore(initialState, { name: 'health_v1' }).on(
+	actions.setHealth,
+	(store, status) => ({
+		...store,
+		status,
+	}),
 );
