@@ -1,22 +1,19 @@
 import React from "react";
 import {
-  ScrollView,
-  View,
-  Text,
-  TextInput,
-  Image,
-  Touchable,
-  TouchableOpacity,
+	Image,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View
 } from "react-native";
 import { styled } from "styled-components/native";
-import { format, parseJSON } from "date-fns";
 
-import { useTranslation } from "react-i18next";
-import ChooseLanguage from "localization/ChooseLanguage";
-import { fonts, colors, sizes } from "styles/Variables";
-import * as styles from "styles/Styles";
 import Button from "components/button/Button";
 import TextLink from "components/button/TextLink";
+import { useTranslation } from "react-i18next";
+import * as styles from "styles/Styles";
+import { colors, fonts, sizes } from "styles/Variables";
 
 import Icon from "assets/icons/Icons";
 import { useStoreMap } from "effector-react";
@@ -68,20 +65,19 @@ const Content = () => {
               width={sizes.icons.title}
               height={sizes.icons.title}
               stroke={colors.primary}
-            />
+							/>
           </TitleContent>
         </TouchableOpacity>
         <ViewNewBooks horizontal={true}>
           {!books.books ? (
-            <TextContent>{t("config:loading")}</TextContent>
+						<TextContent>{t("config:loading")}</TextContent>
           ) : (
-            books.books?.map((book, index) => (
-              <View key={index}>
+						books.books?.map((book, index) => (
+							<View key={index}>
                 <ImageBook source={{ uri: book.imageUrl }} />
                 <TextContentDate>
-                  {parseJSON(book.publicationDate).getFullYear() + " - "}
-                  {format(parseJSON(book.publicationDate), "MM")}
-                </TextContentDate>
+									{t("dates:month-year", { val: new Date(book.publicationDate)})}
+									</TextContentDate>
               </View>
             ))
           )}
