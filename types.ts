@@ -1,5 +1,3 @@
-import { t } from 'i18next';
-
 import Catalog from 'components/catalog/Catalog';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
@@ -16,28 +14,28 @@ export const routes = {
 		name: RouteNames.Homepage,
 		component: Homepage,
 		options: {
-			title: t('home:title'),
+			title: 'home:title',
 		},
 	},
 	[RouteNames.Catalog]: {
 		name: RouteNames.Catalog,
 		component: Catalog,
 		options: {
-			title: t('catalog:title'),
+			title: 'catalog:title',
 		},
 	},
 	[RouteNames.User]: {
 		name: RouteNames.User,
 		component: User,
 		options: {
-			title: t('user:title'),
+			title: 'user:title',
 		},
 	},
 	[RouteNames.Admin]: {
 		name: RouteNames.Admin,
 		component: User,
 		options: {
-			title: t('admin:title'),
+			title: 'admin:title',
 		},
 	},
 } as const;
