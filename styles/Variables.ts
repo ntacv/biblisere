@@ -29,7 +29,8 @@ export const sizes = {
 		bottom: 40,
 	},
 	height: {
-		image: 160,
+		image: 130,
+		imageList: 130,
 	},
 };
 

@@ -4,7 +4,8 @@
 		"text": {
 			"colon": ": ",
 			"separator": " | "
-		}
+		},
+		"loading": "Loading..."
 	},
 	"errors": {
 		"404": "Page not found",
@@ -40,6 +41,10 @@
 		"button": {
 			"click": "Click me"
 		}
+	},
+	"dates": {
+		"year-month": "{{val, datetime(year:'numeric'; month: 'numeric')}}",
+		"month-year": "{{val, datetime(month: 'short'; year:'numeric')}}"
 	},
 	"home": {
 		"name": "Biblisère",
