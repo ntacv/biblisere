@@ -4,7 +4,8 @@
 		"text": {
 			"colon": " : ",
 			"separator": " | "
-		}
+		},
+    "loading": "Chargement..."
 	},
 	"errors": {
 		"404": "Page non trouvée",
@@ -40,6 +41,10 @@
 		"button": {
 			"click": "Cliquez moi"
 		}
+	},
+	"dates": {
+		"year-month": "{{val, datetime(year:'numeric'; month: 'numeric')}}",
+		"month-year": "{{val, datetime(month: 'short'; year:'numeric')}}"
 	},
 	"home": {
 		"name": "Biblisère",

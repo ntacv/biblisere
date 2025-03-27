@@ -1,23 +1,35 @@
 import * as React from 'react';
-import { Image, ScrollView, Text, TextInput, View } from 'react-native';
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
 import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
 import { colors, fonts, sizes } from 'styles/Variables';
+import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TextLink from 'components/button/TextLink';
 
+import { useNav } from 'utils/navigation';
+
 const api = new Api();
 
 const Content = () => {
+	const navigation = useNav();
 	const { t } = useTranslation();
+
+	const newBooks = api.books
+		?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
+		.then((response) => {
+			StoreBooks.actions.setBooks(response.data);
+		});
+	const books = useStoreMap(StoreBooks.store, (store) => store);
 	const services = t('home:content:services', { returnObjects: true });
 
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
@@ -43,8 +55,31 @@ const Content = () => {
 					/>
 				</ViewSearchBar>
 
-				<TitleContent>{t('home:intro')}</TitleContent>
-				<TextContent>{t('home:content:presentation')}</TextContent>
+				<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
+					<TitleContent>
+						{t('home:titles:news')}
+						<Icon
+							iconName="arrowRight"
+							width={sizes.icons.title}
+							height={sizes.icons.title}
+							stroke={colors.primary}
+						/>
+					</TitleContent>
+				</TouchableOpacity>
+				<ViewNewBooks horizontal={true}>
+					{!books.books ? (
+						<TextContent>{t('config:loading')}</TextContent>
+					) : (
+						books.books?.map((book, index) => (
+							<View key={index}>
+								<ImageBook source={{ uri: book.imageUrl }} />
+								<TextContentDate>
+									{t('dates:month-year', { val: new Date(book.publicationDate) })}
+								</TextContentDate>
+							</View>
+						))
+					)}
+				</ViewNewBooks>
 
 				<TitleContent>{t('home:titles:services')}</TitleContent>
 				<View>
@@ -102,6 +137,11 @@ const ImageMainHome = styled(Image)`
 	object-fit: cover;
 	opacity: 0.87;
 `;
+const ImageBook = styled(Image)`
+	height: ${sizes.height.imageList}px;
+	aspect-ratio: 3/4;
+	object-fit: contain;
+`;
 const ViewSearchBar = styled(View)`
 	${styles.PrimaryContainer}
 	flex-direction: row;
@@ -126,11 +166,18 @@ const TitleContent = styled(Text)`
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 `;
+const TextContentDate = styled(Text)`
+	font: ${fonts.content};
+	text-align: center;
+	font-weight: bold;
+`;
 const ContentColumn = styled(View)`
 	margin: ${sizes.padding.main}px ${sizes.padding.main}px ${sizes.padding.bottom}px;
 	gap: ${sizes.padding.main}px;
 `;
-
+const ViewNewBooks = styled(ScrollView)`
+	height: ${sizes.height.imageList + 30}px;
+`;
 const ViewFooter = styled(View)`
 	background: ${colors.footer};
 	display: grid;

@@ -1,12 +1,17 @@
 import * as React from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { DrawerActions } from '@react-navigation/native';
 import Icon from 'assets/icons/Icons';
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
+import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import { RouteNames } from 'types';
+
+import { Api } from 'api/apiSwagger';
 
 import Title from 'components/Title';
 import ViewPage from 'components/ViewPage';
@@ -15,10 +20,20 @@ import Content from 'components/homepage/Content';
 
 import { useNav } from 'utils/navigation';
 
+const api = new Api();
+
 function Homepage() {
-	const os = Platform.OS;
 	const navigation = useNav();
 	const { t } = useTranslation();
+
+	const books = useStoreMap(StoreBooks.store, (store) => store);
+	const user = useStoreMap(StoreUser.store, (store) => store);
+
+	React.useEffect(() => {
+		api.books?.booksControllerFindAll().then((response) => {
+			StoreBooks.actions.setBooks(response.data);
+		});
+	}, []);
 
 	return (
 		<ViewPage>
@@ -26,7 +41,7 @@ function Homepage() {
 				<Text>{t('components:filter:title')}</Text>
 			</ViewFilters>
 
-			<ViewHeader os={os}>
+			<ViewHeader>
 				<Button
 					iconName="menu"
 					background={colors.clickable}
@@ -57,8 +72,6 @@ const ViewHeader = styled(View)`
 	display: flex;
 	flex-direction: row;
 	padding: ${sizes.padding.main}px ${sizes.padding.main}px;
-	margin: ${(props) => (props.os === 'ios' ? sizes.header.top.ios : sizes.header.top.android)}px 0 0
-		0;
 `;
 const ViewFilters = styled(View)`
 	display: none;
