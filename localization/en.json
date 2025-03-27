@@ -46,11 +46,7 @@
 		"title": "Homepage",
 		"intro": "Municipal Library of Trou-perdu-en-Isère",
 		"content": {
-			"times": [
-				"- Monday to Friday: 6:00 AM - 10:00 PM",
-				"- Saturday: 10:00 AM - 5:00 PM",
-				"- Sunday: Closed"
-			],
+			"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			"services": [
 				"- Book and magazine lending",
 				"- Access to digital resources",

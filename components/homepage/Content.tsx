@@ -1,21 +1,32 @@
-import React from 'react';
+import * as React from 'react';
 import { Image, ScrollView, Text, TextInput, View } from 'react-native';
 
 import Icon from 'assets/icons/Icons';
-import ChooseLanguage from 'localization/ChooseLanguage';
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
 import { colors, fonts, sizes } from 'styles/Variables';
 
+import { Api } from 'api/apiSwagger';
+
 import Button from 'components/button/Button';
 import TextLink from 'components/button/TextLink';
 
+const api = new Api();
+
 const Content = () => {
 	const { t } = useTranslation();
-
-	const times = t('home:content:times', { returnObjects: true });
 	const services = t('home:content:services', { returnObjects: true });
+
+	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+
+	React.useEffect(() => {
+		api.schedules?.schedulesControllerFindAllSchedules().then((response) => {
+			StoreSchedules.actions.setSchedules(response.data);
+		});
+	}, []);
 
 	return (
 		<ScrollViewContent>
@@ -32,29 +43,42 @@ const Content = () => {
 					/>
 				</ViewSearchBar>
 
-				<ChooseLanguage />
-
 				<TitleContent>{t('home:intro')}</TitleContent>
 				<TextContent>{t('home:content:presentation')}</TextContent>
+
 				<TitleContent>{t('home:titles:services')}</TitleContent>
 				<View>
 					{services.map((service, index) => (
 						<TextContent key={index}>{service}</TextContent>
 					))}
 				</View>
-				<TitleContent>{t('home:titles:times')}</TitleContent>
-				<View>
-					{times.map((time, index) => (
-						<TextContent key={index}>{time}</TextContent>
-					))}
-				</View>
 
 				<ViewAccess>
-					<Text>{t('home:titles:access')}</Text>
-					<Icon iconName="mapPin" width={sizes.icon} height={sizes.icon} stroke={colors.primary} />
-				</ViewAccess>
+					<TitleContent>
+						<Icon
+							iconName="mapPin"
+							width={sizes.icons.content}
+							height={sizes.icons.content}
+							stroke={colors.primary}
+						/>
 
-				<TextContent>{t('home:content:outro')}</TextContent>
+						{t('home:titles:times')}
+					</TitleContent>
+
+					{schedules.data?.map((schedule) => (
+						<TextContent key={schedule.id}>
+							{t('home:content:days:' + [schedule.dayNumber - 1]) +
+								' - ' +
+								schedule.openingTime.hours +
+								':' +
+								(schedule.openingTime.minutes == 0 ? '00' : schedule.openingTime.minutes) +
+								' - ' +
+								schedule.closingTime.hours +
+								':' +
+								(schedule.closingTime.minutes == 0 ? '00' : schedule.closingTime.minutes)}
+						</TextContent>
+					))}
+				</ViewAccess>
 			</ContentColumn>
 
 			<ViewFooter>
@@ -73,7 +97,7 @@ const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 const ImageMainHome = styled(Image)`
-	height: 200px;
+	height: ${sizes.height.image}px;
 	width: 100%;
 	object-fit: cover;
 	opacity: 0.87;
