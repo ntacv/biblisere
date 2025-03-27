@@ -22,10 +22,8 @@ const Content = () => {
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
 
 	React.useEffect(() => {
-		const schedulesApi = api.schedules
-			?.schedulesControllerFindAllSchedules()
-			
-		schedulesApi.then((response) => {
+		api.schedules?.schedulesControllerFindAllSchedules()
+		.then((response) => {
 				StoreSchedules.actions.setSchedules(response.data);
 			});
 	}, []);
