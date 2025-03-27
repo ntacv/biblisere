@@ -23,7 +23,7 @@ const DrawerMenu = () => {
 			drawerContent={(props) => <DrawerContentCustom {...props} />}
 		>
 			{routesArray.map((route) =>
-				!isAdmin && route.name === 'Admin' ? null : (
+				!isAdmin && route.name === RouteNames.Admin ? null : (
 					<Drawer.Screen
 						key={route.name}
 						name={route.name}
