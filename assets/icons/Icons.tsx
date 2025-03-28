@@ -1,10 +1,13 @@
 import arrowDown from 'assets/icons/arrow-down.svg';
 import arrowRight from 'assets/icons/arrow-right.svg';
 import book from 'assets/icons/book.svg';
+import bookmark from 'assets/icons/bookmark.svg';
+import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
 import search from 'assets/icons/search.svg';
 import user from 'assets/icons/user.svg';
+import x from 'assets/icons/x.svg';
 
 const IconSvgs = {
 	menu: menu,
@@ -14,6 +17,9 @@ const IconSvgs = {
 	book: book,
 	arrowRight: arrowRight,
 	arrowDown: arrowDown,
+	x: x,
+	info: info,
+	bookmark: bookmark,
 };
 export type iconType = keyof typeof IconSvgs;
 
