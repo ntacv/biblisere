@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
@@ -14,8 +14,9 @@ import { RouteNames } from 'types';
 import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
-import Button from 'components/button/Button';
 import Footer from 'components/footer/Footer';
+import ContainerColumn from 'components/utils/ContainerColumn';
+import Searchbar from 'components/utils/Searchbar';
 
 import { useNav } from 'utils/navigation';
 
@@ -46,16 +47,8 @@ function Homepage() {
 			<ScrollViewContent>
 				<ImageMainHome source={require('assets/images/mediatheque_espace_lecture.jpg')} />
 
-				<ContentColumn>
-					<ViewSearchBar>
-						<InputContent placeholder={t('components:input:placeholder')} />
-
-						<Button
-							label="Search"
-							iconName="search"
-							onPress={() => alert(t('components:button:click'))}
-						/>
-					</ViewSearchBar>
+				<ContainerColumn>
+					<Searchbar />
 
 					<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
 						<TitleContent>
@@ -116,7 +109,7 @@ function Homepage() {
 							</TextContent>
 						))}
 					</ViewAccess>
-				</ContentColumn>
+				</ContainerColumn>
 
 				<Footer />
 			</ScrollViewContent>
@@ -139,21 +132,6 @@ const ImageBook = styled(Image)`
 	aspect-ratio: 3/4;
 	object-fit: contain;
 `;
-const ViewSearchBar = styled(View)`
-	${styles.PrimaryContainer}
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	max-width: 400px;
-`;
-const InputContent = styled(TextInput)`
-	border-bottom-color: ${colors.primary};
-	border-bottom-width: 2px;
-	font: ${fonts.content};
-	height: ${sizes.text.input}px;
-	flex: 1;
-	margin: 0 ${sizes.padding.main}px;
-`;
 const ViewAccess = styled(View)`
 	${styles.PrimaryContainer}
 `;
@@ -167,10 +145,6 @@ const TextContentDate = styled(Text)`
 	font: ${fonts.content};
 	text-align: center;
 	font-weight: bold;
-`;
-const ContentColumn = styled(View)`
-	margin: ${sizes.padding.main}px ${sizes.padding.main}px ${sizes.padding.bottom}px;
-	gap: ${sizes.padding.main}px;
 `;
 const ViewNewBooks = styled(ScrollView)`
 	height: ${sizes.height.imageList + 30}px;

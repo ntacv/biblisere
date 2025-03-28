@@ -16,13 +16,13 @@ export interface ItemProps {
 	key: number;
 }
 
-const BookListItem = (Props: ItemProps) => {
-	const book = Props.bookProp;
+const BookListItem = (props: ItemProps) => {
+	const book = props.bookProp;
 
 	const { t } = useTranslation();
 
 	return (
-		<ContainerZone key={Props.key}>
+		<ContainerZone key={props.key}>
 			<ViewListItem>
 				<ImageBook source={{ uri: book.imageUrl }} />
 				<ViewSide>
