@@ -8,10 +8,10 @@ interface Props {
 	url: string;
 }
 
-const TextLink = ({ children, url }: Props) => {
+const TextLink = (props: Props) => {
 	return (
-		<TouchableOpacity onPress={() => Linking.openURL(url)} activeOpacity={0.8}>
-			<TextContent>{children}</TextContent>
+		<TouchableOpacity {...props} onPress={() => Linking.openURL(props.url)} activeOpacity={0.8}>
+			<TextContent>{props.children}</TextContent>
 		</TouchableOpacity>
 	);
 };

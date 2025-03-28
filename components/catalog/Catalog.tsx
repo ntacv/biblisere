@@ -32,7 +32,7 @@ const Catalog = () => {
 	}, []);
 
 	return (
-		<ViewPage>
+		<ViewPage header={true}>
 			<Text>{t('catalog:title')}</Text>
 
 			<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
