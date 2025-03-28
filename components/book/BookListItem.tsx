@@ -11,12 +11,12 @@ import ContainerZone from 'components/ContainerZone';
 import Button from 'components/button/Button';
 import ImageBook from 'components/image/ImageBook';
 
-export interface Props {
+export interface ItemProps {
 	bookProp: Book;
 	key: number;
 }
 
-const BookListItem = (Props) => {
+const BookListItem = (Props: ItemProps) => {
 	const book = Props.bookProp;
 
 	const { t } = useTranslation();

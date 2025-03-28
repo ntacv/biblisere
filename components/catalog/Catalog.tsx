@@ -50,6 +50,7 @@ const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 const ViewList = styled(View)`
+	padding: 0 ${sizes.padding.main}px;
 	gap: ${sizes.padding.main}px;
 `;
 const TextContent = styled(Text)`
