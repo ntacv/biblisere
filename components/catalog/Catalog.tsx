@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
-import { DrawerActions } from '@react-navigation/native';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
@@ -11,7 +10,7 @@ import { fonts, sizes } from 'styles/Variables';
 import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
-import BookList from 'components/book/BookList';
+import BookListItem from 'components/book/BookListItem';
 
 import { useNav } from 'utils/navigation';
 
@@ -33,22 +32,12 @@ const Catalog = () => {
 
 	return (
 		<ViewPage header={true}>
-			<Text>{t('catalog:title')}</Text>
-
-			<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-				<Text>{t('menu:title')}</Text>
-			</TouchableOpacity>
-
-			<TouchableOpacity onPress={navigation.goBack}>
-				<Text>{t('homepage:title')}</Text>
-			</TouchableOpacity>
-
 			<ScrollViewContent>
 				<ViewList>
 					{!books ? (
 						<TextContent>{t('config:loading')}</TextContent>
 					) : (
-						books.books.map((book, index) => <BookList key={index} bookProp={book} />)
+						books.books.map((book, index) => <BookListItem key={index} bookProp={book} />)
 					)}
 				</ViewList>
 			</ScrollViewContent>
