@@ -22,7 +22,7 @@ const Catalog = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	const books = useStoreMap(StoreBooks.store, (store) => store);
+	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
 	React.useEffect(() => {
 		api.books
@@ -39,10 +39,10 @@ const Catalog = () => {
 					<Searchbar />
 
 					<ViewList>
-						{!books ? (
+						{!storeBooks ? (
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (
-							books.books.map((book, index) => <BookListItem key={index} bookProp={book} />)
+							storeBooks.books.map((book, index) => <BookListItem key={index} bookProp={book} />)
 						)}
 					</ViewList>
 				</ContainerColumn>
