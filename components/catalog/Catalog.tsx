@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { DrawerActions } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ const User = () => {
 	const { t } = useTranslation();
 
 	return (
-		<ViewPage>
+		<ViewPage header={true}>
 			<Text>{t('user:title')}</Text>
 			<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
 				<Text>{t('menu:title')}</Text>
