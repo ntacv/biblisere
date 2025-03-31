@@ -7,7 +7,7 @@ import * as StoreUser from 'stores/user';
 
 import { Api } from 'api/apiSwagger';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
 
 const api = new Api();
 

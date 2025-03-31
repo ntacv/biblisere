@@ -2,12 +2,7 @@ import Catalog from 'components/catalog/Catalog';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
 
-export enum RouteNames {
-	Homepage = 'Homepage',
-	Catalog = 'Catalog',
-	User = 'User',
-	Admin = 'Admin',
-}
+import RouteNames from 'utils/routes';
 
 export const routes = {
 	[RouteNames.Homepage]: {

@@ -6,9 +6,9 @@ import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
 import Login from 'components/user/Login';
-import UserStorePrint from 'components/user/userStorePrint';
+import UserStorePrint from 'components/user/UserStorePrint';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
 
 const api = new Api();
 

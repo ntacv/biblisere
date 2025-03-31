@@ -7,7 +7,6 @@ import * as StoreBooks from 'stores/books';
 import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
@@ -19,7 +18,8 @@ import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 

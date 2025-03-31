@@ -14,7 +14,7 @@ import BookListItem from 'components/book/BookListItem';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
 
 const api = new Api();
 
