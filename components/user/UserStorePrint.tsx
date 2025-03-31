@@ -8,18 +8,32 @@ import * as StoreUsers from 'stores/user';
 const UserStorePrint = () => {
 	const { t } = useTranslation();
 	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
+	const user = useStoreMap(StoreUsers.store, (store) => store.id);
+
+	React.useEffect(() => {
+		console.log('UserStorePrint', storeUser);
+	}, [storeUser]);
 
 	return (
 		<View>
 			<Text>
+				{/* TEST COMPONENT to check login and user data */}
 				{t('menu:login') +
 					t('config:text:colon') +
 					(storeUser.id?.email ? storeUser.id?.email : t('errors:notConnected'))}
 			</Text>
 			<Text>
-				{storeUser.token}
-				{storeUser.id?.email}
+				hello {storeUser.id?.firstName} {storeUser.id?.lastName},{' '}
+				{user?.canBorrow ? 'you can' : 'you cannot'} borrow books.
 			</Text>
+			<Text>My books: </Text>
+			<View>
+				{user?.books?.map((book) => (
+					<Text key={book.id}>
+						{book.title} - {book.author}
+					</Text>
+				))}
+			</View>
 		</View>
 	);
 };

@@ -18,6 +18,7 @@
 		"signup": "S'inscrire",
 		"login": "Se connecter",
 		"logout": "Se déconnecter",
+		"logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter?",
 		"settings": "Paramètres"
 	},
 	"components": {

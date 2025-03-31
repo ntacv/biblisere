@@ -85,6 +85,7 @@ export interface User {
 	/** @example "john@doe.com" */
 	email: string;
 	canBorrow: boolean;
+	books: Book[];
 	firstName: string | null;
 	lastName: string | null;
 	role: 'ADMIN' | 'CUSTOMER';

@@ -1,12 +1,17 @@
+import * as React from 'react';
+import { Alert } from 'react-native';
+
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
-import * as StoreUsers from 'stores/user';
+import * as StoreUser from 'stores/user';
+import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
+import Button from 'components/button/Button';
 import Login from 'components/user/Login';
-import UserStorePrint from 'components/user/userStorePrint';
+import UserStorePrint from 'components/user/UserStorePrint';
 
 import { useNav } from 'utils/navigation';
 
@@ -16,14 +21,40 @@ const UserPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	const userLogged = useStoreMap(StoreUsers.store, (store) => store);
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	return (
 		<ViewPage header={true}>
-			{!userLogged && <Login />}
+			{!storeUser.token && <Login />}
 
 			<UserStorePrint></UserStorePrint>
+
+			<Button
+				label={t('menu:logout')}
+				onPress={() => {
+					AlertLogout(storeUser, t, navigation);
+					console.log('logging out,', storeUser);
+				}}
+			/>
 		</ViewPage>
 	);
 };
 export default UserPage;
+
+const AlertLogout = (storeUser, t, navigation) => {
+	return Alert.alert(t('menu:logout'), t('menu:logoutConfirm'), [
+		{
+			text: t('menu:cancel'),
+			onPress: () => console.log('Cancel Pressed'),
+			style: 'cancel',
+		},
+		{
+			text: t('menu:ok'),
+			onPress: () => {
+				console.log('OK Pressed');
+				StoreUser.actions.logout();
+				navigation.navigate(RouteNames.User);
+			},
+		},
+	]);
+};

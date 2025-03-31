@@ -42,7 +42,6 @@ const Login = () => {
 	};
 
 	const login = () => {
-		console.log('login', id);
 		api.login
 			?.authControllerLogin({
 				email: id.email,
@@ -50,9 +49,16 @@ const Login = () => {
 			})
 			.then((response) => {
 				StoreUser.actions.setToken(response.data.access_token);
+				return api.users?.usersControllerGetMe({
+					headers: { Authorization: `Bearer ${response.data.access_token}` },
+				});
 			})
+			.then((response) => StoreUser.actions.setUser(response.data))
 			.catch((error) => {
 				console.error('Login error:', error);
+			})
+			.finally(() => {
+				console.log('Login request completed with: ', storeUser);
 			});
 
 		return true;
@@ -67,12 +73,15 @@ const Login = () => {
 	return (
 		<SafeAreaView>
 			<TextInput placeholder={t('user:input')} onChangeText={(text) => checkEmail(text)} />
+			{/* will become a check input validater */}
 			<Text>{id.email != '' ? 'Ok' : 'Not valid'}</Text>
 			<TextInput
 				placeholder={t('user:input')}
 				onChangeText={(password) => checkPassword(password)}
 			/>
+			{/* will become a check input validater */}
 			<Text>{id.password != '' ? 'Ok' : 'Not valid'}</Text>
+			{/* will become a blue/greyed Validate button */}
 			{id.email != '' && id.password != '' ? (
 				<TouchableOpacity onPress={() => login()}>
 					<Text>{t('user:submit')}</Text>
