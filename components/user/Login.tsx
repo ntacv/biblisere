@@ -41,7 +41,11 @@ const Login = () => {
 		return passwordRegex.test(password);
 	};
 
-	const login = () => {
+	const login = (email = undefined, pass = undefined) => {
+		if (email && pass) {
+			setId({ email: email, password: pass });
+		}
+
 		api.login
 			?.authControllerLogin({
 				email: id.email,
@@ -89,6 +93,15 @@ const Login = () => {
 			) : (
 				<Text>{t('user:notReady')}</Text>
 			)}
+
+			{/* TEST COMPONENT to login as admin */}
+			<TouchableOpacity
+				onPress={() => {
+					login('admin@example.com', 'myAdmin123&');
+				}}
+			>
+				<Text>fast login</Text>
+			</TouchableOpacity>
 		</SafeAreaView>
 	);
 };
