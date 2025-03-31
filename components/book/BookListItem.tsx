@@ -1,16 +1,20 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
+import { RouteNames } from 'types';
 
 import { Api, Book } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
-import Button from 'components/button/Button';
 import ImageBook from 'components/image/ImageBook';
+
+import { useNav } from 'utils/navigation';
+
+import BorrowBook from './BorrowBook';
 
 const api = new Api();
 
@@ -37,34 +41,29 @@ const BookListItem = (props: ItemProps) => {
 	const book = props.bookProp;
 
 	const { t } = useTranslation();
+	const navigation = useNav();
+
+	const storeUser = StoreUser.store.getState();
 
 	return (
-		<ContainerZone>
-			<ViewListItem>
-				<ImageBook source={{ uri: book.imageUrl }} />
-				<ViewSide>
-					<View>
-						<TextBold>{book.title}</TextBold>
-						<TextContent>{book.author}</TextContent>
-						<TextContent>
-							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
-						</TextContent>
-						<TextContent>{book.quantity}</TextContent>
-					</View>
-					<ViewButton>
-						{book.quantity > 0 ? (
-							<Button
-								label={t('catalog:add')}
-								iconName="bookmark"
-								onPress={() => borrowBook(book)}
-							/>
-						) : (
-							<Button label={t('catalog:remove')} iconName="x" />
-						)}
-					</ViewButton>
-				</ViewSide>
-			</ViewListItem>
-		</ContainerZone>
+		<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Details)}>
+			<ContainerZone>
+				<ViewListItem>
+					<ImageBook source={{ uri: book.imageUrl }} />
+					<ViewSide>
+						<View>
+							<TextBold>{book.title}</TextBold>
+							<TextContent>{book.author}</TextContent>
+							<TextContent>
+								{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
+							</TextContent>
+							<TextContent>{book.quantity}</TextContent>
+						</View>
+						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
+					</ViewSide>
+				</ViewListItem>
+			</ContainerZone>
+		</TouchableOpacity>
 	);
 };
 export default BookListItem;
