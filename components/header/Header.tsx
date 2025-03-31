@@ -8,8 +8,8 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import { RouteNames } from 'types';
 
-import Title from 'components/Title';
 import Button from 'components/button/Button';
+import Title from 'components/text/Title';
 
 import { useNav } from 'utils/navigation';
 

@@ -3,6 +3,7 @@ export const sizes = {
 		main: 30,
 	},
 	text: {
+		title: 28,
 		content: 20,
 		input: 25,
 	},
@@ -25,8 +26,10 @@ export const sizes = {
 		out: '25px', // sum of padding
 	},
 	padding: {
+		icon: 5,
 		main: 10,
 		bottom: 40,
+		in: 17,
 	},
 	height: {
 		image: 130,

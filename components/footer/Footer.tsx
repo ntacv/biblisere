@@ -41,4 +41,5 @@ const ViewFooter = styled(View)`
 	display: grid;
 	align-items: center;
 	padding: ${sizes.padding.main}px 0;
+	margin-top: ${sizes.padding.bottom}px;
 `;

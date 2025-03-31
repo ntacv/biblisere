@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-import Icon from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
-import * as styles from 'styles/Styles';
-import { colors, fonts, sizes } from 'styles/Variables';
+import { fonts, sizes } from 'styles/Variables';
 import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
+import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
+import Button from 'components/button/Button';
 import Footer from 'components/footer/Footer';
+import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
@@ -51,15 +52,7 @@ function Homepage() {
 					<Searchbar />
 
 					<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
-						<TitleContent>
-							{t('home:titles:news')}
-							<Icon
-								iconName="arrowRight"
-								width={sizes.icons.title}
-								height={sizes.icons.title}
-								stroke={colors.primary}
-							/>
-						</TitleContent>
+						<TitleContent iconEnd="arrowRight" label={t('home:titles:news')} />
 					</TouchableOpacity>
 					<ViewNewBooks horizontal={true}>
 						{!books.books ? (
@@ -76,39 +69,40 @@ function Homepage() {
 						)}
 					</ViewNewBooks>
 
-					<TitleContent>{t('home:titles:services')}</TitleContent>
+					<ContainerZone>
+						<TitleContent iconStart="mapPin" label={t('home:titles:times')} />
+						<ViewList>
+							{schedules.data?.map((schedule) => (
+								<TextContent key={schedule.id}>
+									{t('home:content:days:' + [schedule.dayNumber - 1]) +
+										' - ' +
+										schedule.openingTime.hours +
+										':' +
+										(schedule.openingTime.minutes == 0 ? '00' : schedule.openingTime.minutes) +
+										' - ' +
+										schedule.closingTime.hours +
+										':' +
+										(schedule.closingTime.minutes == 0 ? '00' : schedule.closingTime.minutes)}
+								</TextContent>
+							))}
+						</ViewList>
+					</ContainerZone>
+
+					<TitleContent label={t('home:intro')} />
+					<TextContent>{t('home:content:presentation')}</TextContent>
+
+					<TitleContent label={t('home:titles:services')} />
 					<View>
 						{services.map((service, index) => (
 							<TextContent key={index}>{service}</TextContent>
 						))}
 					</View>
-
-					<ViewAccess>
-						<TitleContent>
-							<Icon
-								iconName="mapPin"
-								width={sizes.icons.content}
-								height={sizes.icons.content}
-								stroke={colors.primary}
-							/>
-
-							{t('home:titles:times')}
-						</TitleContent>
-
-						{schedules.data?.map((schedule) => (
-							<TextContent key={schedule.id}>
-								{t('home:content:days:' + [schedule.dayNumber - 1]) +
-									' - ' +
-									schedule.openingTime.hours +
-									':' +
-									(schedule.openingTime.minutes == 0 ? '00' : schedule.openingTime.minutes) +
-									' - ' +
-									schedule.closingTime.hours +
-									':' +
-									(schedule.closingTime.minutes == 0 ? '00' : schedule.closingTime.minutes)}
-							</TextContent>
-						))}
-					</ViewAccess>
+					<Button
+						label={t('home:explore')}
+						iconName="book"
+						align="center"
+						onPress={() => navigation.navigate(RouteNames.Catalog)}
+					/>
 				</ContainerColumn>
 
 				<Footer />
@@ -126,17 +120,17 @@ const ImageMainHome = styled(Image)`
 	width: 100%;
 	object-fit: cover;
 	opacity: 0.87;
+	margin-bottom: ${sizes.padding.main}px;
 `;
 const ImageBook = styled(Image)`
 	height: ${sizes.height.imageList}px;
 	aspect-ratio: 3/4;
 	object-fit: contain;
 `;
-const ViewAccess = styled(View)`
-	${styles.PrimaryContainer}
-`;
-const TitleContent = styled(Text)`
-	${styles.fontSubTitle}
+const ViewList = styled(View)`
+	align-items: flex-end;
+	align-self: center;
+	width: auto;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
