@@ -2,18 +2,36 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Book } from 'api/apiSwagger';
+import { Api, Book } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import Button from 'components/button/Button';
 import ImageBook from 'components/image/ImageBook';
 
+const api = new Api();
+
 export interface ItemProps {
 	bookProp: Book;
 }
+
+const borrowBook = (book: Book) => {
+	const token = StoreUser.store.getState().token;
+
+	api.books
+		.booksControllerBorrow(book.id, {
+			headers: { Authorization: `Bearer ${token}` },
+		})
+		.then((response) => {
+			console.log('Book borrowed:', response);
+		})
+		.catch((error) => {
+			console.error('Error borrowing book:', error);
+		});
+};
 
 const BookListItem = (props: ItemProps) => {
 	const book = props.bookProp;
@@ -31,10 +49,15 @@ const BookListItem = (props: ItemProps) => {
 						<TextContent>
 							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 						</TextContent>
+						<TextContent>{book.quantity}</TextContent>
 					</View>
 					<ViewButton>
 						{book.quantity > 0 ? (
-							<Button label={t('catalog:add')} iconName="bookmark" />
+							<Button
+								label={t('catalog:add')}
+								iconName="bookmark"
+								onPress={() => borrowBook(book)}
+							/>
 						) : (
 							<Button label={t('catalog:remove')} iconName="x" />
 						)}

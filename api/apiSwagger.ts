@@ -9,6 +9,14 @@
  * ---------------------------------------------------------------
  */
 
+export const AuthParams = (store) => {
+	return {
+		headers: {
+			Authorization: `Bearer ${store.token}`,
+		},
+	};
+};
+
 export interface Time {
 	hours: number;
 	minutes: number;

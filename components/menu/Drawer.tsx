@@ -1,5 +1,9 @@
+import * as React from 'react';
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreUser from 'stores/user';
 import { RouteNames, routesArray } from 'types';
 
 import DrawerContentCustom from 'components/menu/DrawerContentCustom';
@@ -8,7 +12,9 @@ const Drawer = createDrawerNavigator();
 
 const DrawerMenu = () => {
 	const { t } = useTranslation();
-	const isAdmin = true;
+
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+	const isAdmin = React.useMemo(() => storeUser.id?.role === 'ADMIN', [storeUser.id]);
 
 	return (
 		<Drawer.Navigator
