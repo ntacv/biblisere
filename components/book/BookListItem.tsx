@@ -49,6 +49,7 @@ export default BookListItem;
 
 const ViewListItem = styled(View)`
 	flex-direction: row;
+	padding-left: ${sizes.padding.main}px;
 `;
 const ViewSide = styled(View)`
 	flex: 1;
