@@ -7,11 +7,11 @@ import * as StoreUsers from 'stores/user';
 
 const UserStorePrint = () => {
 	const { t } = useTranslation();
+
 	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
-	const user = useStoreMap(StoreUsers.store, (store) => store.id);
 
 	React.useEffect(() => {
-		console.log('UserStorePrint', storeUser);
+		console.log('UserStorePrint: ', storeUser);
 	}, [storeUser]);
 
 	return (
@@ -24,11 +24,11 @@ const UserStorePrint = () => {
 			</Text>
 			<Text>
 				hello {storeUser.id?.firstName} {storeUser.id?.lastName},{' '}
-				{user?.canBorrow ? 'you can' : 'you cannot'} borrow books.
+				{storeUser.id?.canBorrow ? 'you can' : 'you cannot'} borrow books.
 			</Text>
 			<Text>My books: </Text>
 			<View>
-				{user?.books?.map((book) => (
+				{storeUser.id?.books?.map((book) => (
 					<Text key={book.id}>
 						{book.title} - {book.author}
 					</Text>

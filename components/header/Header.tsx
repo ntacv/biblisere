@@ -3,7 +3,9 @@ import { Text, View } from 'react-native';
 
 import { DrawerActions } from '@react-navigation/native';
 import Icon from 'assets/icons/Icons';
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import { RouteNames } from 'types';
@@ -16,6 +18,8 @@ import { useNav } from 'utils/navigation';
 function Header() {
 	const navigation = useNav();
 	const { t } = useTranslation();
+
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	return (
 		<ViewHeader>
@@ -36,7 +40,11 @@ function Header() {
 				<Text>{t('home:name')}</Text>
 			</Title>
 
-			<Button iconName="user" onPress={() => navigation.navigate(RouteNames.User)} />
+			{storeUser.token ? (
+				<Button iconName="userCheck" onPress={() => navigation.navigate(RouteNames.User)} />
+			) : (
+				<Button iconName="user" onPress={() => navigation.navigate(RouteNames.User)} />
+			)}
 		</ViewHeader>
 	);
 }

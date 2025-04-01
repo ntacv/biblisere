@@ -6,6 +6,8 @@ import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
 import search from 'assets/icons/search.svg';
+import userCheck from 'assets/icons/user-check.svg';
+import userX from 'assets/icons/user-x.svg';
 import user from 'assets/icons/user.svg';
 import x from 'assets/icons/x.svg';
 
@@ -20,6 +22,8 @@ const IconSvgs = {
 	x: x,
 	info: info,
 	bookmark: bookmark,
+	userCheck: userCheck,
+	userX: userX,
 };
 export type iconType = keyof typeof IconSvgs;
 
