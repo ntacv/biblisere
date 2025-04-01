@@ -91,6 +91,15 @@
 		"title": "Utilisateur",
 		"name": "John Doe"
 	},
+	"login": {
+		"title": "Connexion",
+		"email": "Adresse e-mail",
+		"password": "Mot de passe",
+		"forgot": "Mot de passe oublié?",
+		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
+		"submit": "Soumettre",
+		"signup": "S'inscrire"
+	},
 	"admin": {
 		"title": "Admin",
 		"name": "Admin"

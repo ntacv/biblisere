@@ -91,6 +91,15 @@
 		"title": "User",
 		"name": "John Doe"
 	},
+	"login": {
+		"title": "Log in",
+		"email": "Email",
+		"password": "Password",
+		"forgot": "Forgot password?",
+		"forgotText": "We will contact you to reset your password.",
+		"submit": "Log in",
+		"signup": "Sign up"
+	},
 	"admin": {
 		"title": "Admin",
 		"name": "Admin"

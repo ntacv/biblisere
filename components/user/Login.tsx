@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
 
 import { Api } from 'api/apiSwagger';
 
@@ -41,11 +42,7 @@ const Login = () => {
 		return passwordRegex.test(password);
 	};
 
-	const login = (email = undefined, pass = undefined) => {
-		if (email && pass) {
-			setId({ email: email, password: pass });
-		}
-
+	const login = () => {
 		api.login
 			?.authControllerLogin({
 				email: id.email,
@@ -60,19 +57,10 @@ const Login = () => {
 			.then((response) => StoreUser.actions.setUser(response.data))
 			.catch((error) => {
 				console.error('Login error:', error);
-			})
-			.finally(() => {
-				console.log('Login request completed with: ', storeUser);
 			});
 
 		return true;
 	};
-
-	React.useEffect(() => {
-		api.users?.usersControllerGetMe().then((response) => {
-			StoreUser.actions.setUser(response.data);
-		});
-	}, []);
 
 	return (
 		<SafeAreaView>
@@ -85,6 +73,9 @@ const Login = () => {
 			/>
 			{/* will become a check input validater */}
 			<Text>{id.password != '' ? 'Ok' : 'Not valid'}</Text>
+			<TouchableOpacity onPress={() => Alert.alert(t('login:forgot'), t('login:forgotText'))}>
+				<TextUnder>{t('login:forgot')}</TextUnder>
+			</TouchableOpacity>
 			{/* will become a blue/greyed Validate button */}
 			{id.email != '' && id.password != '' ? (
 				<TouchableOpacity onPress={() => login()}>
@@ -97,12 +88,23 @@ const Login = () => {
 			{/* TEST COMPONENT to login as admin */}
 			<TouchableOpacity
 				onPress={() => {
-					login('admin@example.com', 'myAdmin123&');
+					setId({ email: 'admin@example.com', password: 'myAdmin123&' });
 				}}
 			>
-				<Text>fast login</Text>
+				<Text>fast login admin</Text>
+			</TouchableOpacity>
+			<TouchableOpacity
+				onPress={() => {
+					setId({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+				}}
+			>
+				<Text>fast login borrow</Text>
 			</TouchableOpacity>
 		</SafeAreaView>
 	);
 };
 export default Login;
+
+const TextUnder = styled(Text)`
+	text-decoration: underline;
+`;
