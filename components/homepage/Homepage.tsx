@@ -59,12 +59,20 @@ function Homepage() {
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (
 							books.books?.map((book, index) => (
-								<View key={index}>
+								<TouchableOpacity
+									key={index}
+									onPress={() =>
+										navigation.navigate(RouteNames.Catalog, {
+											screen: RouteNames.Details,
+											params: { bookId: book.id } as any,
+										} as any)
+									}
+								>
 									<ImageBook source={{ uri: book.imageUrl }} />
 									<TextContentDate>
 										{t('dates:month-year', { val: new Date(book.publicationDate) })}
 									</TextContentDate>
-								</View>
+								</TouchableOpacity>
 							))
 						)}
 					</ViewNewBooks>

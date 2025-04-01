@@ -1,53 +1,39 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBook from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
-import { Api, Book } from 'api/apiSwagger';
+import { Api } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
-import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
+import ContainerColumn from 'components/utils/ContainerColumn';
 
-import { useNav } from 'utils/navigation';
+import BorrowBook from './BorrowBook';
 
 const api = new Api();
 
 export interface ItemProps {
-	bookProp: Book;
+	bookId: number;
 }
 
-const borrowBook = (book: Book) => {
-	const token = StoreUser.store.getState().token;
-
-	api.books
-		.booksControllerBorrow(book.id, {
-			headers: { Authorization: `Bearer ${token}` },
-		})
-		.then((response) => {
-			console.log('Book borrowed:', response);
-		})
-		.catch((error) => {
-			console.error('Error borrowing book:', error);
-		});
-};
-
-const BookListItem = (props: ItemProps) => {
-	const book = props.bookProp;
-
+const BookDetails = (props) => {
 	const { t } = useTranslation();
-	const navigation = useNav();
 
-	const storeUser = StoreUser.store.getState();
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+
+	const bookId = props.route.params.bookId;
+	const storeBook = useStoreMap(StoreBook.store, (store) => store);
+	// get the book in the store
+	const book = storeBook.books.find((book) => book.id === bookId);
 
 	return (
-		<TouchableOpacity
-			onPress={() => navigation.navigate(RouteNames.Details, { bookId: book.id } as any)}
-		>
+		<ContainerColumn>
 			<ContainerZone>
 				<ViewListItem>
 					<ImageBook source={{ uri: book.imageUrl }} />
@@ -58,16 +44,16 @@ const BookListItem = (props: ItemProps) => {
 							<TextContent>
 								{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 							</TextContent>
-							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
+							<TextContent>{book.quantity}</TextContent>
 						</View>
 						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
 					</ViewSide>
 				</ViewListItem>
 			</ContainerZone>
-		</TouchableOpacity>
+		</ContainerColumn>
 	);
 };
-export default BookListItem;
+export default BookDetails;
 
 const ViewListItem = styled(View)`
 	flex-direction: row;

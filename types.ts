@@ -1,4 +1,4 @@
-import Catalog from 'components/catalog/Catalog';
+import CatalogNavigator from 'components/catalog/CatalogNavigator';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
 
@@ -7,6 +7,7 @@ export enum RouteNames {
 	Catalog = 'Catalog',
 	User = 'User',
 	Admin = 'Admin',
+	Details = 'Details',
 }
 
 export const routes = {
@@ -19,7 +20,7 @@ export const routes = {
 	},
 	[RouteNames.Catalog]: {
 		name: RouteNames.Catalog,
-		component: Catalog,
+		component: CatalogNavigator,
 		options: {
 			title: 'catalog:title',
 		},
