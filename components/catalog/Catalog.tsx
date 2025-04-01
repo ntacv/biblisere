@@ -30,7 +30,7 @@ const Catalog = () => {
 			.then((response) => {
 				StoreBooks.actions.setBooks(response.data);
 			});
-	}, []);
+	}, [storeBooks.books]);
 
 	return (
 		<ViewPage header={true}>

@@ -1,3 +1,5 @@
+import * as StoreUser from 'stores/user';
+
 /* eslint-disable */
 /* tslint:disable */
 /*
@@ -806,3 +808,64 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
 			}),
 	};
 }
+
+export const api = new Api();
+export const userStore = {
+	update: () => {
+		const token = StoreUser.store.getState().token;
+		api.users
+			.usersControllerGetMe({
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				StoreUser.actions.setUser(response.data);
+			})
+			.catch((error) => {
+				console.error('Error fetching user data:', error);
+			});
+	},
+};
+export const bookStore = {
+	update: () => {
+		api.books
+			.booksControllerFindAll()
+			.then((response) => {
+				console.log('Books fetched:', response);
+			})
+			.catch((error) => {
+				console.error('Error fetching books:', error);
+			});
+	},
+	borrow: (bookId) => {
+		const token = StoreUser.store.getState().token;
+
+		api.books
+			.booksControllerBorrow(bookId, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				userStore.update(); // Update user data after borrowing a book
+				bookStore.update(); // Update book data after borrowing a book
+				console.log('Book borrowed:', response);
+			})
+			.catch((error) => {
+				console.error('Error borrowing book:', error);
+			});
+	},
+	return: (bookId) => {
+		const token = StoreUser.store.getState().token;
+
+		api.books
+			.booksControllerReturn(bookId, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				userStore.update(); // Update user data after returning a book
+				bookStore.update(); // Update book data after returning a book
+				console.log('Book returned:', response);
+			})
+			.catch((error) => {
+				console.error('Error returning book:', error);
+			});
+	},
+};

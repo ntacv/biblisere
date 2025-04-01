@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import { Api, Book } from 'api/apiSwagger';
 
@@ -46,7 +45,7 @@ const BookListItem = (props: ItemProps) => {
 	const storeUser = StoreUser.store.getState();
 
 	return (
-		<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Details)}>
+		<TouchableOpacity>
 			<ContainerZone>
 				<ViewListItem>
 					<ImageBook source={{ uri: book.imageUrl }} />
@@ -57,7 +56,7 @@ const BookListItem = (props: ItemProps) => {
 							<TextContent>
 								{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 							</TextContent>
-							<TextContent>{book.quantity}</TextContent>
+							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 						</View>
 						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
 					</ViewSide>

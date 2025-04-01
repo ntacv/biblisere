@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 
-import { Api, Book } from 'api/apiSwagger';
+import { Api, Book, bookStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 
@@ -28,6 +28,20 @@ const borrowBook = (book: Book) => {
 		.catch((error) => {
 			console.error('Error borrowing book:', error);
 		});
+	api.users
+		.usersControllerGetMe({
+			headers: { Authorization: `Bearer ${token}` },
+		})
+		.then((response) => {
+			StoreUser.actions.setUser(response.data);
+		})
+		.catch((error) => {
+			console.error('Error fetching user data:', error);
+		});
+};
+
+const returnBook = (book: Book) => {
+	bookStore.return(book.id);
 };
 
 const BorrowBook = (props: ItemProps) => {
@@ -40,7 +54,7 @@ const BorrowBook = (props: ItemProps) => {
 			{book.quantity > 0 ? (
 				<Button label={t('catalog:add')} iconName="bookmark" onPress={() => borrowBook(book)} />
 			) : (
-				<Button label={t('catalog:remove')} iconName="x" />
+				<Button label={t('catalog:remove')} iconName="x" onPress={() => returnBook(book)} />
 			)}
 		</ViewButton>
 	);
