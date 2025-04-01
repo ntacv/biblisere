@@ -89,7 +89,9 @@
 	},
 	"user": {
 		"title": "User",
-		"name": "John Doe"
+		"name": "John Doe",
+		"borrowed": "You have borrowed {{val}}/10 books",
+		"cantBorrow": "You cannot borrow any books"
 	},
 	"login": {
 		"title": "Log in",

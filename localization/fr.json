@@ -82,14 +82,16 @@
 		"view": "Voir",
 		"read": "Lire",
 		"add": "Ajouter",
-		"remove": "Retirer",
+		"remove": "Rendre",
 		"update": "Mettre à jour",
 		"delete": "Supprimer",
 		"create": "Créer"
 	},
 	"user": {
 		"title": "Utilisateur",
-		"name": "John Doe"
+		"name": "John Doe",
+		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"cantBorrow": "Vous ne pouvez pas emprunter de livres"
 	},
 	"login": {
 		"title": "Connexion",

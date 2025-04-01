@@ -24,16 +24,23 @@ const UserStorePrint = () => {
 			</Text>
 			<Text>
 				hello {storeUser.id?.firstName} {storeUser.id?.lastName},{' '}
-				{storeUser.id?.canBorrow ? 'you can' : 'you cannot'} borrow books.
 			</Text>
-			<Text>My books: </Text>
-			<View>
-				{storeUser.id?.books?.map((book) => (
-					<Text key={book.id}>
-						{book.title} - {book.author}
-					</Text>
-				))}
-			</View>
+
+			{!storeUser.id?.canBorrow ? (
+				<Text>{t('user:cantBorrow')}</Text>
+			) : (
+				<>
+					<Text>{t('user:borrowed', { val: storeUser.id?.books.length.toString() })}</Text>
+					<Text>My books: </Text>
+					<View>
+						{storeUser.id?.books?.map((book) => (
+							<Text key={book.id}>
+								{book.title} - {book.author}
+							</Text>
+						))}
+					</View>
+				</>
+			)}
 		</View>
 	);
 };
