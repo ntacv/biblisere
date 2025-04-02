@@ -2,47 +2,34 @@ import * as React from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 
 import { Api } from 'api/apiSwagger';
 
-import { useNav } from 'utils/navigation';
-
 const api = new Api();
 
 const Login = () => {
-	const navigation = useNav();
 	const { t } = useTranslation();
 	const [id, setId] = React.useState({ email: '', password: '' });
+
+	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	const checkEmail = (email: string) => {
-		const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-
-		if (emailRegex.test(email)) {
-			setId((prev) => ({ ...prev, email: email }));
-		} else {
-			setId((prev) => ({ ...prev, email: '' }));
-		}
-
-		return emailRegex.test(email);
+		setId((prev) => ({ ...prev, email: REGEX_EMAIL.test(email) ? email : '' }));
+		return REGEX_EMAIL.test(email);
 	};
 	const checkPassword = (password: string) => {
-		const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
-
-		if (passwordRegex.test(password)) {
-			setId((prev) => ({ ...prev, password: password }));
-		} else {
-			setId((prev) => ({ ...prev, password: '' }));
-		}
-
-		return passwordRegex.test(password);
+		setId((prev) => ({ ...prev, password: REGEX_PASSWORD.test(password) ? password : '' }));
+		return REGEX_PASSWORD.test(password);
 	};
 
 	const login = () => {
-		api.login
+		return api.login
 			?.authControllerLogin({
 				email: id.email,
 				password: id.password,
@@ -60,8 +47,6 @@ const Login = () => {
 			.finally(() => {
 				console.log('Login request completed with: ', storeUser);
 			});
-
-		return true;
 	};
 
 	React.useEffect(() => {
@@ -71,25 +56,30 @@ const Login = () => {
 	}, []);
 
 	return (
-		<SafeAreaView>
-			<TextInput placeholder={t('user:input')} onChangeText={(text) => checkEmail(text)} />
-			{/* will become a check input validater */}
-			<Text>{id.email != '' ? 'Ok' : 'Not valid'}</Text>
-			<TextInput
-				placeholder={t('user:input')}
-				onChangeText={(password) => checkPassword(password)}
-			/>
-			{/* will become a check input validater */}
-			<Text>{id.password != '' ? 'Ok' : 'Not valid'}</Text>
-			{/* will become a blue/greyed Validate button */}
-			{id.email != '' && id.password != '' ? (
-				<TouchableOpacity onPress={() => login()}>
-					<Text>{t('user:submit')}</Text>
-				</TouchableOpacity>
-			) : (
-				<Text>{t('user:notReady')}</Text>
+		<Formik onSubmit={() => login()} initialValues={{ email: '', password: '' }}>
+			{({ handleSubmit }) => (
+				<SafeAreaView>
+					<TextInput placeholder={t('user:email')} onChangeText={(text) => checkEmail(text)} />
+					{/* will become a check input validater */}
+					<Text>{!!id.email ? 'Ok' : 'Not valid'}</Text>
+					<TextInput
+						placeholder={t('user:password')}
+						onChangeText={(password) => checkPassword(password)}
+					/>
+					{/* will become a check input validater */}
+					<Text>{!!id.password ? 'Ok' : 'Not valid'}</Text>
+
+					{/* will become a blue/greyed Validate button */}
+					{!!id.email && !!id.password ? (
+						<TouchableOpacity onPress={() => handleSubmit()}>
+							<Text>{t('user:submit')}</Text>
+						</TouchableOpacity>
+					) : (
+						<Text>{t('user:notReady')}</Text>
+					)}
+				</SafeAreaView>
 			)}
-		</SafeAreaView>
+		</Formik>
 	);
 };
 export default Login;

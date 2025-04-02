@@ -21,6 +21,7 @@
 		"effector-react": "23.3.0",
 		"expo": "52.0.38",
 		"expo-status-bar": "2.0.1",
+		"formik": "2.4.6",
 		"i18next": "24.2.2",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",

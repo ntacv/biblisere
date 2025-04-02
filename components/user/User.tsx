@@ -27,7 +27,7 @@ const UserPage = () => {
 		<ViewPage header={true}>
 			{!storeUser.token && <Login />}
 
-			<UserStorePrint></UserStorePrint>
+			<UserStorePrint />
 
 			<Button
 				label={t('menu:logout')}

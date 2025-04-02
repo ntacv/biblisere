@@ -89,7 +89,10 @@
 	},
 	"user": {
 		"title": "Utilisateur",
-		"name": "John Doe"
+		"name": "John Doe",
+		"email": "Email",
+		"password": "Mot de passe",
+		"submit": "Soumettre"
 	},
 	"admin": {
 		"title": "Admin",
