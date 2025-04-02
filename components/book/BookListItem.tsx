@@ -12,12 +12,10 @@ import Button from 'components/button/Button';
 import ImageBook from 'components/image/ImageBook';
 
 export interface ItemProps {
-	bookProp: Book;
+	book: Book;
 }
 
-const BookListItem = (props: ItemProps) => {
-	const book = props.bookProp;
-
+const BookListItem = ({ book }: ItemProps) => {
 	const { t } = useTranslation();
 
 	return (
@@ -48,6 +46,7 @@ export default BookListItem;
 
 const ViewListItem = styled(View)`
 	flex-direction: row;
+	padding-left: ${sizes.padding.main}px;
 `;
 const ViewSide = styled(View)`
 	flex: 1;
