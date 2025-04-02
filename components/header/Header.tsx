@@ -44,5 +44,5 @@ export default Header;
 
 const ViewHeader = styled(View)`
 	flex-direction: row;
-	padding: ${sizes.padding.main}px ${sizes.padding.main}px;
+	padding: ${sizes.padding.main}px;
 `;

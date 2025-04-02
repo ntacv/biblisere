@@ -42,7 +42,7 @@ function Homepage() {
 	}, []);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<ScrollViewContent>
 				<ImageMainHome source={require('assets/images/mediatheque_espace_lecture.jpg')} />
 
