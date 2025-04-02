@@ -44,7 +44,8 @@
 	},
 	"dates": {
 		"year-month": "{{val, datetime(year:'numeric'; month: 'numeric')}}",
-		"month-year": "{{val, datetime(month: 'short'; year:'numeric')}}"
+		"month-year": "{{val, datetime(month: 'short'; year:'numeric')}}",
+		"month-year-long": "{{val, datetime(month: 'long'; year:'numeric')}}"
 	},
 	"home": {
 		"name": "Biblisère",

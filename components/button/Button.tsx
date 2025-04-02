@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { colors, sizes } from 'styles/Variables';
 
 interface Props {
+	onPress?: () => void;
 	label?: string;
 	iconName?: iconType;
 	background?: string;
-	onPress?: () => void;
 }
 
 const Button = ({ onPress, label, iconName, background }: Props) => {

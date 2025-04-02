@@ -1,10 +1,10 @@
-import { View } from 'react-native';
+import { View, ViewProps } from 'react-native';
 
 import { styled } from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 
-const ContainerZone = ({ children }) => {
-	return <Container>{children}</Container>;
+const ContainerZone: React.FC<ViewProps> = (props) => {
+	return <Container {...props}>{props.children}</Container>;
 };
 export default ContainerZone;
 
