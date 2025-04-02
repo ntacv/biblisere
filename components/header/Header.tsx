@@ -40,11 +40,10 @@ function Header() {
 				<Text>{t('home:name')}</Text>
 			</Title>
 
-			{storeUser.token ? (
-				<Button iconName="userCheck" onPress={() => navigation.navigate(RouteNames.User)} />
-			) : (
-				<Button iconName="user" onPress={() => navigation.navigate(RouteNames.User)} />
-			)}
+			<Button
+				iconName={storeUser.token ? 'userCheck' : 'user'}
+				onPress={() => navigation.navigate(RouteNames.User)}
+			/>
 		</ViewHeader>
 	);
 }

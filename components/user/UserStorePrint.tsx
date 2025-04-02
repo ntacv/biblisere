@@ -10,10 +10,6 @@ const UserStorePrint = () => {
 
 	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
 
-	React.useEffect(() => {
-		console.log('UserStorePrint: ', storeUser);
-	}, [storeUser]);
-
 	return (
 		<View>
 			<Text>
@@ -23,7 +19,7 @@ const UserStorePrint = () => {
 					(storeUser.id?.email ? storeUser.id?.email : t('errors:notConnected'))}
 			</Text>
 			<Text>
-				hello {storeUser.id?.firstName} {storeUser.id?.lastName},{' '}
+				{storeUser.id?.firstName} {storeUser.id?.lastName}
 			</Text>
 
 			{!storeUser.id?.canBorrow ? (
@@ -31,7 +27,7 @@ const UserStorePrint = () => {
 			) : (
 				<>
 					<Text>{t('user:borrowed', { val: storeUser.id?.books.length.toString() })}</Text>
-					<Text>My books: </Text>
+					<Text>{t('catalog:books') + t('config:text:colon')}</Text>
 					<View>
 						{storeUser.id?.books?.map((book) => (
 							<Text key={book.id}>

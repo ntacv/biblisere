@@ -13,6 +13,7 @@ import ContainerZone from 'components/ContainerZone';
 import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
 
+import Logger from 'utils/Logger';
 import { useNav } from 'utils/navigation';
 
 const api = new Api();
@@ -28,11 +29,8 @@ const borrowBook = (book: Book) => {
 		.booksControllerBorrow(book.id, {
 			headers: { Authorization: `Bearer ${token}` },
 		})
-		.then((response) => {
-			console.log('Book borrowed:', response);
-		})
 		.catch((error) => {
-			console.error('Error borrowing book:', error);
+			Logger.warn('Error borrowing book:', error);
 		});
 };
 

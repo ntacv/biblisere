@@ -9,6 +9,8 @@ import { Api, Book, bookStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 
+import Logger from 'utils/Logger';
+
 const api = new Api();
 
 export interface ItemProps {
@@ -22,11 +24,8 @@ const borrowBook = (book: Book) => {
 		.booksControllerBorrow(book.id, {
 			headers: { Authorization: `Bearer ${token}` },
 		})
-		.then((response) => {
-			console.log('Book borrowed:', response);
-		})
 		.catch((error) => {
-			console.error('Error borrowing book:', error);
+			Logger.warn('Error borrowing book:', error);
 		});
 	api.users
 		.usersControllerGetMe({
@@ -36,7 +35,7 @@ const borrowBook = (book: Book) => {
 			StoreUser.actions.setUser(response.data);
 		})
 		.catch((error) => {
-			console.error('Error fetching user data:', error);
+			Logger.warn('Error fetching user data:', error);
 		});
 };
 

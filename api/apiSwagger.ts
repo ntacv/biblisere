@@ -1,5 +1,7 @@
 import * as StoreUser from 'stores/user';
 
+import Logger from 'utils/Logger';
+
 /* eslint-disable */
 /* tslint:disable */
 /*
@@ -821,7 +823,7 @@ export const userStore = {
 				StoreUser.actions.setUser(response.data);
 			})
 			.catch((error) => {
-				console.error('Error fetching user data:', error);
+				Logger.warn('Error fetching user data:', error);
 			});
 	},
 };
@@ -830,10 +832,10 @@ export const bookStore = {
 		api.books
 			.booksControllerFindAll()
 			.then((response) => {
-				console.log('Books fetched:', response);
+				Logger.info('Books fetched:', response);
 			})
 			.catch((error) => {
-				console.error('Error fetching books:', error);
+				Logger.warn('Error fetching books:', error);
 			});
 	},
 	borrow: (bookId) => {
@@ -846,10 +848,10 @@ export const bookStore = {
 			.then((response) => {
 				userStore.update(); // Update user data after borrowing a book
 				bookStore.update(); // Update book data after borrowing a book
-				console.log('Book borrowed:', response);
+				Logger.info('Book borrowed:', response);
 			})
 			.catch((error) => {
-				console.error('Error borrowing book:', error);
+				Logger.warn('Error borrowing book:', error);
 			});
 	},
 	return: (bookId) => {
@@ -862,10 +864,10 @@ export const bookStore = {
 			.then((response) => {
 				userStore.update(); // Update user data after returning a book
 				bookStore.update(); // Update book data after returning a book
-				console.log('Book returned:', response);
+				Logger.info('Book returned:', response);
 			})
 			.catch((error) => {
-				console.error('Error returning book:', error);
+				Logger.warn('Error returning book:', error);
 			});
 	},
 };

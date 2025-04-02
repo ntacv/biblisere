@@ -8,6 +8,7 @@ import styled from 'styled-components/native';
 
 import { Api } from 'api/apiSwagger';
 
+import Logger from 'utils/Logger';
 import { useNav } from 'utils/navigation';
 
 const api = new Api();
@@ -56,7 +57,7 @@ const Login = () => {
 			})
 			.then((response) => StoreUser.actions.setUser(response.data))
 			.catch((error) => {
-				console.error('Login error:', error);
+				Logger.warn('Error login: ', error);
 			});
 
 		return true;
