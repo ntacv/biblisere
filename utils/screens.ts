@@ -4,7 +4,7 @@ import User from 'components/user/User';
 
 import RouteNames from 'utils/routes';
 
-export const routes = {
+export const screens = {
 	[RouteNames.Homepage]: {
 		name: RouteNames.Homepage,
 		component: Homepage,
@@ -35,22 +35,6 @@ export const routes = {
 	},
 } as const;
 
-export const routesArray = Object.values(routes);
+export const routesArray = Object.values(screens);
 
-export type routesType = typeof routes;
-
-export type ApiSchedules = {
-	id: number;
-	title: string; //"Monday";
-	dayNumber: number; //1-7
-	closingTime: {
-		hours: number;
-		minutes: number;
-	};
-	openingTime: {
-		hours: number;
-		minutes: number;
-	};
-	createdAt: string; //ISO8601
-	updatedAt: string;
-};
+export type screensType = typeof screens;

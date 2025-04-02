@@ -1,10 +1,10 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useTranslation } from 'react-i18next';
-import { routesArray } from 'types';
 
 import DrawerContentCustom from 'components/menu/DrawerContentCustom';
 
 import RouteNames from 'utils/routes';
+import { routesArray } from 'utils/screens';
 
 const Drawer = createDrawerNavigator();
 
