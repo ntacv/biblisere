@@ -1,26 +1,69 @@
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { ScrollView, Text, View } from 'react-native';
 
-import { DrawerActions } from '@react-navigation/native';
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
+import styled from 'styled-components/native';
+import { fonts, sizes } from 'styles/Variables';
+
+import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
+import BookListItem from 'components/book/BookListItem';
 
-import { useNav } from 'utils/navigation';
+import Logger from 'utils/Logger';
 
-const User = () => {
-	const navigation = useNav();
+const api = new Api();
+
+const Catalog = () => {
 	const { t } = useTranslation();
+	const [loading, setLoading] = React.useState(true);
+
+	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
+
+	React.useEffect(() => {
+		api.books
+			?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
+			.then((response) => {
+				StoreBooks.actions.setBooks(response.data);
+			})
+			.catch((error) => {
+				Logger.warn('Error fetching books:', error);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
 
 	return (
-		<ViewPage>
-			<Text>{t('user:title')}</Text>
-			<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-				<Text>{t('menu:title')}</Text>
-			</TouchableOpacity>
-			<TouchableOpacity onPress={navigation.goBack}>
-				<Text>{t('homepage:title')}</Text>
-			</TouchableOpacity>
+		<ViewPage header={true}>
+			<ScrollViewContent>
+				<ViewList>
+					{loading ? (
+						<TextContent>{t('config:loading')}</TextContent>
+					) : (
+						storeBooks.books?.map((book, index) => <BookListItem key={index} book={book} />)
+					)}
+				</ViewList>
+			</ScrollViewContent>
 		</ViewPage>
 	);
 };
-export default User;
+export default Catalog;
+
+const ScrollViewContent = styled(ScrollView)`
+	flex: 1;
+`;
+const ViewList = styled(View)`
+	padding: 0 ${sizes.padding.main}px;
+	gap: ${sizes.padding.main}px;
+`;
+const TextContent = styled(Text)`
+	font: ${fonts.content};
+`;
+const TextContentDate = styled(Text)`
+	font: ${fonts.content};
+	text-align: center;
+	font-weight: bold;
+`;

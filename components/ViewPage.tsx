@@ -3,10 +3,23 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
-const ViewPage = ({ children }) => {
+import Header from 'components/header/Header';
+
+interface Props {
+	children: React.ReactNode;
+	header?: boolean;
+}
+
+const ViewPage = ({ children, header }: Props) => {
 	const insets = useSafeAreaInsets();
 
-	return <Container insets={insets}>{children}</Container>;
+	return (
+		<Container insets={insets}>
+			{header && <Header />}
+
+			{children}
+		</Container>
+	);
 };
 export default ViewPage;
 

@@ -1,16 +1,16 @@
-import { Linking, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { styled } from 'styled-components/native';
 import { colors, fonts } from 'styles/Variables';
 
 interface Props {
-	children: JSX.Element | string;
-	url: string;
+	children: string;
+	onPress?: () => void;
 }
 
-const TextLink = ({ children, url }: Props) => {
+const TextLink = ({ children, onPress }: Props) => {
 	return (
-		<TouchableOpacity onPress={() => Linking.openURL(url)} activeOpacity={0.8}>
+		<TouchableOpacity onPress={onPress} activeOpacity={0.8}>
 			<TextContent>{children}</TextContent>
 		</TouchableOpacity>
 	);
