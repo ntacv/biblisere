@@ -12,17 +12,15 @@ import Button from 'components/button/Button';
 import ImageBook from 'components/image/ImageBook';
 
 export interface ItemProps {
-	bookProp: Book;
+	book: Book;
 	key: number;
 }
 
-const BookListItem = (Props: ItemProps) => {
-	const book = Props.bookProp;
-
+const BookListItem = ({ book, key }: ItemProps) => {
 	const { t } = useTranslation();
 
 	return (
-		<ContainerZone key={Props.key}>
+		<ContainerZone key={key}>
 			<ViewListItem>
 				<ImageBook source={{ uri: book.imageUrl }} />
 				<ViewSide>
