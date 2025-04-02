@@ -12,7 +12,7 @@ const User = () => {
 	const { t } = useTranslation();
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<Text>{t('user:title')}</Text>
 			<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
 				<Text>{t('menu:title')}</Text>

@@ -43,7 +43,6 @@ function Header() {
 export default Header;
 
 const ViewHeader = styled(View)`
-	display: flex;
 	flex-direction: row;
-	padding: ${sizes.padding.main}px ${sizes.padding.main}px;
+	padding: ${sizes.padding.main}px;
 `;
