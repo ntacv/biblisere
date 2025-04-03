@@ -9,11 +9,12 @@ interface Props {
 	label?: string;
 	iconName?: iconType;
 	background?: string;
+	alignLeft?: boolean;
 }
 
-const Button = ({ onPress, label, iconName, background }: Props) => {
+const Button = ({ onPress, label, iconName, background, alignLeft }: Props) => {
 	return (
-		<Container onPress={onPress} background={background} activeOpacity={0.8}>
+		<Container onPress={onPress} background={background} alignLeft={alignLeft} activeOpacity={0.8}>
 			{iconName && (
 				<Icon
 					iconName={iconName}
@@ -33,10 +34,11 @@ const TextInside = styled(Text)`
 	text-align: center;
 `;
 
-const Container = styled(TouchableOpacity)<{ background?: string }>`
+const Container = styled(TouchableOpacity)<{ background?: string; alignLeft?: boolean }>`
 	background-color: ${(props) => (props.background ? props.background : colors.primary)};
 	padding: 8px 15px;
 	border-radius: ${sizes.radius.in};
 	flex-direction: row;
 	gap: ${sizes.padding.main}px;
+	align-self: ${(props) => (props.alignLeft ? 'flex-end' : 'center')};
 `;

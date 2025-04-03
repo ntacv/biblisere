@@ -51,6 +51,7 @@
 		"name": "Biblisère",
 		"title": "Homepage",
 		"intro": "Municipal Library of Trou-perdu-en-Isère",
+		"explore": "Explore",
 		"content": {
 			"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			"services": [

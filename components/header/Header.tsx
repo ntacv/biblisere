@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 
 import { DrawerActions } from '@react-navigation/native';
-import Icon from 'assets/icons/Icons';
+import Icon, { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import { RouteNames } from 'types';
 
-import Title from 'components/Title';
 import Button from 'components/button/Button';
+import Title from 'components/text/Title';
 
 import { useNav } from 'utils/navigation';
 
@@ -20,14 +20,14 @@ function Header() {
 	return (
 		<ViewHeader>
 			<Button
-				iconName="menu"
+				iconName={IconNames.menu}
 				background={colors.clickable}
 				onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
 			/>
 
 			<Title>
 				<Icon
-					iconName="book"
+					iconName={IconNames.book}
 					width={sizes.icons.title}
 					height={sizes.icons.title}
 					stroke={colors.primary}
@@ -36,7 +36,7 @@ function Header() {
 				<Text>{t('home:name')}</Text>
 			</Title>
 
-			<Button iconName="user" onPress={() => navigation.navigate(RouteNames.User)} />
+			<Button iconName={IconNames.user} onPress={() => navigation.navigate(RouteNames.User)} />
 		</ViewHeader>
 	);
 }

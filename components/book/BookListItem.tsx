@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
@@ -13,14 +14,13 @@ import ImageBook from 'components/image/ImageBook';
 
 export interface ItemProps {
 	book: Book;
-	key: number;
 }
 
-const BookListItem = ({ book, key }: ItemProps) => {
+const BookListItem = ({ book }: ItemProps) => {
 	const { t } = useTranslation();
 
 	return (
-		<ContainerZone key={key}>
+		<ContainerZone>
 			<ViewListItem>
 				<ImageBook source={{ uri: book.imageUrl }} />
 				<ViewSide>
@@ -31,13 +31,11 @@ const BookListItem = ({ book, key }: ItemProps) => {
 							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 						</TextContent>
 					</View>
-					<ViewButton>
-						{book.quantity > 0 ? (
-							<Button label={t('catalog:add')} iconName="bookmark" />
-						) : (
-							<Button label={t('catalog:remove')} iconName="x" />
-						)}
-					</ViewButton>
+					{book.quantity > 0 ? (
+						<Button label={t('catalog:add')} iconName={IconNames.bookmark} alignLeft />
+					) : (
+						<Button label={t('catalog:remove')} iconName={IconNames.x} alignLeft />
+					)}
 				</ViewSide>
 			</ViewListItem>
 		</ContainerZone>
@@ -54,10 +52,7 @@ const ViewSide = styled(View)`
 	justify-content: space-between;
 	padding: 0 0 0 ${sizes.padding.main}px;
 `;
-const ViewButton = styled(View)`
-	flex-direction: row;
-	justify-content: flex-end;
-`;
+
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 `;

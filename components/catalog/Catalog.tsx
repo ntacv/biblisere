@@ -11,6 +11,8 @@ import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
+import ContainerColumn from 'components/utils/ContainerColumn';
+import Searchbar from 'components/utils/Searchbar';
 
 import Logger from 'utils/Logger';
 
@@ -39,13 +41,17 @@ const Catalog = () => {
 	return (
 		<ViewPage header>
 			<ScrollViewContent>
-				<ViewList>
-					{loading ? (
-						<TextContent>{t('config:loading')}</TextContent>
-					) : (
-						storeBooks.books?.map((book, index) => <BookListItem key={index} book={book} />)
-					)}
-				</ViewList>
+				<ContainerColumn>
+					<Searchbar />
+
+					<ViewList>
+						{loading ? (
+							<TextContent>{t('config:loading')}</TextContent>
+						) : (
+							storeBooks.books?.map((book, index) => <BookListItem key={index} book={book} />)
+						)}
+					</ViewList>
+				</ContainerColumn>
 			</ScrollViewContent>
 		</ViewPage>
 	);
@@ -56,7 +62,6 @@ const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 const ViewList = styled(View)`
-	padding: 0 ${sizes.padding.main}px;
 	gap: ${sizes.padding.main}px;
 `;
 const TextContent = styled(Text)`
