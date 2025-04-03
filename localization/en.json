@@ -90,22 +90,20 @@
 	"user": {
 		"title": "User",
 		"name": "John Doe",
-		"requied": "Required",
-		"email": "Email",
-		"wrongEmail": "Invalid email",
-		"password": "Password",
-		"wrongPassword": "Invalid password",
-		"submit": "Submit",
 		"borrowed": "You have borrowed {{val}}/10 books",
 		"cantBorrow": "You cannot borrow any books"
 	},
 	"login": {
 		"title": "Log in",
+		"required": "Required",
 		"email": "Email",
+		"wrongEmail": "Invalid email",
 		"password": "Password",
+		"wrongPassword": "Invalid password",
+		"submit": "Submit",
 		"forgot": "Forgot password?",
 		"forgotText": "We will contact you to reset your password.",
-		"submit": "Log in",
+		"login": "Log in",
 		"signup": "Sign up"
 	},
 	"admin": {

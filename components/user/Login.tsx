@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
 
-import { useStoreMap } from 'effector-react';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
@@ -26,8 +26,6 @@ const Login = () => {
 			.required(t('user:required')),
 	});
 
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-
 	const login = ({ email, password }) => {
 		return api.login
 			?.authControllerLogin({
@@ -40,15 +38,12 @@ const Login = () => {
 					headers: { Authorization: `Bearer ${response.data.access_token}` },
 				});
 			})
-			.then((response) => StoreUser.actions.setUser(response.data))
+			.then((response) => {
+				StoreUser.actions.setUser(response.data);
+			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-			})
-			.finally(() => {
-				console.log('Login request completed with: ', storeUser);
 			});
-
-		return true;
 	};
 
 	return (
@@ -78,7 +73,7 @@ const Login = () => {
 					{/* will become a check input validater */}
 					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
 
-					<TouchableOpacity onPress={() => Alert.alert(t('login:forgot'), t('login:forgotText'))}>
+					<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
 						<TextUnder>{t('login:forgot')}</TextUnder>
 					</TouchableOpacity>
 					{/* will become a blue/greyed Validate button */}
@@ -93,14 +88,14 @@ const Login = () => {
 					{/* TEST COMPONENT to login as admin */}
 					<TouchableOpacity
 						onPress={() => {
-							setId({ email: 'admin@example.com', password: 'myAdmin123&' });
+							login({ email: 'admin@example.com', password: 'myAdmin123&' });
 						}}
 					>
 						<Text>fast login admin</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
-							setId({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+							login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
 						}}
 					>
 						<Text>fast login borrow</Text>
