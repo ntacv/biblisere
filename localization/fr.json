@@ -82,7 +82,7 @@
 		"view": "Voir",
 		"read": "Lire",
 		"add": "Ajouter",
-		"remove": "Retirer",
+		"remove": "Rendre",
 		"update": "Mettre à jour",
 		"delete": "Supprimer",
 		"create": "Créer"
@@ -95,7 +95,18 @@
 		"wrongEmail": "Email invalide",
 		"password": "Mot de passe",
 		"wrongPassword": "Mot de passe invalide",
-		"submit": "Soumettre"
+		"submit": "Soumettre",
+		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"cantBorrow": "Vous ne pouvez pas emprunter de livres"
+	},
+	"login": {
+		"title": "Connexion",
+		"email": "Adresse e-mail",
+		"password": "Mot de passe",
+		"forgot": "Mot de passe oublié?",
+		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
+		"submit": "Soumettre",
+		"signup": "S'inscrire"
 	},
 	"admin": {
 		"title": "Admin",

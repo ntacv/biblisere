@@ -2,12 +2,14 @@ import * as React from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
-import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
 import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
+
+import Logger from 'utils/Logger';
 
 const api = new Api();
 
@@ -40,18 +42,14 @@ const Login = () => {
 			})
 			.then((response) => StoreUser.actions.setUser(response.data))
 			.catch((error) => {
-				console.error('Login error:', error);
+				Logger.warn('Error login: ', error);
 			})
 			.finally(() => {
 				console.log('Login request completed with: ', storeUser);
 			});
-	};
 
-	React.useEffect(() => {
-		api.users?.usersControllerGetMe().then((response) => {
-			StoreUser.actions.setUser(response.data);
-		});
-	}, []);
+		return true;
+	};
 
 	return (
 		<Formik
@@ -80,6 +78,9 @@ const Login = () => {
 					{/* will become a check input validater */}
 					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
 
+					<TouchableOpacity onPress={() => Alert.alert(t('login:forgot'), t('login:forgotText'))}>
+						<TextUnder>{t('login:forgot')}</TextUnder>
+					</TouchableOpacity>
 					{/* will become a blue/greyed Validate button */}
 					{!errors.email && !errors.password ? (
 						<TouchableOpacity onPress={() => handleSubmit()}>
@@ -88,9 +89,29 @@ const Login = () => {
 					) : (
 						<Text>{t('user:notReady')}</Text>
 					)}
+
+					{/* TEST COMPONENT to login as admin */}
+					<TouchableOpacity
+						onPress={() => {
+							setId({ email: 'admin@example.com', password: 'myAdmin123&' });
+						}}
+					>
+						<Text>fast login admin</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							setId({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+						}}
+					>
+						<Text>fast login borrow</Text>
+					</TouchableOpacity>
 				</SafeAreaView>
 			)}
 		</Formik>
 	);
 };
 export default Login;
+
+const TextUnder = styled(Text)`
+	text-decoration: underline;
+`;

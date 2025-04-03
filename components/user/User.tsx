@@ -12,6 +12,7 @@ import ViewPage from 'components/ViewPage';
 import Button from 'components/button/Button';
 import Login from 'components/user/Login';
 import UserStorePrint from 'components/user/UserStorePrint';
+import ContainerColumn from 'components/utils/ContainerColumn';
 
 import { useNav } from 'utils/navigation';
 
@@ -26,32 +27,32 @@ const UserPage = () => {
 	return (
 		<ViewPage header={true}>
 			{!storeUser.token && <Login />}
+			<ContainerColumn>
+				<UserStorePrint />
 
-			<UserStorePrint />
-
-			<Button
-				label={t('menu:logout')}
-				onPress={() => {
-					AlertLogout(storeUser, t, navigation);
-					console.log('logging out,', storeUser);
-				}}
-			/>
+				<Button
+					iconName="userX"
+					align="center"
+					label={t('menu:logout')}
+					onPress={() => {
+						AlertLogout(t, navigation);
+					}}
+				/>
+			</ContainerColumn>
 		</ViewPage>
 	);
 };
 export default UserPage;
 
-const AlertLogout = (storeUser, t, navigation) => {
+const AlertLogout = (t, navigation) => {
 	return Alert.alert(t('menu:logout'), t('menu:logoutConfirm'), [
 		{
 			text: t('menu:cancel'),
-			onPress: () => console.log('Cancel Pressed'),
 			style: 'cancel',
 		},
 		{
 			text: t('menu:ok'),
 			onPress: () => {
-				console.log('OK Pressed');
 				StoreUser.actions.logout();
 				navigation.navigate(RouteNames.User);
 			},

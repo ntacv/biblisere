@@ -7,12 +7,8 @@ import * as StoreUsers from 'stores/user';
 
 const UserStorePrint = () => {
 	const { t } = useTranslation();
-	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
-	const user = useStoreMap(StoreUsers.store, (store) => store.id);
 
-	React.useEffect(() => {
-		console.log('UserStorePrint', storeUser);
-	}, [storeUser]);
+	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
 
 	return (
 		<View>
@@ -23,17 +19,24 @@ const UserStorePrint = () => {
 					(storeUser.id?.email ? storeUser.id?.email : t('errors:notConnected'))}
 			</Text>
 			<Text>
-				hello {storeUser.id?.firstName} {storeUser.id?.lastName},{' '}
-				{user?.canBorrow ? 'you can' : 'you cannot'} borrow books.
+				{storeUser.id?.firstName} {storeUser.id?.lastName}
 			</Text>
-			<Text>My books: </Text>
-			<View>
-				{user?.books?.map((book) => (
-					<Text key={book.id}>
-						{book.title} - {book.author}
-					</Text>
-				))}
-			</View>
+
+			{!storeUser.id?.canBorrow ? (
+				<Text>{t('user:cantBorrow')}</Text>
+			) : (
+				<>
+					<Text>{t('user:borrowed', { val: storeUser.id?.books.length.toString() })}</Text>
+					<Text>{t('catalog:books') + t('config:text:colon')}</Text>
+					<View>
+						{storeUser.id?.books?.map((book) => (
+							<Text key={book.id}>
+								{book.title} - {book.author}
+							</Text>
+						))}
+					</View>
+				</>
+			)}
 		</View>
 	);
 };

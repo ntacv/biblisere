@@ -30,7 +30,7 @@ const Catalog = () => {
 			.then((response) => {
 				StoreBooks.actions.setBooks(response.data);
 			});
-	}, []);
+	}, [storeBooks.books]);
 
 	return (
 		<ViewPage header={true}>
@@ -60,9 +60,4 @@ const ViewList = styled(View)`
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
-`;
-const TextContentDate = styled(Text)`
-	font: ${fonts.content};
-	text-align: center;
-	font-weight: bold;
 `;
