@@ -39,7 +39,7 @@ const Catalog = () => {
 	}, []);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar />

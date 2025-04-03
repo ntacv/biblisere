@@ -5,8 +5,6 @@ import * as StoreUsers from 'stores/user';
 import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
-import Login from 'components/user/Login';
-import UserStorePrint from 'components/user/UserStorePrint';
 
 import useNav from 'utils/navigation';
 
@@ -19,7 +17,7 @@ const UserPage = () => {
 	const userLogged = useStoreMap(StoreUsers.store, (store) => store);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			{!userLogged && <Login />}
 
 			<UserStorePrint></UserStorePrint>

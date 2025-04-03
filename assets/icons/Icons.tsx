@@ -9,17 +9,30 @@ import search from 'assets/icons/search.svg';
 import user from 'assets/icons/user.svg';
 import x from 'assets/icons/x.svg';
 
+export enum IconNames {
+	arrowDown = 'arrowDown',
+	arrowRight = 'arrowRight',
+	book = 'book',
+	bookmark = 'bookmark',
+	info = 'info',
+	mapPin = 'mapPin',
+	menu = 'menu',
+	search = 'search',
+	user = 'user',
+	x = 'x',
+}
+
 const IconSvgs = {
-	menu: menu,
-	mapPin: mapPin,
-	user: user,
-	search: search,
-	book: book,
-	arrowRight: arrowRight,
 	arrowDown: arrowDown,
-	x: x,
-	info: info,
+	arrowRight: arrowRight,
+	book: book,
 	bookmark: bookmark,
+	info: info,
+	mapPin: mapPin,
+	menu: menu,
+	search: search,
+	user: user,
+	x: x,
 };
 export type iconType = keyof typeof IconSvgs;
 
