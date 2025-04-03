@@ -3,11 +3,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
-import { RouteNames } from 'types';
-
-import BookDetails from 'components/book/BookDetails';
-
-import Catalog from './Catalog';
+import { RouteNames, routesCatalogArray } from 'types';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,9 +19,9 @@ const CatalogNavigator = () => {
 				headerShown: false,
 			}}
 		>
-			<Stack.Screen name={RouteNames.Catalog} component={Catalog} />
-
-			<Stack.Screen name={RouteNames.Details} component={BookDetails} />
+			{routesCatalogArray.map((route) => (
+				<Stack.Screen key={route.name} name={route.name} component={route.component} />
+			))}
 		</Stack.Navigator>
 	);
 };

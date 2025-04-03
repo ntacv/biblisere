@@ -1,3 +1,5 @@
+import BookDetails from 'components/book/BookDetails';
+import Catalog from 'components/catalog/Catalog';
 import CatalogNavigator from 'components/catalog/CatalogNavigator';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
@@ -5,6 +7,7 @@ import User from 'components/user/User';
 export enum RouteNames {
 	Homepage = 'Homepage',
 	Catalog = 'Catalog',
+	CatalogNavigator = 'CatalogNavigator',
 	User = 'User',
 	Admin = 'Admin',
 	Details = 'Details',
@@ -18,8 +21,8 @@ export const routes = {
 			title: 'home:title',
 		},
 	},
-	[RouteNames.Catalog]: {
-		name: RouteNames.Catalog,
+	[RouteNames.CatalogNavigator]: {
+		name: RouteNames.CatalogNavigator,
 		component: CatalogNavigator,
 		options: {
 			title: 'catalog:title',
@@ -42,8 +45,27 @@ export const routes = {
 } as const;
 
 export const routesArray = Object.values(routes);
-
 export type routesType = typeof routes;
+
+export const routesCatalog = {
+	[RouteNames.Catalog]: {
+		name: RouteNames.Catalog,
+		component: Catalog,
+		options: {
+			title: 'catalog:title',
+		},
+	},
+	[RouteNames.Details]: {
+		name: RouteNames.Details,
+		component: BookDetails,
+		options: {
+			title: 'details:title',
+		},
+	},
+} as const;
+
+export const routesCatalogArray = Object.values(routesCatalog);
+export type routesCatalogType = typeof routesCatalog;
 
 export type ApiSchedules = {
 	id: number;
