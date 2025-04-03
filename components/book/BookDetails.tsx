@@ -13,6 +13,7 @@ import { Api } from 'api/apiSwagger';
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import ImageBook from 'components/image/ImageBook';
+import ListRow from 'components/list/ListRow';
 import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
@@ -65,6 +66,7 @@ const BookDetails = (props) => {
 							{t('lorem:long') + t('lorem:long')}
 						</TextContent>
 						{/* 3 books from author */}
+						<ListRow title={t('details:sameAuthor')} booksId={[37]} />
 						{/* 3 books from the same category */}
 
 						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}

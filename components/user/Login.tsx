@@ -74,12 +74,15 @@ const Login = () => {
 			/>
 			{/* will become a check input validater */}
 			<Text>{id.password != '' ? 'Ok' : 'Not valid'}</Text>
-			<TouchableOpacity onPress={() => Alert.alert(t('login:forgot'), t('login:forgotText'))}>
+			<TouchableOpacity
+				activeOpacity={0.8}
+				onPress={() => Alert.alert(t('login:forgot'), t('login:forgotText'))}
+			>
 				<TextUnder>{t('login:forgot')}</TextUnder>
 			</TouchableOpacity>
 			{/* will become a blue/greyed Validate button */}
 			{id.email != '' && id.password != '' ? (
-				<TouchableOpacity onPress={() => login()}>
+				<TouchableOpacity activeOpacity={0.8} onPress={() => login()}>
 					<Text>{t('user:submit')}</Text>
 				</TouchableOpacity>
 			) : (

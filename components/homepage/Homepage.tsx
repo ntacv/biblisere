@@ -52,6 +52,7 @@ function Homepage() {
 					<Searchbar />
 
 					<TouchableOpacity
+						activeOpacity={0.8}
 						onPress={() =>
 							navigation.navigate(RouteNames.CatalogNavigator, {
 								screen: RouteNames.Catalog,
@@ -67,6 +68,7 @@ function Homepage() {
 							books.books?.map((book, index) => (
 								<TouchableOpacity
 									key={index}
+									activeOpacity={0.8}
 									onPress={() =>
 										navigation.navigate(RouteNames.CatalogNavigator, {
 											screen: RouteNames.Details,

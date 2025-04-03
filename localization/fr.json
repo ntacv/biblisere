@@ -92,6 +92,11 @@
 		"unavailable": "Rupture de stock",
 		"borrowed": "Emprunté"
 	},
+	"details": {
+		"title": "Détails",
+		"sameAuthor": "Du même auteur",
+		"sameKind": "Du même genre"
+	},
 	"user": {
 		"title": "Utilisateur",
 		"name": "John Doe",

@@ -92,6 +92,11 @@
 		"unavailable": "Out of stock",
 		"borrowed": "Borrowed"
 	},
+	"details": {
+		"title": "Details",
+		"sameAuthor": "Same author",
+		"sameKind": "Same kind"
+	},
 	"user": {
 		"title": "User",
 		"name": "John Doe",
