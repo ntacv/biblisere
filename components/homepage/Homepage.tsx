@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
@@ -52,7 +53,7 @@ function Homepage() {
 					<Searchbar />
 
 					<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
-						<TitleContent iconEnd="arrowRight" label={t('home:titles:news')} />
+						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
 					</TouchableOpacity>
 					<ViewNewBooks horizontal={true}>
 						{!books.books ? (
@@ -70,7 +71,7 @@ function Homepage() {
 					</ViewNewBooks>
 
 					<ContainerZone>
-						<TitleContent iconStart="mapPin" label={t('home:titles:times')} />
+						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:times')} />
 						<ViewList>
 							{schedules.data?.map((schedule) => (
 								<TextContent key={schedule.id}>
@@ -99,8 +100,7 @@ function Homepage() {
 					</View>
 					<Button
 						label={t('home:explore')}
-						iconName="book"
-						align="center"
+						iconName={IconNames.book}
 						onPress={() => navigation.navigate(RouteNames.Catalog)}
 					/>
 				</ContainerColumn>
@@ -130,7 +130,6 @@ const ImageBook = styled(Image)`
 const ViewList = styled(View)`
 	align-items: flex-end;
 	align-self: center;
-	width: auto;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
