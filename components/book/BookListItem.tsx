@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
-import { fonts, sizes } from 'styles/Variables';
+import { fonts } from 'styles/Variables';
 import { RouteNames } from 'types';
 
 import { Api, Book } from 'api/apiSwagger';
@@ -50,14 +50,13 @@ const BookListItem = (props: ItemProps) => {
 				<ViewListItem>
 					<ImageBook source={{ uri: book.imageUrl }} />
 					<ViewSide>
-						<View>
-							<TextBold>{book.title}</TextBold>
-							<TextContent>{book.author}</TextContent>
-							<TextContent>
-								{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
-							</TextContent>
-							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
-						</View>
+						<TextBold>{book.title}</TextBold>
+						<TextContent>{book.author}</TextContent>
+						<TextContent>
+							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
+						</TextContent>
+						{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
+
 						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
 					</ViewSide>
 				</ViewListItem>
@@ -72,8 +71,6 @@ const ViewListItem = styled(View)`
 `;
 const ViewSide = styled(View)`
 	flex: 1;
-	justify-content: space-between;
-	padding: 0 0 0 ${sizes.padding.main}px;
 `;
 const ViewButton = styled(View)`
 	flex-direction: row;

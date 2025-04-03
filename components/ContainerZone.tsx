@@ -10,7 +10,7 @@ export default ContainerZone;
 
 const Container = styled(View)`
 	background-color: ${colors.secondary};
-	padding: ${sizes.padding.main}px ${sizes.padding.in}px;
+	padding: ${sizes.padding.main}px;
 	border-radius: ${sizes.radius.out};
 	gap: ${sizes.padding.main}px;
 `;
