@@ -5,6 +5,7 @@ import { useStoreMap } from 'effector-react';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
 
@@ -12,27 +13,24 @@ const api = new Api();
 
 const Login = () => {
 	const { t } = useTranslation();
-	const [id, setId] = React.useState({ email: '', password: '' });
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
 
+	const formSchema = Yup.object().shape({
+		email: Yup.string().matches(REGEX_EMAIL, t('user:wrongEmail')).required(t('user:required')),
+		password: Yup.string()
+			.matches(REGEX_PASSWORD, t('user:wrongPassword'))
+			.required(t('user:required')),
+	});
+
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
-	const checkEmail = (email: string) => {
-		setId((prev) => ({ ...prev, email: REGEX_EMAIL.test(email) ? email : '' }));
-		return REGEX_EMAIL.test(email);
-	};
-	const checkPassword = (password: string) => {
-		setId((prev) => ({ ...prev, password: REGEX_PASSWORD.test(password) ? password : '' }));
-		return REGEX_PASSWORD.test(password);
-	};
-
-	const login = () => {
+	const login = ({ email, password }) => {
 		return api.login
 			?.authControllerLogin({
-				email: id.email,
-				password: id.password,
+				email: email,
+				password: password,
 			})
 			.then((response) => {
 				StoreUser.actions.setToken(response.data.access_token);
@@ -56,21 +54,34 @@ const Login = () => {
 	}, []);
 
 	return (
-		<Formik onSubmit={() => login()} initialValues={{ email: '', password: '' }}>
-			{({ handleSubmit }) => (
+		<Formik
+			onSubmit={(values) => login(values)}
+			validationSchema={formSchema}
+			initialValues={{ email: '', password: '' }}
+		>
+			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeAreaView>
-					<TextInput placeholder={t('user:email')} onChangeText={(text) => checkEmail(text)} />
-					{/* will become a check input validater */}
-					<Text>{!!id.email ? 'Ok' : 'Not valid'}</Text>
 					<TextInput
-						placeholder={t('user:password')}
-						onChangeText={(password) => checkPassword(password)}
+						placeholder={t('user:email')}
+						onChangeText={handleChange('email')}
+						onBlur={handleBlur('email')}
+						value={values.email}
 					/>
 					{/* will become a check input validater */}
-					<Text>{!!id.password ? 'Ok' : 'Not valid'}</Text>
+					<Text>{errors.email && touched.email ? errors.email : 'Ok'}</Text>
+
+					<TextInput
+						placeholder={t('user:password')}
+						onChangeText={handleChange('password')}
+						onBlur={handleBlur('password')}
+						value={values.password}
+						secureTextEntry
+					/>
+					{/* will become a check input validater */}
+					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
 
 					{/* will become a blue/greyed Validate button */}
-					{!!id.email && !!id.password ? (
+					{!errors.email && !errors.password ? (
 						<TouchableOpacity onPress={() => handleSubmit()}>
 							<Text>{t('user:submit')}</Text>
 						</TouchableOpacity>

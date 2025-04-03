@@ -90,8 +90,11 @@
 	"user": {
 		"title": "Utilisateur",
 		"name": "John Doe",
+		"required": "Obligatoires",
 		"email": "Email",
+		"wrongEmail": "Email invalide",
 		"password": "Mot de passe",
+		"wrongPassword": "Mot de passe invalide",
 		"submit": "Soumettre"
 	},
 	"admin": {

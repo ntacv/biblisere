@@ -90,8 +90,11 @@
 	"user": {
 		"title": "User",
 		"name": "John Doe",
+		"requied": "Required",
 		"email": "Email",
+		"wrongEmail": "Invalid email",
 		"password": "Password",
+		"wrongPassword": "Invalid password",
 		"submit": "Submit"
 	},
 	"admin": {
