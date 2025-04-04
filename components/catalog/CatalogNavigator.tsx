@@ -3,9 +3,10 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
-import { RouteNames } from 'types';
 
 import BookDetails from 'components/book/BookDetails';
+
+import RouteNames from 'utils/routes';
 
 import Catalog from './Catalog';
 

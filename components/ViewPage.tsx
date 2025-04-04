@@ -5,14 +5,19 @@ import styled from 'styled-components/native';
 
 import Header from 'components/header/Header';
 
-const ViewPage = (props) => {
+interface Props {
+	children: React.ReactNode;
+	header?: boolean;
+}
+
+const ViewPage = ({ children, header }: Props) => {
 	const insets = useSafeAreaInsets();
 
 	return (
-		<Container {...props} insets={insets}>
-			{props?.header && <Header />}
+		<Container insets={insets}>
+			{header && <Header />}
 
-			{props.children}
+			{children}
 		</Container>
 	);
 };

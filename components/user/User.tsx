@@ -14,7 +14,7 @@ import Login from 'components/user/Login';
 import UserStorePrint from 'components/user/UserStorePrint';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
 
 const api = new Api();
 
@@ -25,7 +25,7 @@ const UserPage = () => {
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			{!storeUser.token && <Login />}
 			<ContainerColumn>
 				<UserStorePrint />

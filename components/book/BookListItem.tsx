@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
+import RouteNames from 'utils/routes';
 
 import { Api, Book } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
-import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
 
 import Logger from 'utils/Logger';
@@ -19,7 +18,7 @@ import { useNav } from 'utils/navigation';
 const api = new Api();
 
 export interface ItemProps {
-	bookProp: Book;
+	book: Book;
 }
 
 const borrowBook = (book: Book) => {
@@ -34,9 +33,7 @@ const borrowBook = (book: Book) => {
 		});
 };
 
-const BookListItem = (props: ItemProps) => {
-	const book = props.bookProp;
-
+const BookListItem = ({ book }: ItemProps) => {
 	const { t } = useTranslation();
 	const navigation = useNav();
 
@@ -58,7 +55,7 @@ const BookListItem = (props: ItemProps) => {
 							</TextContent>
 							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 						</View>
-						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
+						{storeUser.id?.canBorrow && <BorrowBook bTouchableOpac} />}
 					</ViewSide>
 				</ViewListItem>
 			</ContainerZone>
@@ -69,16 +66,14 @@ export default BookListItem;
 
 const ViewListItem = styled(View)`
 	flex-direction: row;
+	padding-left: ${sizes.padding.main}px;
 `;
 const ViewSide = styled(View)`
 	flex: 1;
 	justify-content: space-between;
 	padding: 0 0 0 ${sizes.padding.main}px;
 `;
-const ViewButton = styled(View)`
-	flex-direction: row;
-	justify-content: flex-end;
-`;
+
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 `;

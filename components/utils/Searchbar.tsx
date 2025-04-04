@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
@@ -17,7 +18,8 @@ const Searchbar = (props) => {
 
 			<Button
 				label="Search"
-				iconName="search"
+				iconName={IconNames.search}
+				alignLeft
 				onPress={() => alert(t('components:button:click'))}
 			/>
 		</ViewSearchBar>
