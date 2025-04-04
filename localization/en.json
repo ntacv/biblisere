@@ -101,6 +101,8 @@
 		"password": "Password",
 		"wrongPassword": "Invalid password",
 		"submit": "Submit",
+		"wrongLogin": "Invalid email or password",
+		"serverError": "Server error",
 		"forgot": "Forgot password?",
 		"forgotText": "We will contact you to reset your password.",
 		"login": "Log in",

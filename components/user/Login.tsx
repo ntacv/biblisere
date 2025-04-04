@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
+import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
+
+import Button from 'components/button/Button';
+import ContainerColumn from 'components/utils/ContainerColumn';
+import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
 
@@ -43,6 +48,11 @@ const Login = () => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
+				if (error.status === 401) {
+					alert(t('login:wrongLogin'));
+				} else {
+					alert(t('login:serverError'));
+				}
 			});
 	};
 
@@ -54,52 +64,51 @@ const Login = () => {
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeAreaView>
-					<TextInput
-						placeholder={t('user:email')}
-						onChangeText={handleChange('email')}
-						onBlur={handleBlur('email')}
-						value={values.email}
-					/>
-					{/* will become a check input validater */}
-					<Text>{errors.email && touched.email ? errors.email : 'Ok'}</Text>
+					<ContainerColumnForm>
+						<InputContent
+							placeholder={t('user:email')}
+							onChangeText={handleChange('email')}
+							onBlur={handleBlur('email')}
+							value={values.email}
+							style={{ borderColor: errors.email && touched.email ? colors.danger : '' }}
+						/>
 
-					<TextInput
-						placeholder={t('user:password')}
-						onChangeText={handleChange('password')}
-						onBlur={handleBlur('password')}
-						value={values.password}
-						secureTextEntry
-					/>
-					{/* will become a check input validater */}
-					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
+						<InputContent
+							placeholder={t('user:password')}
+							onChangeText={handleChange('password')}
+							onBlur={handleBlur('password')}
+							value={values.password}
+							secureTextEntry
+							style={{ borderColor: errors.password && touched.password ? colors.danger : '' }}
+						/>
 
-					<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
-						<TextUnder>{t('login:forgot')}</TextUnder>
-					</TouchableOpacity>
-					{/* will become a blue/greyed Validate button */}
-					{!errors.email && !errors.password ? (
-						<TouchableOpacity onPress={() => handleSubmit()}>
-							<Text>{t('user:submit')}</Text>
+						<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+							<TextUnder>{t('login:forgot')}</TextUnder>
 						</TouchableOpacity>
-					) : (
-						<Text>{t('user:notReady')}</Text>
-					)}
 
-					{/* TEST COMPONENT to login as admin */}
-					<TouchableOpacity
-						onPress={() => {
-							login({ email: 'admin@example.com', password: 'myAdmin123&' });
-						}}
-					>
-						<Text>fast login admin</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => {
-							login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
-						}}
-					>
-						<Text>fast login borrow</Text>
-					</TouchableOpacity>
+						<Button
+							label={t('user:submit')}
+							background={!errors.email && !errors.password ? colors.primary : colors.locked}
+							align="center"
+							onPress={() => handleSubmit()}
+						/>
+
+						{/* TEST COMPONENT to login as admin */}
+						<TouchableOpacity
+							onPress={() => {
+								login({ email: 'admin@example.com', password: 'myAdmin123&' });
+							}}
+						>
+							<Text>fast login admin</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => {
+								login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+							}}
+						>
+							<Text>fast login borrow</Text>
+						</TouchableOpacity>
+					</ContainerColumnForm>
 				</SafeAreaView>
 			)}
 		</Formik>
@@ -109,4 +118,8 @@ export default Login;
 
 const TextUnder = styled(Text)`
 	text-decoration: underline;
+`;
+const ContainerColumnForm = styled(ContainerColumn)`
+	align-items: center;
+	gap: ${sizes.padding.in}px;
 `;
