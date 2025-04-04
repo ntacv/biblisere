@@ -85,7 +85,8 @@
 		"remove": "Rendre",
 		"update": "Mettre à jour",
 		"delete": "Supprimer",
-		"create": "Créer"
+		"create": "Créer",
+		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés"
 	},
 	"user": {
 		"title": "Utilisateur",

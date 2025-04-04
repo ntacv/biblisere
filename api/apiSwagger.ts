@@ -1,3 +1,4 @@
+import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 
 import Logger from 'utils/Logger';
@@ -811,6 +812,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
 	};
 }
 
+export const MAX_BOOKS = 10;
+
 export const api = new Api();
 export const userStore = {
 	update: () => {
@@ -832,7 +835,8 @@ export const bookStore = {
 		api.books
 			.booksControllerFindAll()
 			.then((response) => {
-				Logger.info('Books fetched:', response);
+				StoreBooks.actions.setBooks(response.data);
+				//Logger.info('Books fetched:', response);
 			})
 			.catch((error) => {
 				Logger.warn('Error fetching books:', error);
@@ -847,8 +851,8 @@ export const bookStore = {
 			})
 			.then((response) => {
 				userStore.update(); // Update user data after borrowing a book
-				bookStore.update(); // Update book data after borrowing a book
-				Logger.info('Book borrowed:', response);
+				StoreBooks.actions.updateBook(bookId); // Update book data after borrowing a book
+				//bookStore.update(); // Update book data after borrowing a book
 			})
 			.catch((error) => {
 				Logger.warn('Error borrowing book:', error);
@@ -864,7 +868,7 @@ export const bookStore = {
 			.then((response) => {
 				userStore.update(); // Update user data after returning a book
 				bookStore.update(); // Update book data after returning a book
-				Logger.info('Book returned:', response);
+				//Logger.info('Book returned:', response);
 			})
 			.catch((error) => {
 				Logger.warn('Error returning book:', error);

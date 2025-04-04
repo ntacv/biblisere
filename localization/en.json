@@ -85,7 +85,8 @@
 		"remove": "Remove",
 		"update": "Update",
 		"delete": "Delete",
-		"create": "Create"
+		"create": "Create",
+		"limitBooks": "You have reach the limit of {{val}} borrowed books"
 	},
 	"user": {
 		"title": "User",
