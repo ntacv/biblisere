@@ -28,7 +28,7 @@ const UserPage = () => {
 		<ViewPage header={true}>
 			{!storeUser.token && <Login />}
 			<ContainerColumn>
-				<UserStorePrint></UserStorePrint>
+				<UserStorePrint />
 
 				<Button
 					iconName="userX"
