@@ -21,4 +21,5 @@ const TextContent = styled(Text)`
 	font: ${fonts.content};
 	color: ${colors.content};
 	text-decoration: underline solid ${colors.content};
+	text-align: center;
 `;

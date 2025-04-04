@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
 import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
@@ -26,6 +27,15 @@ const UserPage = () => {
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	const deleteAccount = () => {
+		if (storeUser.id?.books.length > 0) {
+			return Alert.alert(t('user:deleteAccount'), t('user:deleteAccountError'), [
+				{
+					text: t('user:cancel'),
+					style: 'cancel',
+				},
+			]);
+		}
+
 		return Alert.alert(t('user:deleteAccount'), t('user:deleteAccountConfirm'), [
 			{
 				text: t('user:cancel'),
@@ -48,33 +58,40 @@ const UserPage = () => {
 		<ViewPage header={true}>
 			{!storeUser.token && <Login />}
 			{storeUser.token && (
-				<ContainerColumn>
-					<UserStorePrint />
+				<ScrollViewContent>
+					<ContainerColumn>
+						<UserStorePrint />
 
-					<Button
-						iconName="userX"
-						align="center"
-						label={t('menu:logout')}
-						onPress={() => {
-							AlertLogout(t, navigation);
-						}}
-					/>
-					<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
-				</ContainerColumn>
+						<Button
+							iconName="userX"
+							align="center"
+							label={t('menu:logout')}
+							onPress={() => {
+								AlertLogout(t, navigation);
+							}}
+						/>
+
+						<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
+					</ContainerColumn>
+				</ScrollViewContent>
 			)}
 		</ViewPage>
 	);
 };
 export default UserPage;
 
+const ScrollViewContent = styled.ScrollView`
+	flex: 1;
+`;
+
 const AlertLogout = (t, navigation) => {
 	return Alert.alert(t('menu:logout'), t('menu:logoutConfirm'), [
 		{
-			text: t('menu:cancel'),
+			text: t('user:cancel'),
 			style: 'cancel',
 		},
 		{
-			text: t('menu:ok'),
+			text: t('menu:logout'),
 			onPress: () => {
 				StoreUser.actions.logout();
 				navigation.navigate(RouteNames.User);

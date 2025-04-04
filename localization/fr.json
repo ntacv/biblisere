@@ -94,6 +94,7 @@
 		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
 		"deleteAccount": "Supprimer le compte",
 		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte?",
+		"deleteAccountError": "Vous devez rendre tous vos livres avant de supprimer votre compte.",
 		"cancel": "Annuler",
 		"delete": "Supprimer"
 	},
