@@ -43,7 +43,6 @@ const Catalog = () => {
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar />
-
 					<ViewList>
 						{loading ? (
 							<TextContent>{t('config:loading')}</TextContent>
