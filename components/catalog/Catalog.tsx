@@ -39,7 +39,7 @@ const Catalog = () => {
 					<Searchbar />
 
 					<ViewList>
-						{!storeBooks ? (
+						{!storeBooks.books ? (
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (
 							storeBooks.books.map((book, index) => <BookListItem key={index} bookProp={book} />)

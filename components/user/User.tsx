@@ -10,6 +10,7 @@ import { Api } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
 import Button from 'components/button/Button';
+import TextAction from 'components/button/TextAction';
 import Login from 'components/user/Login';
 import UserStorePrint from 'components/user/UserStorePrint';
 import ContainerColumn from 'components/utils/ContainerColumn';
@@ -23,6 +24,25 @@ const UserPage = () => {
 	const { t } = useTranslation();
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+
+	const deleteAccount = () => {
+		return Alert.alert(t('user:deleteAccount'), t('user:deleteAccountConfirm'), [
+			{
+				text: t('user:cancel'),
+				style: 'cancel',
+			},
+			{
+				text: t('user:delete'),
+				onPress: () => {
+					api.users?.usersControllerRemove({
+						headers: { Authorization: `Bearer ${storeUser.token}` },
+					});
+					StoreUser.actions.logout();
+					navigation.navigate(RouteNames.Homepage);
+				},
+			},
+		]);
+	};
 
 	return (
 		<ViewPage header={true}>
@@ -39,6 +59,7 @@ const UserPage = () => {
 							AlertLogout(t, navigation);
 						}}
 					/>
+					<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
 				</ContainerColumn>
 			)}
 		</ViewPage>

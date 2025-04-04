@@ -91,7 +91,11 @@
 		"title": "User",
 		"name": "John Doe",
 		"borrowed": "You have borrowed {{val}}/10 books",
-		"cantBorrow": "You cannot borrow any books"
+		"cantBorrow": "You cannot borrow any books",
+		"deleteAccount": "Delete account",
+		"deleteAccountConfirm": "Are you sure you want to delete your account?",
+		"cancel": "Cancel",
+		"delete": "Delete"
 	},
 	"login": {
 		"title": "Log in",
