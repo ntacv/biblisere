@@ -1,19 +1,20 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import RouteNames from 'utils/routes';
 
 import { Api, Book } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
+import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
 
 import Logger from 'utils/Logger';
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 
@@ -55,7 +56,7 @@ const BookListItem = ({ book }: ItemProps) => {
 							</TextContent>
 							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 						</View>
-						{storeUser.id?.canBorrow && <BorrowBook bTouchableOpac} />}
+						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
 					</ViewSide>
 				</ViewListItem>
 			</ContainerZone>
