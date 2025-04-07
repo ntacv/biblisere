@@ -18,6 +18,7 @@
 		"signup": "Sign up",
 		"login": "Log in",
 		"logout": "Log out",
+		"logoutConfirm": "Are you sure you want to log out?",
 		"settings": "Settings"
 	},
 	"components": {
@@ -88,7 +89,22 @@
 	},
 	"user": {
 		"title": "User",
-		"name": "John Doe"
+		"name": "John Doe",
+		"borrowed": "You have borrowed {{val}}/10 books",
+		"cantBorrow": "You cannot borrow any books"
+	},
+	"login": {
+		"title": "Log in",
+		"required": "Required",
+		"email": "Email",
+		"wrongEmail": "Invalid email",
+		"password": "Password",
+		"wrongPassword": "Invalid password",
+		"submit": "Submit",
+		"forgot": "Forgot password?",
+		"forgotText": "We will contact you to reset your password.",
+		"login": "Log in",
+		"signup": "Sign up"
 	},
 	"admin": {
 		"title": "Admin",

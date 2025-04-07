@@ -3,6 +3,7 @@ enum RouteNames {
 	Catalog = 'Catalog',
 	User = 'User',
 	Admin = 'Admin',
+	Details = 'Details',
 }
 
 export default RouteNames;

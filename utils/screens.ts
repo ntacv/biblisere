@@ -1,4 +1,5 @@
-import Catalog from 'components/catalog/Catalog';
+import BookDetails from 'components/book/BookDetails';
+import CatalogNavigator from 'components/catalog/CatalogNavigator';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
 
@@ -14,7 +15,7 @@ export const screens = {
 	},
 	[RouteNames.Catalog]: {
 		name: RouteNames.Catalog,
-		component: Catalog,
+		component: CatalogNavigator,
 		options: {
 			title: 'catalog:title',
 		},
@@ -31,6 +32,13 @@ export const screens = {
 		component: User,
 		options: {
 			title: 'admin:title',
+		},
+	},
+	[RouteNames.Details]: {
+		name: RouteNames.Details,
+		component: BookDetails,
+		options: {
+			title: 'details:title',
 		},
 	},
 } as const;

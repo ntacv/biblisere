@@ -1,3 +1,7 @@
+import * as StoreUser from 'stores/user';
+
+import Logger from 'utils/Logger';
+
 /* eslint-disable */
 /* tslint:disable */
 /*
@@ -8,6 +12,14 @@
  * ## SOURCE: https://github.com/acacode/swagger-typescript-api ##
  * ---------------------------------------------------------------
  */
+
+export const AuthParams = (store) => {
+	return {
+		headers: {
+			Authorization: `Bearer ${store.token}`,
+		},
+	};
+};
 
 export interface Time {
 	hours: number;
@@ -85,6 +97,7 @@ export interface User {
 	/** @example "john@doe.com" */
 	email: string;
 	canBorrow: boolean;
+	books: Book[];
 	firstName: string | null;
 	lastName: string | null;
 	role: 'ADMIN' | 'CUSTOMER';
@@ -797,3 +810,64 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
 			}),
 	};
 }
+
+export const api = new Api();
+export const userStore = {
+	update: () => {
+		const token = StoreUser.store.getState().token;
+		api.users
+			.usersControllerGetMe({
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				StoreUser.actions.setUser(response.data);
+			})
+			.catch((error) => {
+				Logger.warn('Error fetching user data:', error);
+			});
+	},
+};
+export const bookStore = {
+	update: () => {
+		api.books
+			.booksControllerFindAll()
+			.then((response) => {
+				Logger.info('Books fetched:', response);
+			})
+			.catch((error) => {
+				Logger.warn('Error fetching books:', error);
+			});
+	},
+	borrow: (bookId) => {
+		const token = StoreUser.store.getState().token;
+
+		api.books
+			.booksControllerBorrow(bookId, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				userStore.update(); // Update user data after borrowing a book
+				bookStore.update(); // Update book data after borrowing a book
+				Logger.info('Book borrowed:', response);
+			})
+			.catch((error) => {
+				Logger.warn('Error borrowing book:', error);
+			});
+	},
+	return: (bookId) => {
+		const token = StoreUser.store.getState().token;
+
+		api.books
+			.booksControllerReturn(bookId, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				userStore.update(); // Update user data after returning a book
+				bookStore.update(); // Update book data after returning a book
+				Logger.info('Book returned:', response);
+			})
+			.catch((error) => {
+				Logger.warn('Error returning book:', error);
+			});
+	},
+};

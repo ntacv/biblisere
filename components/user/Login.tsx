@@ -1,86 +1,112 @@
 import * as React from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
 
-import { useStoreMap } from 'effector-react';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
+import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
 
-import useNav from 'utils/navigation';
+import Logger from 'utils/Logger';
 
 const api = new Api();
 
 const Login = () => {
-	const navigation = useNav();
 	const { t } = useTranslation();
-	const [id, setId] = React.useState({ email: '', password: '' });
 
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
 
-	const checkEmail = (email: string) => {
-		const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	const formSchema = Yup.object().shape({
+		email: Yup.string().matches(REGEX_EMAIL, t('user:wrongEmail')).required(t('user:required')),
+		password: Yup.string()
+			.matches(REGEX_PASSWORD, t('user:wrongPassword'))
+			.required(t('user:required')),
+	});
 
-		if (emailRegex.test(email)) {
-			setId((prev) => ({ ...prev, email: email }));
-		} else {
-			setId((prev) => ({ ...prev, email: '' }));
-		}
-
-		return emailRegex.test(email);
-	};
-	const checkPassword = (password: string) => {
-		const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
-
-		if (passwordRegex.test(password)) {
-			setId((prev) => ({ ...prev, password: password }));
-		} else {
-			setId((prev) => ({ ...prev, password: '' }));
-		}
-
-		return passwordRegex.test(password);
-	};
-
-	const login = () => {
-		console.log('login', id);
-		api.login
+	const login = ({ email, password }) => {
+		return api.login
 			?.authControllerLogin({
-				email: id.email,
-				password: id.password,
+				email: email,
+				password: password,
 			})
 			.then((response) => {
 				StoreUser.actions.setToken(response.data.access_token);
+				return api.users?.usersControllerGetMe({
+					headers: { Authorization: `Bearer ${response.data.access_token}` },
+				});
+			})
+			.then((response) => {
+				StoreUser.actions.setUser(response.data);
 			})
 			.catch((error) => {
-				console.error('Login error:', error);
+				Logger.warn('Error login: ', error);
 			});
-
-		return true;
 	};
 
-	React.useEffect(() => {
-		api.users?.usersControllerGetMe().then((response) => {
-			StoreUser.actions.setUser(response.data);
-		});
-	}, []);
-
 	return (
-		<SafeAreaView>
-			<TextInput placeholder={t('user:input')} onChangeText={(text) => checkEmail(text)} />
-			<Text>{id.email != '' ? 'Ok' : 'Not valid'}</Text>
-			<TextInput
-				placeholder={t('user:input')}
-				onChangeText={(password) => checkPassword(password)}
-			/>
-			<Text>{id.password != '' ? 'Ok' : 'Not valid'}</Text>
-			{id.email != '' && id.password != '' ? (
-				<TouchableOpacity onPress={() => login()}>
-					<Text>{t('user:submit')}</Text>
-				</TouchableOpacity>
-			) : (
-				<Text>{t('user:notReady')}</Text>
+		<Formik
+			onSubmit={(values) => login(values)}
+			validationSchema={formSchema}
+			initialValues={{ email: '', password: '' }}
+		>
+			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+				<SafeAreaView>
+					<TextInput
+						placeholder={t('user:email')}
+						onChangeText={handleChange('email')}
+						onBlur={handleBlur('email')}
+						value={values.email}
+					/>
+					{/* will become a check input validater */}
+					<Text>{errors.email && touched.email ? errors.email : 'Ok'}</Text>
+
+					<TextInput
+						placeholder={t('user:password')}
+						onChangeText={handleChange('password')}
+						onBlur={handleBlur('password')}
+						value={values.password}
+						secureTextEntry
+					/>
+					{/* will become a check input validater */}
+					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
+
+					<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+						<TextUnder>{t('login:forgot')}</TextUnder>
+					</TouchableOpacity>
+					{/* will become a blue/greyed Validate button */}
+					{!errors.email && !errors.password ? (
+						<TouchableOpacity onPress={() => handleSubmit()}>
+							<Text>{t('user:submit')}</Text>
+						</TouchableOpacity>
+					) : (
+						<Text>{t('user:notReady')}</Text>
+					)}
+
+					{/* TEST COMPONENT to login as admin */}
+					<TouchableOpacity
+						onPress={() => {
+							login({ email: 'admin@example.com', password: 'myAdmin123&' });
+						}}
+					>
+						<Text>fast login admin</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+						}}
+					>
+						<Text>fast login borrow</Text>
+					</TouchableOpacity>
+				</SafeAreaView>
 			)}
-		</SafeAreaView>
+		</Formik>
 	);
 };
 export default Login;
+
+const TextUnder = styled(Text)`
+	text-decoration: underline;
+`;

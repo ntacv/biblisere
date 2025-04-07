@@ -36,7 +36,7 @@ const Catalog = () => {
 			.finally(() => {
 				setLoading(false);
 			});
-	}, []);
+	}, [storeBooks.books]);
 
 	return (
 		<ViewPage header>
@@ -65,9 +65,4 @@ const ViewList = styled(View)`
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
-`;
-const TextContentDate = styled(Text)`
-	font: ${fonts.content};
-	text-align: center;
-	font-weight: bold;
 `;

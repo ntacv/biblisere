@@ -18,6 +18,7 @@
 		"signup": "S'inscrire",
 		"login": "Se connecter",
 		"logout": "Se déconnecter",
+		"logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter?",
 		"settings": "Paramètres"
 	},
 	"components": {
@@ -81,14 +82,29 @@
 		"view": "Voir",
 		"read": "Lire",
 		"add": "Ajouter",
-		"remove": "Retirer",
+		"remove": "Rendre",
 		"update": "Mettre à jour",
 		"delete": "Supprimer",
 		"create": "Créer"
 	},
 	"user": {
 		"title": "Utilisateur",
-		"name": "John Doe"
+		"name": "John Doe",
+		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"cantBorrow": "Vous ne pouvez pas emprunter de livres"
+	},
+	"login": {
+		"title": "Connexion",
+		"required": "Obligatoires",
+		"email": "Email",
+		"wrongEmail": "Email invalide",
+		"password": "Mot de passe",
+		"wrongPassword": "Mot de passe invalide",
+		"submit": "Soumettre",
+		"forgot": "Mot de passe oublié?",
+		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
+		"login": "Connexion",
+		"signup": "S'inscrire"
 	},
 	"admin": {
 		"title": "Admin",
