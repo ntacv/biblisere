@@ -4,16 +4,9 @@ import CatalogNavigator from 'components/catalog/CatalogNavigator';
 import Homepage from 'components/homepage/Homepage';
 import User from 'components/user/User';
 
-export enum RouteNames {
-	Homepage = 'Homepage',
-	Catalog = 'Catalog',
-	CatalogNavigator = 'CatalogNavigator',
-	User = 'User',
-	Admin = 'Admin',
-	Details = 'Details',
-}
+import RouteNames from 'utils/routes';
 
-export const routes = {
+export const screens = {
 	[RouteNames.Homepage]: {
 		name: RouteNames.Homepage,
 		component: Homepage,
@@ -42,10 +35,17 @@ export const routes = {
 			title: 'admin:title',
 		},
 	},
+	[RouteNames.Details]: {
+		name: RouteNames.Details,
+		component: BookDetails,
+		options: {
+			title: 'details:title',
+		},
+	},
 } as const;
 
-export const routesArray = Object.values(routes);
-export type routesType = typeof routes;
+export const routesArray = Object.values(screens);
+export type screensType = typeof screens;
 
 export const routesCatalog = {
 	[RouteNames.Catalog]: {

@@ -1,15 +1,16 @@
 import { createEvent, createStore } from 'effector';
-import { ApiSchedules } from 'types';
+
+import { Schedule } from 'api/apiSwagger';
 
 interface SchedulesState {
-	data?: ApiSchedules[];
+	data?: Schedule[];
 }
 const initialState: SchedulesState = {
 	data: undefined,
 };
 
 export const actions = {
-	setSchedules: createEvent<ApiSchedules[]>('SET_Schedules'),
+	setSchedules: createEvent<Schedule[]>('SET_Schedules'),
 };
 
 export const store = createStore(initialState, { name: 'Schedules_v1' }).on(
