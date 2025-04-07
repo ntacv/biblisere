@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
@@ -26,11 +26,17 @@ const Footer = () => {
 
 	return (
 		<ViewFooter>
-			<TextLink url="https://www.cardiweb.com/contact">{t('footer:contact')}</TextLink>
+			<TextLink onPress={() => Linking.openURL('https://www.cardiweb.com/contact')}>
+				{t('footer:contact')}
+			</TextLink>
 
-			<TextLink url="https://www.cardiweb.com/mentions-legales">{t('footer:terms')}</TextLink>
+			<TextLink onPress={() => Linking.openURL('https://www.cardiweb.com/mentions-legales')}>
+				{t('footer:terms')}
+			</TextLink>
 
-			<TextLink url="https://www.cardiweb.com/mentions-legales">{t('footer:privacy')}</TextLink>
+			<TextLink onPress={() => Linking.openURL('https://www.cardiweb.com/mentions-legales')}>
+				{t('footer:privacy')}
+			</TextLink>
 		</ViewFooter>
 	);
 };

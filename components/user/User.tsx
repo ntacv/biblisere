@@ -4,7 +4,6 @@ import { Alert } from 'react-native';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
-import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
@@ -14,7 +13,8 @@ import Login from 'components/user/Login';
 import UserStorePrint from 'components/user/UserStorePrint';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 
@@ -25,14 +25,13 @@ const UserPage = () => {
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			{!storeUser.token && <Login />}
 			<ContainerColumn>
-				<UserStorePrint></UserStorePrint>
+				<UserStorePrint />
 
 				<Button
 					iconName="userX"
-					align="center"
 					label={t('menu:logout')}
 					onPress={() => {
 						AlertLogout(t, navigation);

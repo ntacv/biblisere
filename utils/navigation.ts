@@ -1,4 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { routesType } from 'types';
 
-export const useNav = () => useNavigation<NavigationProp<routesType>>();
+import { screensType } from 'utils/screens';
+
+const useNav = () => useNavigation<NavigationProp<screensType>>();
+export default useNav;
