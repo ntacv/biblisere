@@ -52,7 +52,14 @@ function Homepage() {
 				<ContainerColumn>
 					<Searchbar />
 
-					<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPress={() =>
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+							} as any)
+						}
+					>
 						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
 					</TouchableOpacity>
 					<ViewNewBooks horizontal={true}>
@@ -63,7 +70,7 @@ function Homepage() {
 								<TouchableOpacity
 									key={index}
 									onPress={() =>
-										navigation.navigate(RouteNames.Catalog, {
+										navigation.navigate(RouteNames.CatalogNavigator, {
 											screen: RouteNames.Details,
 											params: { bookId: book.id } as any,
 										} as any)
@@ -109,7 +116,11 @@ function Homepage() {
 					<Button
 						label={t('home:explore')}
 						iconName={IconNames.book}
-						onPress={() => navigation.navigate(RouteNames.Catalog)}
+						onPress={() =>
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+							} as any)
+						}
 					/>
 				</ContainerColumn>
 
