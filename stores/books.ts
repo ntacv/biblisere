@@ -3,25 +3,30 @@ import { createEvent, createStore } from 'effector';
 import { Book } from 'api/apiSwagger';
 
 interface BooksState {
-  books?: Book[];
+	books?: Book[];
+	bookMap: Record<number, Book>;
 }
 
 const initialState: BooksState = {
-  books: undefined,
+	books: undefined,
+	bookMap: {},
 };
 
 export const actions = {
 	setBooks: createEvent<Book[]>('SET_BOOKS'),
 };
 
-export const store = createStore(initialState, { name: "Books_v1" }).on(
-  actions.setBooks,
-  (store, books) => ({
-    ...store,
-    books,
-    bookMap: books.reduce((acc, book) => {
-      acc[book.id] = book;
-      return acc;
-    }, {} as Record<string, Book>),
-  })
+export const store = createStore(initialState, { name: 'Books_v1' }).on(
+	actions.setBooks,
+	(store, books) => ({
+		...store,
+		books,
+		bookMap: books.reduce(
+			(acc, book) => {
+				acc[book.id] = book;
+				return acc;
+			},
+			{} as Record<string, Book>,
+		),
+	}),
 );
