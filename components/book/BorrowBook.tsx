@@ -59,14 +59,14 @@ const BorrowBook = (props: ItemProps) => {
 					label={t('catalog:add')}
 					iconName="bookmark"
 					onPress={() => borrowBook(book)}
-					align="flex-end"
+					alignLeft
 				/>
 			) : (
 				<Button
 					label={t('catalog:remove')}
 					iconName="x"
 					onPress={() => returnBook(book)}
-					align="flex-end"
+					alignLeft
 				/>
 			)}
 		</>

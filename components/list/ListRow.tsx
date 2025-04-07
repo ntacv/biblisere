@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
@@ -33,7 +34,7 @@ const ListRow = ({ title, booksId, onPressTitle }: Props) => {
 		<View>
 			{title && (
 				<TouchableOpacity activeOpacity={0.8} onPress={onPressTitle}>
-					<TitleContent iconEnd={onPressTitle && 'arrowRight'} label={title} />
+					<TitleContent iconEnd={onPressTitle && IconNames.arrowRight} label={title} />
 				</TouchableOpacity>
 			)}
 			{!booksId ? null : (

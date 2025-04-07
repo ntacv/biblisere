@@ -40,7 +40,7 @@ const BookDetails = (props) => {
 			<ScrollViewContent>
 				<ContainerColumn>
 					<ContainerZone>
-						<TitleContent label={book.title}></TitleContent>
+						<TitleContent label={book.title} />
 						<ImageBookDetails height={300} source={{ uri: book.imageUrl }} />
 
 						<TextBold>{book.author}</TextBold>
