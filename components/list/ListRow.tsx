@@ -6,14 +6,14 @@ import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
 import ImageBook from 'components/image/ImageBook';
 import TitleContent from 'components/text/TitleContent';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 

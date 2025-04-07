@@ -4,8 +4,12 @@ import { View } from 'react-native';
 import { styled } from 'styled-components/native';
 import { sizes } from 'styles/Variables';
 
-const ContainerColumn = (props) => {
-	return <ContentColumn {...props}>{props.children}</ContentColumn>;
+interface Props {
+	children: React.ReactNode;
+}
+
+const ContainerColumn = ({ children }: Props) => {
+	return <ContentColumn>{children}</ContentColumn>;
 };
 export default ContainerColumn;
 

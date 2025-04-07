@@ -105,11 +105,15 @@
 	},
 	"login": {
 		"title": "Log in",
+		"required": "Required",
 		"email": "Email",
+		"wrongEmail": "Invalid email",
 		"password": "Password",
+		"wrongPassword": "Invalid password",
+		"submit": "Submit",
 		"forgot": "Forgot password?",
 		"forgotText": "We will contact you to reset your password.",
-		"submit": "Log in",
+		"login": "Log in",
 		"signup": "Sign up"
 	},
 	"admin": {

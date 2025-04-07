@@ -105,11 +105,15 @@
 	},
 	"login": {
 		"title": "Connexion",
-		"email": "Adresse e-mail",
+		"required": "Obligatoires",
+		"email": "Email",
+		"wrongEmail": "Email invalide",
 		"password": "Mot de passe",
+		"wrongPassword": "Mot de passe invalide",
+		"submit": "Soumettre",
 		"forgot": "Mot de passe oublié?",
 		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
-		"submit": "Soumettre",
+		"login": "Connexion",
 		"signup": "S'inscrire"
 	},
 	"admin": {

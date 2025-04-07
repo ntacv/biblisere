@@ -14,13 +14,13 @@ import BookListItem from 'components/book/BookListItem';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-import { useNav } from 'utils/navigation';
+import Logger from 'utils/Logger';
 
 const api = new Api();
 
 const Catalog = () => {
-	const navigation = useNav();
 	const { t } = useTranslation();
+	const [loading, setLoading] = React.useState(true);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
@@ -29,20 +29,25 @@ const Catalog = () => {
 			?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
 			.then((response) => {
 				StoreBooks.actions.setBooks(response.data);
+			})
+			.catch((error) => {
+				Logger.warn('Error fetching books:', error);
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 	}, [storeBooks.books]);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar />
-
 					<ViewList>
-						{!storeBooks ? (
+						{loading ? (
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (
-							storeBooks.books.map((book, index) => <BookListItem key={index} bookProp={book} />)
+							storeBooks.books?.map((book, index) => <BookListItem key={index} book={book} />)
 						)}
 					</ViewList>
 				</ContainerColumn>
