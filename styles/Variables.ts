@@ -6,6 +6,7 @@ export const sizes = {
 		title: 28,
 		content: 20,
 		input: 25,
+		length: 35,
 	},
 	header: {
 		top: {

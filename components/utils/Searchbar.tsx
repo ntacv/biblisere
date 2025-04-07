@@ -14,7 +14,7 @@ const Searchbar = (props) => {
 
 	return (
 		<ViewSearchBar {...props}>
-			<InputContent placeholder={t('components:input:placeholder')} />
+			<InputContent placeholder={t('components:input:placeholder')} maxLength={sizes.text.length} />
 
 			<Button
 				label="Search"
