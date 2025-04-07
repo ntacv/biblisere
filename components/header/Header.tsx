@@ -15,7 +15,11 @@ import Title from 'components/text/Title';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
-function Header() {
+interface Props {
+	returnIcon?: boolean;
+}
+
+function Header({ returnIcon }: Props) {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
@@ -23,11 +27,20 @@ function Header() {
 
 	return (
 		<ViewHeader>
-			<Button
-				iconName={IconNames.menu}
-				background={colors.clickable}
-				onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-			/>
+			{!returnIcon && (
+				<Button
+					iconName={IconNames.menu}
+					background={colors.clickable}
+					onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+				/>
+			)}
+			{returnIcon && (
+				<Button
+					iconName={IconNames.arrowLeft}
+					background={colors.clickable}
+					onPress={() => navigation.goBack()}
+				/>
+			)}
 
 			<Title>
 				<Icon
@@ -37,6 +50,7 @@ function Header() {
 					stroke={colors.primary}
 					strokeWidth={3}
 				/>
+
 				<Text>{t('home:name')}</Text>
 			</Title>
 
