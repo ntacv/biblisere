@@ -36,7 +36,7 @@ const BookDetails = (props) => {
 	const book = storeBook.books.find((book) => book.id === bookId);
 
 	return (
-		<ViewPage header>
+		<ViewPage header returnIcon>
 			<ScrollViewContent>
 				<ContainerColumn>
 					<ContainerZone>
