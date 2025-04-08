@@ -3,48 +3,45 @@ import { View } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 
-import { Api, Book, MAX_BOOKS, bookStore } from 'api/apiSwagger';
+import { MAX_BOOKS, bookStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 
-const api = new Api();
-
-export interface ItemProps {
-	bookProp: Book;
+export interface Props {
+	bookId: number;
 }
 
-const BorrowBook = (props: ItemProps) => {
-	const book = props.bookProp;
-
+const BorrowBook = ({ bookId }: Props) => {
 	const { t } = useTranslation();
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 
-	const returnBook = (book: Book) => {
-		bookStore.return(book.id);
-	};
+	const book = StoreBooks.store.getState().books.find((book) => book.id === bookId);
 
-	const borrowBook = (book: Book) => {
-		const token = StoreUser.store.getState().token;
-
+	const borrowBook = (bookId: number) => {
 		// check if user has reached the limit of borrowed books
 		if (storeUser.id?.books?.length >= MAX_BOOKS) {
 			alert(t('catalog:limitBooks', { val: MAX_BOOKS }));
 			return;
 		}
 		// else borrow a book and update user and catalog data
-		bookStore.borrow(book.id);
+		bookStore.borrow(bookId);
+	};
+
+	const returnBook = (bookId: number) => {
+		bookStore.return(bookId);
 	};
 
 	return (
 		<ViewButton>
 			{book.quantity > 0 ? (
-				<Button label={t('catalog:add')} iconName="bookmark" onPress={() => borrowBook(book)} />
+				<Button label={t('catalog:add')} iconName="bookmark" onPress={() => borrowBook(book.id)} />
 			) : (
-				<Button label={t('catalog:remove')} iconName="x" onPress={() => returnBook(book)} />
+				<Button label={t('catalog:remove')} iconName="x" onPress={() => returnBook(book.id)} />
 			)}
 		</ViewButton>
 	);

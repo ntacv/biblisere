@@ -7,30 +7,15 @@ import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
-
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-import { useNav } from 'utils/navigation';
-
-const api = new Api();
-
 const Catalog = () => {
-	const navigation = useNav();
 	const { t } = useTranslation();
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
-
-	React.useEffect(() => {
-		api.books
-			?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
-			.then((response) => {
-				StoreBooks.actions.setBooks(response.data);
-			});
-	}, [storeBooks.books]);
 
 	return (
 		<ViewPage header={true}>
@@ -39,10 +24,10 @@ const Catalog = () => {
 					<Searchbar />
 
 					<ViewList>
-						{!storeBooks.books ? (
-							<TextContent>{t('config:loading')}</TextContent>
+						{storeBooks.books ? (
+							storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
 						) : (
-							storeBooks.books.map((book, index) => <BookListItem key={index} bookProp={book} />)
+							<TextContent>{t('config:loading')}</TextContent>
 						)}
 					</ViewList>
 				</ContainerColumn>

@@ -8,15 +8,11 @@ import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
-
 import ContainerZone from 'components/ContainerZone';
 import ImageBook from 'components/image/ImageBook';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
 import BorrowBook from './BorrowBook';
-
-const api = new Api();
 
 export interface ItemProps {
 	bookId: number;
@@ -46,7 +42,7 @@ const BookDetails = (props) => {
 							</TextContent>
 							<TextContent>{book.quantity}</TextContent>
 						</View>
-						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
+						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ViewSide>
 				</ViewListItem>
 			</ContainerZone>

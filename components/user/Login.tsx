@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
@@ -39,12 +39,7 @@ const Login = () => {
 			})
 			.then((response) => {
 				StoreUser.actions.setToken(response.data.access_token);
-				return api.users?.usersControllerGetMe({
-					headers: { Authorization: `Bearer ${response.data.access_token}` },
-				});
-			})
-			.then((response) => {
-				StoreUser.actions.setUser(response.data);
+				userStore.update();
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);

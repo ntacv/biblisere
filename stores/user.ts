@@ -1,6 +1,6 @@
 import { createEvent, createStore } from 'effector';
 
-import { User } from 'api/apiSwagger';
+import { Book, User } from 'api/apiSwagger';
 
 interface UserState {
 	id?: User;
@@ -15,6 +15,8 @@ const initialState: UserState = {
 export const actions = {
 	setUser: createEvent<User>('SET_USERS'),
 	setToken: createEvent<string>('SET_TOKEN'),
+	borrowBook: createEvent<Book>('UPDATE_BOOK'),
+	returnBook: createEvent<Book>('RETURN_BOOK'),
 	logout: createEvent('LOGOUT'),
 };
 
@@ -26,5 +28,19 @@ export const store = createStore(initialState, { name: 'User_v1' })
 	.on(actions.setToken, (store, token) => ({
 		...store,
 		token,
+	}))
+	.on(actions.borrowBook, (state, newBook: Book) => ({
+		...state,
+		id: {
+			...state.id,
+			books: [...(state.id?.books || []), newBook],
+		},
+	}))
+	.on(actions.returnBook, (state, newBook: Book) => ({
+		...state,
+		id: {
+			...state.id,
+			books: state.id?.books?.filter((book) => book.id !== newBook.id),
+		},
 	}))
 	.reset(actions.logout);
