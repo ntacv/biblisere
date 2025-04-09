@@ -76,9 +76,11 @@
 	"catalog": {
 		"title": "Catalog",
 		"books": "Books",
+		"from": "From ",
 		"authors": "Authors",
 		"genres": "Genres",
 		"categories": "Categories",
+		"pages": " pages",
 		"view": "View",
 		"read": "Read",
 		"add": "Add",
@@ -86,7 +88,15 @@
 		"update": "Update",
 		"delete": "Delete",
 		"create": "Create",
-		"limitBooks": "You have reach the limit of {{val}} borrowed books"
+		"limitBooks": "You have reach the limit of {{val}} borrowed books",
+		"available": "Available",
+		"unavailable": "Out of stock",
+		"borrowed": "Borrowed"
+	},
+	"details": {
+		"title": "Details",
+		"sameAuthor": "Same author",
+		"sameKind": "Same kind"
 	},
 	"user": {
 		"title": "User",

@@ -76,17 +76,27 @@
 	"catalog": {
 		"title": "Catalogue",
 		"books": "Livres",
+		"from": "De ",
 		"authors": "Auteurs",
 		"genres": "Genres",
 		"categories": "Catégories",
+		"pages": " pages",
 		"view": "Voir",
 		"read": "Lire",
-		"add": "Ajouter",
+		"add": "Emprunter",
 		"remove": "Rendre",
 		"update": "Mettre à jour",
 		"delete": "Supprimer",
 		"create": "Créer",
-		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés"
+		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
+		"available": "Disponible",
+		"unavailable": "Rupture de stock",
+		"borrowed": "Emprunté"
+	},
+	"details": {
+		"title": "Détails",
+		"sameAuthor": "Du même auteur",
+		"sameKind": "Du même genre"
 	},
 	"user": {
 		"title": "Utilisateur",

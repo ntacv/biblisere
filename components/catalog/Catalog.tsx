@@ -14,15 +14,15 @@ import Searchbar from 'components/utils/Searchbar';
 
 const Catalog = () => {
 	const { t } = useTranslation();
+	const [loading, setLoading] = React.useState(true);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar />
-
 					<ViewList>
 						{storeBooks.books ? (
 							storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)

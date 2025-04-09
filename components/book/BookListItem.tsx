@@ -6,13 +6,13 @@ import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import ContainerZone from 'components/ContainerZone';
 import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 export interface Props {
 	bookId: number;
@@ -27,20 +27,20 @@ const BookListItem = ({ bookId }: Props) => {
 
 	return (
 		<TouchableOpacity
+			activeOpacity={0.8}
 			onPress={() => navigation.navigate(RouteNames.Details, { bookId: book.id } as any)}
 		>
 			<ContainerZone>
 				<ViewListItem>
 					<ImageBook source={{ uri: book.imageUrl }} />
 					<ViewSide>
-						<View>
-							<TextBold>{book.title}</TextBold>
-							<TextContent>{book.author}</TextContent>
-							<TextContent>
-								{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
-							</TextContent>
-							{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
-						</View>
+						<TextBold>{book.title}</TextBold>
+						<TextContent>{book.author}</TextContent>
+						<TextContent>
+							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
+						</TextContent>
+						{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
+
 						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ViewSide>
 				</ViewListItem>
@@ -52,16 +52,12 @@ export default BookListItem;
 
 const ViewListItem = styled(View)`
 	flex-direction: row;
+	padding-left: ${sizes.padding.main}px;
 `;
 const ViewSide = styled(View)`
 	flex: 1;
-	justify-content: space-between;
-	padding: 0 0 0 ${sizes.padding.main}px;
 `;
-const ViewButton = styled(View)`
-	flex-direction: row;
-	justify-content: flex-end;
-`;
+
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 `;

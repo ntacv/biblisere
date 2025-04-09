@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import { colors, sizes } from 'styles/Variables';
 
 interface Props {
+	onPress?: () => void;
 	label?: string;
 	iconName?: iconType;
 	background?: string;
-	align?: string;
-	onPress?: () => void;
+	alignLeft?: boolean;
 }
 
-const Button = ({ onPress, label, iconName, background, align }: Props) => {
+const Button = ({ onPress, label, iconName, background, alignLeft }: Props) => {
 	return (
-		<Container onPress={onPress} background={background} align={align} activeOpacity={0.8}>
+		<Container onPress={onPress} background={background} alignLeft={alignLeft} activeOpacity={0.8}>
 			{iconName && (
 				<Icon
 					iconName={iconName}
@@ -34,11 +34,11 @@ const TextInside = styled(Text)`
 	text-align: center;
 `;
 
-const Container = styled(TouchableOpacity)<{ background?: string; align?: string }>`
+const Container = styled(TouchableOpacity)<{ background?: string; alignLeft?: boolean }>`
 	background-color: ${(props) => (props.background ? props.background : colors.primary)};
 	padding: 8px 15px;
 	border-radius: ${sizes.radius.in};
 	flex-direction: row;
 	gap: ${sizes.padding.main}px;
-	align-self: ${(props) => (props.align ? props.align : 'flex-start')};
+	align-self: ${(props) => (props.alignLeft ? 'flex-end' : 'center')};
 `;
