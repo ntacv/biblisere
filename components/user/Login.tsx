@@ -67,20 +67,20 @@ const Login = () => {
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
 							<InputContent
+								inputError={!!errors.email}
 								placeholder={t('user:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
-								style={{ borderColor: errors.email && touched.email ? colors.danger : '' }}
 							/>
 
 							<InputContent
+								inputError={!!errors.password}
 								placeholder={t('user:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
 								secureTextEntry
-								style={{ borderColor: errors.password && touched.password ? colors.danger : '' }}
 							/>
 
 							<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
