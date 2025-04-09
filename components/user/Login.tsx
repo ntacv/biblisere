@@ -72,6 +72,7 @@ const Login = () => {
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
+								maxLength={sizes.text.length}
 							/>
 
 							<InputContent
@@ -80,17 +81,17 @@ const Login = () => {
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
+								maxLength={sizes.text.length}
 								secureTextEntry
 							/>
 
-							<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+							<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
 								<TextUnder>{t('login:forgot')}</TextUnder>
 							</TouchableOpacity>
 
 							<Button
 								label={t('login:submit')}
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
-								align="center"
 								onPress={() => handleSubmit()}
 							/>
 
@@ -116,6 +117,7 @@ export default Login;
 
 const TextUnder = styled(Text)`
 	text-decoration: underline;
+	text-align: center;
 `;
 const SafeViewForm = styled(SafeAreaView)`
 	flex: 1;

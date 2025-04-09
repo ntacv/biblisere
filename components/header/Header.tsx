@@ -2,20 +2,24 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 
 import { DrawerActions } from '@react-navigation/native';
-import Icon from 'assets/icons/Icons';
+import Icon, { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import Button from 'components/button/Button';
 import Title from 'components/text/Title';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
-function Header() {
+interface Props {
+	returnIcon?: boolean;
+}
+
+function Header({ returnIcon }: Props) {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
@@ -23,25 +27,35 @@ function Header() {
 
 	return (
 		<ViewHeader>
-			<Button
-				iconName="menu"
-				background={colors.clickable}
-				onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-			/>
+			{!returnIcon && (
+				<Button
+					iconName={IconNames.menu}
+					background={colors.clickable}
+					onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+				/>
+			)}
+			{returnIcon && (
+				<Button
+					iconName={IconNames.arrowLeft}
+					background={colors.clickable}
+					onPress={() => navigation.goBack()}
+				/>
+			)}
 
 			<Title>
 				<Icon
-					iconName="book"
+					iconName={IconNames.book}
 					width={sizes.icons.title}
 					height={sizes.icons.title}
 					stroke={colors.primary}
 					strokeWidth={3}
 				/>
+
 				<Text>{t('home:name')}</Text>
 			</Title>
 
 			<Button
-				iconName={storeUser.token ? 'userCheck' : 'user'}
+				iconName={storeUser.token ? IconNames.userCheck : IconNames.user}
 				onPress={() => navigation.navigate(RouteNames.User)}
 			/>
 		</ViewHeader>
@@ -50,7 +64,6 @@ function Header() {
 export default Header;
 
 const ViewHeader = styled(View)`
-	display: flex;
 	flex-direction: row;
-	padding: ${sizes.padding.main}px ${sizes.padding.main}px;
+	padding: ${sizes.padding.main}px;
 `;
