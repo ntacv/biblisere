@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
+import { sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
@@ -59,6 +60,7 @@ const Login = () => {
 						onChangeText={handleChange('email')}
 						onBlur={handleBlur('email')}
 						value={values.email}
+						maxLength={sizes.text.length}
 					/>
 					{/* will become a check input validater */}
 					<Text>{errors.email && touched.email ? errors.email : 'Ok'}</Text>
@@ -68,17 +70,18 @@ const Login = () => {
 						onChangeText={handleChange('password')}
 						onBlur={handleBlur('password')}
 						value={values.password}
+						maxLength={sizes.text.length}
 						secureTextEntry
 					/>
 					{/* will become a check input validater */}
 					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
 
-					<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+					<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
 						<TextUnder>{t('login:forgot')}</TextUnder>
 					</TouchableOpacity>
 					{/* will become a blue/greyed Validate button */}
 					{!errors.email && !errors.password ? (
-						<TouchableOpacity onPress={() => handleSubmit()}>
+						<TouchableOpacity activeOpacity={0.8} onPress={() => handleSubmit()}>
 							<Text>{t('user:submit')}</Text>
 						</TouchableOpacity>
 					) : (

@@ -27,17 +27,19 @@ const UserPage = () => {
 	return (
 		<ViewPage header>
 			{!storeUser.token && <Login />}
-			<ContainerColumn>
-				<UserStorePrint />
+			{storeUser.token && (
+				<ContainerColumn>
+					<UserStorePrint />
 
-				<Button
-					iconName="userX"
-					label={t('menu:logout')}
-					onPress={() => {
-						AlertLogout(t, navigation);
-					}}
-				/>
-			</ContainerColumn>
+					<Button
+						iconName="userX"
+						label={t('menu:logout')}
+						onPress={() => {
+							AlertLogout(t, navigation);
+						}}
+					/>
+				</ContainerColumn>
+			)}
 		</ViewPage>
 	);
 };

@@ -35,13 +35,6 @@ export const screens = {
 			title: 'admin:title',
 		},
 	},
-	[RouteNames.Details]: {
-		name: RouteNames.Details,
-		component: BookDetails,
-		options: {
-			title: 'details:title',
-		},
-	},
 } as const;
 
 export const routesArray = Object.values(screens);

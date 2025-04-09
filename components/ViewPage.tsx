@@ -8,14 +8,15 @@ import Header from 'components/header/Header';
 interface Props {
 	children: React.ReactNode;
 	header?: boolean;
+	returnIcon?: boolean;
 }
 
-const ViewPage = ({ children, header }: Props) => {
+const ViewPage = ({ children, header, returnIcon }: Props) => {
 	const insets = useSafeAreaInsets();
 
 	return (
 		<Container insets={insets}>
-			{header && <Header />}
+			{header && <Header returnIcon={returnIcon} />}
 
 			{children}
 		</Container>

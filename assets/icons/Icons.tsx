@@ -1,5 +1,7 @@
 import arrowDown from 'assets/icons/arrow-down.svg';
+import arrowLeft from 'assets/icons/arrow-left.svg';
 import arrowRight from 'assets/icons/arrow-right.svg';
+import arrowUp from 'assets/icons/arrow-up.svg';
 import book from 'assets/icons/book.svg';
 import bookmark from 'assets/icons/bookmark.svg';
 import info from 'assets/icons/info.svg';
@@ -13,7 +15,9 @@ import x from 'assets/icons/x.svg';
 
 export enum IconNames {
 	arrowDown = 'arrowDown',
+	arrowLeft = 'arrowLeft',
 	arrowRight = 'arrowRight',
+	arrowUp = 'arrowUp',
 	book = 'book',
 	bookmark = 'bookmark',
 	info = 'info',
@@ -28,7 +32,9 @@ export enum IconNames {
 
 const IconSvgs = {
 	arrowDown: arrowDown,
+	arrowLeft: arrowLeft,
 	arrowRight: arrowRight,
+	arrowUp: arrowUp,
 	book: book,
 	bookmark: bookmark,
 	info: info,
