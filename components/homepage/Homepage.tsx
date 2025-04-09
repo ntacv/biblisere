@@ -62,7 +62,7 @@ function Homepage() {
 					>
 						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
 					</TouchableOpacity>
-					<ViewNewBooks horizontal={true}>
+					<ViewNewBooks horizontal>
 						{!books.books ? (
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (

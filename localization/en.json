@@ -76,16 +76,21 @@
 	"catalog": {
 		"title": "Catalog",
 		"books": "Books",
+		"from": "From ",
 		"authors": "Authors",
 		"genres": "Genres",
 		"categories": "Categories",
+		"pages": " pages",
 		"view": "View",
 		"read": "Read",
 		"add": "Add",
 		"remove": "Remove",
 		"update": "Update",
 		"delete": "Delete",
-		"create": "Create"
+		"create": "Create",
+		"available": "Available",
+		"unavailable": "Out of stock",
+		"borrowed": "Borrowed"
 	},
 	"user": {
 		"title": "User",
