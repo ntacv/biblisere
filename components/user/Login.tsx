@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -63,53 +63,51 @@ const Login = () => {
 			initialValues={{ email: '', password: '' }}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
-				<SafeAreaView>
-					<ContainerColumnForm>
-						<InputContent
-							placeholder={t('user:email')}
-							onChangeText={handleChange('email')}
-							onBlur={handleBlur('email')}
-							value={values.email}
-							style={{ borderColor: errors.email && touched.email ? colors.danger : '' }}
-						/>
+				<SafeViewForm>
+					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
+						<ContainerColumnForm>
+							<InputContent
+								placeholder={t('user:email')}
+								onChangeText={handleChange('email')}
+								onBlur={handleBlur('email')}
+								value={values.email}
+								style={{ borderColor: errors.email && touched.email ? colors.danger : '' }}
+							/>
 
-						<InputContent
-							placeholder={t('user:password')}
-							onChangeText={handleChange('password')}
-							onBlur={handleBlur('password')}
-							value={values.password}
-							secureTextEntry
-							style={{ borderColor: errors.password && touched.password ? colors.danger : '' }}
-						/>
+							<InputContent
+								placeholder={t('user:password')}
+								onChangeText={handleChange('password')}
+								onBlur={handleBlur('password')}
+								value={values.password}
+								secureTextEntry
+								style={{ borderColor: errors.password && touched.password ? colors.danger : '' }}
+							/>
 
-						<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
-							<TextUnder>{t('login:forgot')}</TextUnder>
-						</TouchableOpacity>
+							<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+								<TextUnder>{t('login:forgot')}</TextUnder>
+							</TouchableOpacity>
 
-						<Button
-							label={t('user:submit')}
-							background={!errors.email && !errors.password ? colors.primary : colors.locked}
-							align="center"
-							onPress={() => handleSubmit()}
-						/>
+							<Button
+								label={t('login:submit')}
+								background={!errors.email && !errors.password ? colors.primary : colors.locked}
+								align="center"
+								onPress={() => handleSubmit()}
+							/>
 
-						{/* TEST COMPONENT to login as admin */}
-						<TouchableOpacity
-							onPress={() => {
-								login({ email: 'admin@example.com', password: 'myAdmin123&' });
-							}}
-						>
-							<Text>fast login admin</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							onPress={() => {
-								login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
-							}}
-						>
-							<Text>fast login borrow</Text>
-						</TouchableOpacity>
-					</ContainerColumnForm>
-				</SafeAreaView>
+							{/* TEST COMPONENT to login as admin */}
+							<FastLogin
+								onPress={() => {
+									login({ email: 'admin@example.com', password: 'myAdmin123&' });
+								}}
+							/>
+							<FastLogin
+								onPress={() => {
+									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+								}}
+							/>
+						</ContainerColumnForm>
+					</KeyboardView>
+				</SafeViewForm>
 			)}
 		</Formik>
 	);
@@ -119,7 +117,18 @@ export default Login;
 const TextUnder = styled(Text)`
 	text-decoration: underline;
 `;
+const SafeViewForm = styled(SafeAreaView)`
+	flex: 1;
+	flex-direction: row;
+`;
+const KeyboardView = styled(KeyboardAvoidingView)`
+	flex: 1;
+	align-self: center;
+`;
 const ContainerColumnForm = styled(ContainerColumn)`
 	align-items: center;
 	gap: ${sizes.padding.in}px;
+`;
+const FastLogin = styled(TouchableOpacity)`
+	padding: ${2 * sizes.padding.main}px;
 `;
