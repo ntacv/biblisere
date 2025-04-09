@@ -107,12 +107,18 @@
 		"deleteAccount": "Supprimer le compte",
 		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte?",
 		"deleteAccountError": "Vous devez rendre tous vos livres avant de supprimer votre compte.",
+		"updateUser": "Mettre à jour votre profil",
 		"cancel": "Annuler",
-		"delete": "Supprimer"
+		"delete": "Supprimer",
+		"edit": "Modifier",
+		"done": "Terminé",
+		"save": "Enregistrer"
 	},
 	"login": {
 		"title": "Connexion",
 		"required": "Obligatoires",
+		"firstName": "Prénom",
+		"lastName": "Nom",
 		"email": "Email",
 		"wrongEmail": "Email invalide",
 		"password": "Mot de passe",
