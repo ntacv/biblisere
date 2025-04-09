@@ -27,7 +27,12 @@ const BookListItem = ({ bookId }: Props) => {
 
 	return (
 		<TouchableOpacity
-			onPress={() => navigation.navigate(RouteNames.Details, { bookId: book.id } as any)}
+			onPress={() =>
+				navigation.navigate(RouteNames.Catalog, {
+					screen: RouteNames.Details,
+					params: { bookId: book.id } as any,
+				} as any)
+			}
 		>
 			<ContainerZone>
 				<ViewListItem>

@@ -91,6 +91,7 @@
 	"user": {
 		"title": "User",
 		"name": "John Doe",
+		"membership": "Member since ",
 		"borrowed": "You have borrowed {{val}}/{{max}} books",
 		"cantBorrow": "You cannot borrow any books",
 		"deleteAccount": "Delete account",
