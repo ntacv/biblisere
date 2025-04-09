@@ -4,6 +4,7 @@ import arrowRight from 'assets/icons/arrow-right.svg';
 import arrowUp from 'assets/icons/arrow-up.svg';
 import book from 'assets/icons/book.svg';
 import bookmark from 'assets/icons/bookmark.svg';
+import clock from 'assets/icons/clock.svg';
 import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
@@ -20,6 +21,7 @@ export enum IconNames {
 	arrowUp = 'arrowUp',
 	book = 'book',
 	bookmark = 'bookmark',
+	clock = 'clock',
 	info = 'info',
 	mapPin = 'mapPin',
 	menu = 'menu',
@@ -37,6 +39,7 @@ const IconSvgs = {
 	arrowUp: arrowUp,
 	book: book,
 	bookmark: bookmark,
+	clock: clock,
 	info: info,
 	mapPin: mapPin,
 	menu: menu,
