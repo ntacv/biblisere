@@ -29,7 +29,7 @@ const BookListItem = ({ bookId }: Props) => {
 		<TouchableOpacity
 			activeOpacity={0.8}
 			onPress={() =>
-				navigation.navigate(RouteNames.Catalog, {
+				navigation.navigate(RouteNames.CatalogNavigator, {
 					screen: RouteNames.Details,
 					params: { bookId: book.id } as any,
 				} as any)
