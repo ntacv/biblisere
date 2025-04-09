@@ -4,9 +4,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
-import { RouteNames, routesArray } from 'types';
 
 import DrawerContentCustom from 'components/menu/DrawerContentCustom';
+
+import RouteNames from 'utils/routes';
+import { routesArray } from 'utils/screens';
 
 const Drawer = createDrawerNavigator();
 

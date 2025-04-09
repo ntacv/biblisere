@@ -67,30 +67,31 @@ const Login = () => {
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
 							<InputContent
+								inputError={!!errors.email}
 								placeholder={t('user:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
-								style={{ borderColor: errors.email && touched.email ? colors.danger : '' }}
+								maxLength={sizes.text.length}
 							/>
 
 							<InputContent
+								inputError={!!errors.password}
 								placeholder={t('user:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
+								maxLength={sizes.text.length}
 								secureTextEntry
-								style={{ borderColor: errors.password && touched.password ? colors.danger : '' }}
 							/>
 
-							<TouchableOpacity onPress={() => alert(t('login:forgotText'))}>
+							<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
 								<TextUnder>{t('login:forgot')}</TextUnder>
 							</TouchableOpacity>
 
 							<Button
 								label={t('login:submit')}
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
-								align="center"
 								onPress={() => handleSubmit()}
 							/>
 
@@ -99,12 +100,12 @@ const Login = () => {
 								onPress={() => {
 									login({ email: 'admin@example.com', password: 'myAdmin123&' });
 								}}
-							></FastLogin>
+							/>
 							<FastLogin
 								onPress={() => {
 									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
 								}}
-							></FastLogin>
+							/>
 						</ContainerColumnForm>
 					</KeyboardView>
 				</SafeViewForm>
@@ -116,6 +117,7 @@ export default Login;
 
 const TextUnder = styled(Text)`
 	text-decoration: underline;
+	text-align: center;
 `;
 const SafeViewForm = styled(SafeAreaView)`
 	flex: 1;

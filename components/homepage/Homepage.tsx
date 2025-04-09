@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import { Api } from 'api/apiSwagger';
 
@@ -19,7 +19,8 @@ import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 
@@ -44,25 +45,33 @@ function Homepage() {
 	}, []);
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			<ScrollViewContent>
 				<ImageMainHome source={require('assets/images/mediatheque_espace_lecture.jpg')} />
 
 				<ContainerColumn>
 					<Searchbar />
 
-					<TouchableOpacity onPress={() => navigation.navigate(RouteNames.Catalog)}>
-						<TitleContent iconEnd="arrowRight" label={t('home:titles:news')} />
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPress={() =>
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+							} as any)
+						}
+					>
+						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
 					</TouchableOpacity>
-					<ViewNewBooks horizontal={true}>
+					<ViewNewBooks horizontal>
 						{!books.books ? (
 							<TextContent>{t('config:loading')}</TextContent>
 						) : (
 							books.books?.map((book, index) => (
 								<TouchableOpacity
 									key={index}
+									activeOpacity={0.8}
 									onPress={() =>
-										navigation.navigate(RouteNames.Catalog, {
+										navigation.navigate(RouteNames.CatalogNavigator, {
 											screen: RouteNames.Details,
 											params: { bookId: book.id } as any,
 										} as any)
@@ -78,7 +87,7 @@ function Homepage() {
 					</ViewNewBooks>
 
 					<ContainerZone>
-						<TitleContent iconStart="mapPin" label={t('home:titles:times')} />
+						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:times')} />
 						<ViewList>
 							{schedules.data?.map((schedule) => (
 								<TextContent key={schedule.id}>
@@ -107,9 +116,12 @@ function Homepage() {
 					</View>
 					<Button
 						label={t('home:explore')}
-						iconName="book"
-						align="center"
-						onPress={() => navigation.navigate(RouteNames.Catalog)}
+						iconName={IconNames.book}
+						onPress={() =>
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+							} as any)
+						}
 					/>
 				</ContainerColumn>
 
@@ -138,7 +150,6 @@ const ImageBook = styled(Image)`
 const ViewList = styled(View)`
 	align-items: flex-end;
 	align-self: center;
-	width: auto;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
