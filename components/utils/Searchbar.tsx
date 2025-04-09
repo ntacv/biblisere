@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
@@ -14,11 +15,12 @@ const Searchbar = (props) => {
 
 	return (
 		<ViewSearchBar {...props}>
-			<InputContent placeholder={t('components:input:placeholder')} />
+			<InputContent placeholder={t('components:input:placeholder')} maxLength={sizes.text.length} />
 
 			<Button
 				label="Search"
-				iconName="search"
+				iconName={IconNames.search}
+				alignLeft
 				onPress={() => alert(t('components:button:click'))}
 			/>
 		</ViewSearchBar>

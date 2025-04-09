@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, ScrollView, Text, View } from 'react-native';
 
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,6 @@ import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-import { RouteNames } from 'types';
 
 import { Api, MAX_BOOKS } from 'api/apiSwagger';
 
@@ -20,7 +19,8 @@ import TitleContent from 'components/text/TitleContent';
 import Login from 'components/user/Login';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
-import { useNav } from 'utils/navigation';
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
 
 const api = new Api();
 
@@ -34,34 +34,23 @@ const UserPage = () => {
 
 	const deleteAccount = () => {
 		if (storeUser.id?.books.length > 0) {
-			return Alert.alert(t('user:deleteAccount'), t('user:deleteAccountError'), [
-				{
-					text: t('user:cancel'),
-					style: 'cancel',
-				},
-			]);
+			return renderAlert(t('user:deleteAccount'), t('user:deleteAccountError'), t('user:cancel'));
 		}
 
-		return Alert.alert(t('user:deleteAccount'), t('user:deleteAccountConfirm'), [
-			{
-				text: t('user:cancel'),
-				style: 'cancel',
+		return renderAlert(t('user:deleteAccount'), t('user:deleteAccountConfirm'), t('user:cancel'), {
+			text: t('user:delete'),
+			onPress: () => {
+				api.users?.usersControllerRemove({
+					headers: { Authorization: `Bearer ${storeUser.token}` },
+				});
+				StoreUser.actions.logout();
+				navigation.navigate(RouteNames.Homepage);
 			},
-			{
-				text: t('user:delete'),
-				onPress: () => {
-					api.users?.usersControllerRemove({
-						headers: { Authorization: `Bearer ${storeUser.token}` },
-					});
-					StoreUser.actions.logout();
-					navigation.navigate(RouteNames.Homepage);
-				},
-			},
-		]);
+		});
 	};
 
 	return (
-		<ViewPage header={true}>
+		<ViewPage header>
 			{!storeUser.token && <Login />}
 			{storeUser.token && (
 				<ScrollViewContent>
@@ -93,10 +82,15 @@ const UserPage = () => {
 
 								<Button
 									iconName="userX"
-									align="center"
 									label={t('menu:logout')}
 									onPress={() => {
-										AlertLogout(t, navigation);
+										renderAlert(t('menu:logout'), t('menu:logoutConfirm'), t('user:cancel'), {
+											text: t('menu:logout'),
+											onPress: () => {
+												StoreUser.actions.logout();
+												navigation.navigate(RouteNames.User);
+											},
+										});
 									}}
 								/>
 							</ContainerZone>
@@ -119,7 +113,7 @@ const UserPage = () => {
 };
 export default UserPage;
 
-const ScrollViewContent = styled.ScrollView`
+const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 const TextContent = styled(Text)`
@@ -129,18 +123,29 @@ const ViewList = styled(View)`
 	gap: ${sizes.padding.main}px;
 `;
 
-const AlertLogout = (t, navigation) => {
-	return Alert.alert(t('menu:logout'), t('menu:logoutConfirm'), [
-		{
-			text: t('user:cancel'),
-			style: 'cancel',
-		},
-		{
-			text: t('menu:logout'),
-			onPress: () => {
-				StoreUser.actions.logout();
-				navigation.navigate(RouteNames.User);
-			},
-		},
-	]);
+interface AlertButton {
+	text: string;
+	onPress: () => void;
+	style?: 'cancel' | 'default' | 'destructive';
+}
+
+const renderAlert = (title: string, message: string, cancel: string, button?: AlertButton) => {
+	return Alert.alert(
+		title,
+		message,
+		button
+			? [
+					{
+						text: cancel,
+						style: 'cancel',
+					},
+					button,
+				]
+			: [
+					{
+						text: cancel,
+						style: 'cancel',
+					},
+				],
+	);
 };

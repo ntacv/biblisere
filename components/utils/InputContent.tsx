@@ -7,13 +7,13 @@ import * as styles from 'styles/Styles';
 import { colors, fonts, sizes } from 'styles/Variables';
 
 interface Props extends TextInputProps {
-	borderColor?: string;
+	inputError?: boolean;
 }
 
-const InputContent: React.FC<TextInputProps> = ({ borderColor, ...props }: Props) => {
+const InputContent = ({ inputError = false, ...props }: Props) => {
 	const { t } = useTranslation();
 
-	return <InputContentStyle {...props} />;
+	return <InputContentStyle {...props} inputError={inputError} />;
 };
 export default InputContent;
 
@@ -24,9 +24,8 @@ const ViewSearchBar = styled(View)`
 	align-items: center;
 	max-width: ${sizes.width.max}px;
 `;
-const InputContentStyle = styled(TextInput)`
-	border-bottom-color: ${(props) =>
-		props.style?.borderColor ? props.style?.borderColor : colors.primary};
+const InputContentStyle = styled(TextInput)<{ inputError?: boolean }>`
+	border-bottom-color: ${(props) => (props.inputError ? colors.danger : colors.primary)};
 	border-bottom-width: 2px;
 
 	font: ${fonts.content};
