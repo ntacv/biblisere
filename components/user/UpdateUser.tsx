@@ -19,7 +19,7 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
-const UpdateUser = () => {
+const UpdateUser = (props) => {
 	const { t } = useTranslation();
 
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
@@ -109,7 +109,13 @@ const UpdateUser = () => {
 								maxLength={sizes.text.length}
 							/>
 
-							<Button label={t('user:save')} onPress={() => handleSubmit()} />
+							<Button
+								label={t('user:save')}
+								onPress={() => {
+									handleSubmit();
+									props.setEdit(false);
+								}}
+							/>
 						</ContainerColumnForm>
 					</KeyboardView>
 				</SafeViewForm>

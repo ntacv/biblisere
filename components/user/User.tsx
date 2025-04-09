@@ -60,16 +60,7 @@ const UserPage = () => {
 					{user && (
 						<ContainerColumn>
 							<ContainerZone>
-								{edit && (
-									<>
-										<UpdateUser />
-										<Button
-											label={t('user:done')}
-											iconName={IconNames.editLine}
-											onPress={() => setEdit(false)}
-										/>
-									</>
-								)}
+								{edit && <UpdateUser setEdit={setEdit} />}
 								{!edit && (
 									<>
 										<UserInfo />
