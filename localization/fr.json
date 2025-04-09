@@ -129,7 +129,8 @@
 		"forgot": "Mot de passe oublié?",
 		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
 		"login": "Connexion",
-		"signup": "S'inscrire"
+		"signup": "S'inscrire",
+		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {
 		"title": "Admin",

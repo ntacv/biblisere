@@ -9,7 +9,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, userStore } from 'api/apiSwagger';
+import { Api, CreateUserDto, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -19,33 +19,53 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
-const Login = (props) => {
+const Signup = (props) => {
 	const { t } = useTranslation();
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 	const formSchema = Yup.object().shape({
+		firstName: Yup.string().required(t('user:required')),
+		lastName: Yup.string().required(t('user:required')),
 		email: Yup.string().matches(REGEX_EMAIL, t('user:wrongEmail')).required(t('user:required')),
 		password: Yup.string()
 			.matches(REGEX_PASSWORD, t('user:wrongPassword'))
 			.required(t('user:required')),
 	});
 
-	const login = ({ email, password }) => {
-		return api.login
-			?.authControllerLogin({
-				email: email,
-				password: password,
+	const signup = ({ ...props }: CreateUserDto) => {
+		return api.users
+			?.usersControllerCreate({
+				firstName: props.firstName,
+				lastName: props.lastName,
+				email: props.email,
+				password: props.password,
 			})
 			.then((response) => {
-				StoreUser.actions.setToken(response.data.access_token);
-				userStore.update();
+				// login user after signup
+				return api.login
+					?.authControllerLogin({
+						email: props.email,
+						password: props.password,
+					})
+					.then((response) => {
+						StoreUser.actions.setToken(response.data.access_token);
+						userStore.update();
+					})
+					.catch((error) => {
+						Logger.warn('Error login: ', error);
+						if (error.status === 401) {
+							alert(t('login:wrongLogin'));
+						} else {
+							alert(t('login:serverError'));
+						}
+					});
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
 				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
+					alert(t('login:unauthorized'));
 				} else {
 					alert(t('login:serverError'));
 				}
@@ -54,19 +74,35 @@ const Login = (props) => {
 
 	return (
 		<Formik
-			onSubmit={(values) => login(values)}
+			onSubmit={(values) => signup(values)}
 			validationSchema={formSchema}
-			initialValues={{ email: '', password: '' }}
+			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
-							<TitleContent label={t('login:login')} />
+							<TitleContent label={t('login:signup')} />
 
 							<InputContent
+								inputError={!!errors.firstName}
+								placeholder={t('login:firstName')}
+								onChangeText={handleChange('firstName')}
+								onBlur={handleBlur('firstName')}
+								value={values.firstName}
+								maxLength={sizes.text.length}
+							/>
+							<InputContent
+								inputError={!!errors.lastName}
+								placeholder={t('login:lastName')}
+								onChangeText={handleChange('lastName')}
+								onBlur={handleBlur('lastName')}
+								value={values.lastName}
+								maxLength={sizes.text.length}
+							/>
+							<InputContent
 								inputError={!!errors.email}
-								placeholder={t('user:email')}
+								placeholder={t('login:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
@@ -75,17 +111,13 @@ const Login = (props) => {
 
 							<InputContent
 								inputError={!!errors.password}
-								placeholder={t('user:password')}
+								placeholder={t('login:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
 								maxLength={sizes.text.length}
 								secureTextEntry
 							/>
-
-							<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
-								<TextUnder>{t('login:forgot')}</TextUnder>
-							</TouchableOpacity>
 
 							<Button
 								label={t('login:submit')}
@@ -94,22 +126,23 @@ const Login = (props) => {
 							/>
 
 							<Button
-								label={t('login:signup')}
-								iconName={IconNames.userCheck}
-								onPress={() => props.setSignup(true)}
+								label={t('login:login')}
+								iconName={IconNames.user}
+								onPress={() => props.setSignup(false)}
 							/>
 
 							{/* TEST COMPONENT to login as admin */}
 							<FastLogin
 								onPress={() => {
-									login({ email: 'admin@example.com', password: 'myAdmin123&' });
+									signup({
+										firstName: 'hi',
+										lastName: 'you',
+										email: 'hi@example.com',
+										password: 'myAdmin123&',
+									});
 								}}
 							/>
-							<FastLogin
-								onPress={() => {
-									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
-								}}
-							/>
+							<FastLogin onPress={() => {}} />
 						</ContainerColumnForm>
 					</KeyboardView>
 				</SafeViewForm>
@@ -117,7 +150,7 @@ const Login = (props) => {
 		</Formik>
 	);
 };
-export default Login;
+export default Signup;
 
 const TextUnder = styled(Text)`
 	text-decoration: underline;

@@ -24,12 +24,15 @@ import ContainerColumn from 'components/utils/ContainerColumn';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
+import Signup from './Signup';
+
 const api = new Api();
 
 const UserPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 	const [edit, setEdit] = React.useState(false);
+	const [signup, setSignup] = React.useState(false);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
@@ -54,7 +57,8 @@ const UserPage = () => {
 
 	return (
 		<ViewPage header>
-			{!storeUser.token && <Login />}
+			{!storeUser.token && !signup && <Login setSignup={setSignup} />}
+			{!storeUser.token && signup && <Signup setSignup={setSignup} />}
 			{storeUser.token && (
 				<ScrollViewContent>
 					{user && (
