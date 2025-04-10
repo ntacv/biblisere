@@ -71,7 +71,15 @@
 			"recommended": "Recommended",
 			"access": "Access",
 			"times": "Opening times"
-		}
+		},
+		"access": [
+			"La Ferme, 38200 Vienne",
+			"Isère Rhodanienne",
+			"04 74 57 20 81",
+			"bibliotheques.vienne.fr",
+			"Fully accessible to reduced mobility",
+			"Free wifi"
+		]
 	},
 	"catalog": {
 		"title": "Catalog",
