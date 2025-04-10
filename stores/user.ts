@@ -13,7 +13,7 @@ const initialState: UserState = {
 };
 
 export const actions = {
-	setUser: createEvent<User>('SET_USERS'),
+	setUser: createEvent<User>('SET_USER'),
 	setToken: createEvent<string>('SET_TOKEN'),
 	borrowBook: createEvent<Book>('UPDATE_BOOK'),
 	returnBook: createEvent<Book>('RETURN_BOOK'),

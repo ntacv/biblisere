@@ -19,7 +19,8 @@
 		"login": "Se connecter",
 		"logout": "Se déconnecter",
 		"logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter?",
-		"settings": "Paramètres"
+		"settings": "Paramètres",
+		"books": "Livres"
 	},
 	"components": {
 		"translate": {
@@ -134,7 +135,16 @@
 	},
 	"admin": {
 		"title": "Admin",
-		"name": "Admin"
+		"name": "Admin",
+		"refused": "Vous n'êtes pas autorisé à accéder à cette page",
+		"canBorrow": "Peut emprunter",
+		"isAdmin": "Est admin",
+		"add": "Ajouter",
+		"update": "Mettre à jour",
+		"delete": "Supprimer",
+		"edit": "Modifier",
+		"cancel": "Annuler",
+		"save": "Enregistrer"
 	},
 	"footer": {
 		"contact": "Contactez-nous",

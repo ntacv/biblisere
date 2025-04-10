@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreAdmin from 'stores/admin';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
@@ -27,6 +28,7 @@ const UserPage = () => {
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 	const user = storeUser.id;
+	const storeAdmin = useStoreMap(StoreAdmin.store, (store) => store);
 
 	return (
 		<>
@@ -60,6 +62,7 @@ const UserPage = () => {
 						text: t('menu:logout'),
 						onPress: () => {
 							StoreUser.actions.logout();
+							StoreAdmin.actions.logout();
 							navigation.navigate(RouteNames.User);
 						},
 					});

@@ -19,7 +19,8 @@
 		"login": "Log in",
 		"logout": "Log out",
 		"logoutConfirm": "Are you sure you want to log out?",
-		"settings": "Settings"
+		"settings": "Settings",
+		"books": "Books"
 	},
 	"components": {
 		"translate": {
@@ -134,7 +135,16 @@
 	},
 	"admin": {
 		"title": "Admin",
-		"name": "Admin"
+		"name": "Admin",
+		"refused": "You are not authorized to access this page",
+		"canBorrow": "Can borrow",
+		"isAdmin": "Is admin",
+		"add": "Add",
+		"update": "Update",
+		"delete": "Delete",
+		"edit": "Edit",
+		"cancel": "Cancel",
+		"save": "Save"
 	},
 	"footer": {
 		"contact": "Contact us",

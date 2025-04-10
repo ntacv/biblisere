@@ -4,6 +4,7 @@ import { KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from
 import { IconNames } from 'assets/icons/Icons';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import StoreAdmin from 'stores/admin';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
@@ -19,8 +20,15 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
-const Signup = (props) => {
+interface Props {
+	setSignup?: (signup: boolean) => void;
+	isAdmin?: boolean;
+}
+
+const Signup = ({ setSignup, isAdmin }: Props) => {
 	const { t } = useTranslation();
+
+	const initialValues = { firstName: '', lastName: '', email: '', password: '' };
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -35,6 +43,7 @@ const Signup = (props) => {
 	});
 
 	const signup = ({ ...props }: CreateUserDto) => {
+		Logger.info('Signup', props);
 		return api.users
 			?.usersControllerCreate({
 				firstName: props.firstName,
@@ -43,6 +52,17 @@ const Signup = (props) => {
 				password: props.password,
 			})
 			.then((response) => {
+				// if an admin create a use, they do not want to login
+				if (isAdmin) {
+					api.admin
+						?.adminControllerFindAllUsers({
+							headers: { Authorization: `Bearer ${StoreUser.store.getState().token}` },
+						})
+						.then((response) => {
+							StoreAdmin.actions.setUsers(response.data);
+						});
+					return;
+				}
 				// login user after signup
 				return api.login
 					?.authControllerLogin({
@@ -76,9 +96,9 @@ const Signup = (props) => {
 		<Formik
 			onSubmit={(values) => signup(values)}
 			validationSchema={formSchema}
-			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+			initialValues={initialValues}
 		>
-			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+			{({ handleSubmit, handleChange, handleBlur, values, errors, touched, resetForm }) => (
 				<SafeViewForm>
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
@@ -122,27 +142,35 @@ const Signup = (props) => {
 							<Button
 								label={t('login:submit')}
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
-								onPress={() => handleSubmit()}
-							/>
-
-							<Button
-								label={t('login:login')}
-								iconName={IconNames.user}
-								onPress={() => props.setSignup(false)}
-							/>
-
-							{/* TEST COMPONENT to login as admin */}
-							<FastLogin
 								onPress={() => {
-									signup({
-										firstName: 'hi',
-										lastName: 'you',
-										email: 'hi@example.com',
-										password: 'myAdmin123&',
-									});
+									handleSubmit();
+									resetForm({ values: initialValues });
 								}}
 							/>
-							<FastLogin onPress={() => {}} />
+							{!isAdmin && (
+								<>
+									<Button
+										label={t('login:login')}
+										iconName={IconNames.user}
+										onPress={() => {
+											setSignup(false);
+										}}
+									/>
+
+									{/* TEST COMPONENT to login as admin */}
+									<FastLogin
+										onPress={() => {
+											signup({
+												firstName: 'hi',
+												lastName: 'you',
+												email: 'hi@example.com',
+												password: 'myAdmin123&',
+											});
+										}}
+									/>
+									<FastLogin onPress={() => {}} />
+								</>
+							)}
 						</ContainerColumnForm>
 					</KeyboardView>
 				</SafeViewForm>

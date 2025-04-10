@@ -11,15 +11,10 @@ import { fonts, sizes } from 'styles/Variables';
 
 import { Api } from 'api/apiSwagger';
 
-import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
-import BookListItem from 'components/book/BookListItem';
+import AdminBook from 'components/admin/AdminBook';
+import AdminUser from 'components/admin/AdminUser';
 import Button from 'components/button/Button';
-import TextAction from 'components/button/TextAction';
-import Login from 'components/user/Login';
-import Signup from 'components/user/Signup';
-import UpdateUser from 'components/user/UpdateUser';
-import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
 import useNav from 'utils/navigation';
@@ -27,15 +22,16 @@ import RouteNames from 'utils/routes';
 
 const api = new Api();
 
-const UserPage = () => {
+const AdminPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
+	const [userSection, setUserSection] = React.useState(true);
+	const [bookSection, setBookSection] = React.useState(true);
 	const [edit, setEdit] = React.useState(false);
 	const [signup, setSignup] = React.useState(false);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-	const user = storeUser.id;
 
 	const deleteAccount = () => {
 		if (storeUser.id?.books.length > 0) {
@@ -56,49 +52,54 @@ const UserPage = () => {
 
 	return (
 		<ViewPage header>
-			{!storeUser.token && !signup && <Login setSignup={setSignup} />}
-			{!storeUser.token && signup && <Signup setSignup={setSignup} />}
-			{storeUser.token && (
-				<ScrollViewContent>
-					{user && (
+			{storeUser.id.role !== 'ADMIN' && <Text>{t('admin:refused')}</Text>}
+			{storeUser.token && storeUser.id.role === 'ADMIN' && (
+				<>
+					<ViewRow>
+						<Button
+							label={t('user:title')}
+							iconName={IconNames.user}
+							onPress={() => {
+								setUserSection(true);
+								setBookSection(false);
+							}}
+						/>
+						<Button
+							label={t('menu:books')}
+							iconName={IconNames.book}
+							onPress={() => {
+								setUserSection(false);
+								setBookSection(true);
+							}}
+						/>
+					</ViewRow>
+
+					<ScrollViewContent>
 						<ContainerColumn>
-							<ContainerZone>
-								{edit && <UpdateUser setEdit={setEdit} />}
-								{!edit && (
-									<>
-										<UserInfo />
-										<Button
-											label={t('user:edit')}
-											iconName={IconNames.editLine}
-											onPress={() => setEdit(true)}
-										/>
-									</>
-								)}
-							</ContainerZone>
-
-							<ViewList>
-								{user.books ? (
-									user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
-								) : (
-									<TextContent>{t('config:loading')}</TextContent>
-								)}
-							</ViewList>
-
-							<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
+							{userSection && <AdminUser />}
+							{bookSection && <AdminBook />}
 						</ContainerColumn>
-					)}
-				</ScrollViewContent>
+					</ScrollViewContent>
+				</>
 			)}
 		</ViewPage>
 	);
 };
-export default UserPage;
+
+export default AdminPage;
 
 const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
+`;
+const ViewRow = styled(View)`
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: ${sizes.padding.main}px;
+	padding: ${sizes.padding.main}px;
 `;
 const ViewList = styled(View)`
 	gap: ${sizes.padding.main}px;
