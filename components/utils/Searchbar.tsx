@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
-import { IconNames } from 'assets/icons/Icons';
+import Icon, { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
@@ -10,18 +10,35 @@ import { sizes } from 'styles/Variables';
 import Button from 'components/button/Button';
 import InputContent from 'components/utils/InputContent';
 
-const Searchbar = (props) => {
+interface Props {
+	onPress?: () => void;
+	value?: { search: string; setSearch: (search: string) => void };
+	home?: boolean;
+}
+
+const Searchbar = ({ onPress, value, home }: Props) => {
 	const { t } = useTranslation();
 
 	return (
-		<ViewSearchBar {...props}>
-			<InputContent placeholder={t('components:input:placeholder')} maxLength={sizes.text.length} />
-
+		<ViewSearchBar>
+			<InputContent
+				placeholder={t('components:input:placeholder')}
+				maxLength={sizes.text.length}
+				onChangeText={(text) => {
+					value?.setSearch(text);
+				}}
+				value={value?.search}
+			/>
+			{!home && (
+				<TouchableOpacity activeOpacity={0.5} onPress={() => value?.setSearch('')}>
+					<Icon iconName={IconNames.x} width={sizes.icons.content} />
+				</TouchableOpacity>
+			)}
 			<Button
-				label="Search"
 				iconName={IconNames.search}
 				alignLeft
-				onPress={() => alert(t('components:button:click'))}
+				onPress={onPress}
+				label={home ? t('catalog:books') : null}
 			/>
 		</ViewSearchBar>
 	);
@@ -34,4 +51,6 @@ const ViewSearchBar = styled(View)`
 	justify-content: space-between;
 	align-items: center;
 	max-width: ${sizes.width.max}px;
+	gap: ${sizes.padding.main}px;
+	padding-left: ${sizes.padding.in}px;
 `;
