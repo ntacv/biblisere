@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { sizes } from 'styles/Variables';
+import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
 import { Api } from 'api/apiSwagger';
+
+import Button from 'components/button/Button';
+import ContainerColumn from 'components/utils/ContainerColumn';
+import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
 
@@ -44,6 +48,11 @@ const Login = () => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
+				if (error.status === 401) {
+					alert(t('login:wrongLogin'));
+				} else {
+					alert(t('login:serverError'));
+				}
 			});
 	};
 
@@ -54,56 +63,52 @@ const Login = () => {
 			initialValues={{ email: '', password: '' }}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
-				<SafeAreaView>
-					<TextInput
-						placeholder={t('user:email')}
-						onChangeText={handleChange('email')}
-						onBlur={handleBlur('email')}
-						value={values.email}
-						maxLength={sizes.text.length}
-					/>
-					{/* will become a check input validater */}
-					<Text>{errors.email && touched.email ? errors.email : 'Ok'}</Text>
+				<SafeViewForm>
+					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
+						<ContainerColumnForm>
+							<InputContent
+								inputError={!!errors.email}
+								placeholder={t('user:email')}
+								onChangeText={handleChange('email')}
+								onBlur={handleBlur('email')}
+								value={values.email}
+								maxLength={sizes.text.length}
+							/>
 
-					<TextInput
-						placeholder={t('user:password')}
-						onChangeText={handleChange('password')}
-						onBlur={handleBlur('password')}
-						value={values.password}
-						maxLength={sizes.text.length}
-						secureTextEntry
-					/>
-					{/* will become a check input validater */}
-					<Text>{errors.password && touched.password ? errors.password : 'Ok'}</Text>
+							<InputContent
+								inputError={!!errors.password}
+								placeholder={t('user:password')}
+								onChangeText={handleChange('password')}
+								onBlur={handleBlur('password')}
+								value={values.password}
+								maxLength={sizes.text.length}
+								secureTextEntry
+							/>
 
-					<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
-						<TextUnder>{t('login:forgot')}</TextUnder>
-					</TouchableOpacity>
-					{/* will become a blue/greyed Validate button */}
-					{!errors.email && !errors.password ? (
-						<TouchableOpacity activeOpacity={0.8} onPress={() => handleSubmit()}>
-							<Text>{t('user:submit')}</Text>
-						</TouchableOpacity>
-					) : (
-						<Text>{t('user:notReady')}</Text>
-					)}
+							<TouchableOpacity activeOpacity={0.8} onPress={() => alert(t('login:forgotText'))}>
+								<TextUnder>{t('login:forgot')}</TextUnder>
+							</TouchableOpacity>
 
-					{/* TEST COMPONENT to login as admin */}
-					<TouchableOpacity
-						onPress={() => {
-							login({ email: 'admin@example.com', password: 'myAdmin123&' });
-						}}
-					>
-						<Text>fast login admin</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => {
-							login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
-						}}
-					>
-						<Text>fast login borrow</Text>
-					</TouchableOpacity>
-				</SafeAreaView>
+							<Button
+								label={t('login:submit')}
+								background={!errors.email && !errors.password ? colors.primary : colors.locked}
+								onPress={() => handleSubmit()}
+							/>
+
+							{/* TEST COMPONENT to login as admin */}
+							<FastLogin
+								onPress={() => {
+									login({ email: 'admin@example.com', password: 'myAdmin123&' });
+								}}
+							/>
+							<FastLogin
+								onPress={() => {
+									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+								}}
+							/>
+						</ContainerColumnForm>
+					</KeyboardView>
+				</SafeViewForm>
 			)}
 		</Formik>
 	);
@@ -112,4 +117,20 @@ export default Login;
 
 const TextUnder = styled(Text)`
 	text-decoration: underline;
+	text-align: center;
+`;
+const SafeViewForm = styled(SafeAreaView)`
+	flex: 1;
+	flex-direction: row;
+`;
+const KeyboardView = styled(KeyboardAvoidingView)`
+	flex: 1;
+	align-self: center;
+`;
+const ContainerColumnForm = styled(ContainerColumn)`
+	align-items: center;
+	gap: ${sizes.padding.in}px;
+`;
+const FastLogin = styled(TouchableOpacity)`
+	padding: ${2 * sizes.padding.main}px;
 `;

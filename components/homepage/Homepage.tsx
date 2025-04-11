@@ -30,6 +30,7 @@ function Homepage() {
 	const { t } = useTranslation();
 
 	const services = t('home:content:services', { returnObjects: true }) as string[];
+	const access = t('home:access', { returnObjects: true }) as string[];
 
 	const books = useStoreMap(StoreBooks.store, (store) => store);
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
@@ -68,7 +69,7 @@ function Homepage() {
 					)}
 					{schedules.data && (
 						<ContainerZone>
-							<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:times')} />
+							<TitleContent iconStart={IconNames.clock} label={t('home:titles:times')} />
 							<ViewList>
 								{schedules.data?.map((schedule) => (
 									<TextContent key={schedule.id}>
@@ -86,6 +87,15 @@ function Homepage() {
 							</ViewList>
 						</ContainerZone>
 					)}
+
+					<ContainerZone>
+						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:access')} />
+						<View>
+							{access.map((access, index) => (
+								<TextContent key={index}>{t('home:access:' + index)}</TextContent>
+							))}
+						</View>
+					</ContainerZone>
 
 					<TitleContent label={t('home:intro')} />
 					<TextContent>{t('home:content:presentation')}</TextContent>

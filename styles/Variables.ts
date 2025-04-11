@@ -37,6 +37,10 @@ export const sizes = {
 		imageItem: 110,
 		imageList: 140,
 	},
+	width: {
+		input: 200,
+		max: 400,
+	},
 };
 
 export const colors = {
