@@ -30,11 +30,11 @@ const BorrowBook = ({ bookId }: Props) => {
 			return;
 		}
 		// else borrow a book and update user and catalog data
-		bookStore.borrow(bookId);
+		bookStore.borrowBook(bookId);
 	};
 
 	const returnBook = (bookId: number) => {
-		bookStore.return(bookId);
+		bookStore.returnBook(bookId);
 	};
 
 	return (
