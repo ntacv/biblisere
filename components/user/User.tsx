@@ -3,7 +3,6 @@ import { Alert, ScrollView, Text, View } from 'react-native';
 
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
-import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
@@ -28,12 +27,11 @@ const UserPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-	const user = storeUser.id;
+	const user = useStoreMap(StoreUser.store, (store) => store.id);
+	const token = useStoreMap(StoreUser.store, (store) => store.token);
 
 	const deleteAccount = () => {
-		if (storeUser.id?.books.length > 0) {
+		if (user && user.books.length > 0) {
 			return renderAlert(t('user:deleteAccount'), t('user:deleteAccountError'), t('user:cancel'));
 		}
 
@@ -41,7 +39,7 @@ const UserPage = () => {
 			text: t('user:delete'),
 			onPress: () => {
 				api.users?.usersControllerRemove({
-					headers: { Authorization: `Bearer ${storeUser.token}` },
+					headers: { Authorization: `Bearer ${token}` },
 				});
 				StoreUser.actions.logout();
 				navigation.navigate(RouteNames.Homepage);
@@ -51,8 +49,8 @@ const UserPage = () => {
 
 	return (
 		<ViewPage header>
-			{!storeUser.token && <Login />}
-			{storeUser.token && (
+			{!token && <Login />}
+			{token && (
 				<ScrollViewContent>
 					{user && (
 						<ContainerColumn>
@@ -66,17 +64,15 @@ const UserPage = () => {
 										t('dates:month-year-long', { val: new Date(user.createdAt) })}
 								</TextContent>
 								<TextContent>
-									{!storeUser.id?.canBorrow ? (
-										<Text>{t('user:cantBorrow')}</Text>
+									{!user.canBorrow ? (
+										<Text>
+											{t('user:borrowed', {
+												val: user.books.length.toString(),
+												max: MAX_BOOKS.toString(),
+											})}
+										</Text>
 									) : (
-										<>
-											<Text>
-												{t('user:borrowed', {
-													val: storeUser.id?.books.length.toString(),
-													max: MAX_BOOKS.toString(),
-												})}
-											</Text>
-										</>
+										<Text>{t('user:cantBorrow')}</Text>
 									)}
 								</TextContent>
 
