@@ -4,7 +4,6 @@ import { Alert, ScrollView, Text, View } from 'react-native';
 import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
-import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
@@ -31,12 +30,11 @@ const UserPage = () => {
 	const { t } = useTranslation();
 	const [edit, setEdit] = React.useState(false);
 
-	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-	const user = storeUser.id;
+	const user = useStoreMap(StoreUser.store, (store) => store.id);
+	const token = useStoreMap(StoreUser.store, (store) => store.token);
 
 	const deleteAccount = () => {
-		if (storeUser.id?.books.length > 0) {
+		if (user && user.books.length > 0) {
 			return renderAlert(t('user:deleteAccount'), t('user:deleteAccountError'), t('user:cancel'));
 		}
 
@@ -44,7 +42,7 @@ const UserPage = () => {
 			text: t('user:delete'),
 			onPress: () => {
 				api.users?.usersControllerRemove({
-					headers: { Authorization: `Bearer ${storeUser.token}` },
+					headers: { Authorization: `Bearer ${token}` },
 				});
 				StoreUser.actions.logout();
 				navigation.navigate(RouteNames.Homepage);
@@ -54,8 +52,8 @@ const UserPage = () => {
 
 	return (
 		<ViewPage header>
-			{!storeUser.token && <Login />}
-			{storeUser.token && (
+			{!token && <Login />}
+			{token && (
 				<ScrollViewContent>
 					{user && (
 						<ContainerColumn>

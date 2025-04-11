@@ -102,7 +102,7 @@
 		"title": "Utilisateur",
 		"name": "John Doe",
 		"membership": "Membre depuis ",
-		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"borrowed": "Vous avez emprunté {{val}}/{{max}} livres",
 		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
 		"deleteAccount": "Supprimer le compte",
 		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte?",
