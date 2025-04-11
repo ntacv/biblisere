@@ -13,7 +13,6 @@ import { Api } from 'api/apiSwagger';
 import ImageBook from 'components/image/ImageBook';
 import TitleContent from 'components/text/TitleContent';
 
-import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
@@ -47,7 +46,6 @@ const ListRow = ({ title, booksId, onPressTitle }: Props) => {
 								key={index}
 								activeOpacity={0.8}
 								onPress={() => {
-									Logger.info('ListRow', 'bookId', bookId);
 									navigation.navigate(RouteNames.CatalogNavigator, {
 										screen: RouteNames.Details,
 										params: { bookId: book?.id } as any,
