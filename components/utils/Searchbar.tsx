@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 
 import Icon, { IconNames } from 'assets/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'styled-components/native';
 import * as styles from 'styles/Styles';
-import { sizes } from 'styles/Variables';
+import { colors, fonts, sizes } from 'styles/Variables';
 
 import Button from 'components/button/Button';
-import InputContent from 'components/utils/InputContent';
 
 interface Props {
 	onPress?: () => void;
@@ -21,7 +20,7 @@ const Searchbar = ({ onPress, value, home }: Props) => {
 
 	return (
 		<ViewSearchBar>
-			<InputContent
+			<InputSearch
 				placeholder={t('components:input:placeholder')}
 				maxLength={sizes.text.length}
 				onChangeText={(text) => {
@@ -53,4 +52,14 @@ const ViewSearchBar = styled(View)`
 	max-width: ${sizes.width.max}px;
 	gap: ${sizes.padding.main}px;
 	padding-left: ${sizes.padding.in}px;
+`;
+const InputSearch = styled(TextInput)`
+	border-bottom-color: ${colors.primary};
+	border-bottom-width: 2px;
+
+	font: ${fonts.content};
+
+	align-self: center;
+	height: ${sizes.text.input}px;
+	flex: 1;
 `;

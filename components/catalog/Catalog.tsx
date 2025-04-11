@@ -50,7 +50,6 @@ const Catalog = (props) => {
 	React.useEffect(() => {
 		if (propSearch !== '' && propSearch !== undefined) {
 			setSearch(propSearch);
-			filterBooks();
 		}
 	}, [propSearch]);
 
