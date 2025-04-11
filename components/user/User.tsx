@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { fonts, sizes } from 'styles/Variables';
+import { colors, fonts, sizes } from 'styles/Variables';
 
 import { Api } from 'api/apiSwagger';
 
@@ -72,6 +72,7 @@ const UserPage = () => {
 											label={t('user:edit')}
 											iconName={IconNames.editLine}
 											onPress={() => setEdit(true)}
+											background={colors.secondary}
 										/>
 									</>
 								)}

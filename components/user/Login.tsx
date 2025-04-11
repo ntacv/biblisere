@@ -97,6 +97,7 @@ const Login = (props) => {
 								label={t('login:signup')}
 								iconName={IconNames.userCheck}
 								onPress={() => props.setSignup(true)}
+								background={colors.secondary}
 							/>
 
 							{/* TEST COMPONENT to login as admin */}

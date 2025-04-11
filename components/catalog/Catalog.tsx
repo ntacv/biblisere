@@ -94,6 +94,7 @@ const Catalog = (props) => {
 							label={t('catalog:filter')}
 							iconName={IconNames.arrowDown}
 							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
+							background={colors.secondary}
 						/>
 						{categories.open && (
 							<ViewInline>

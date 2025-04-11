@@ -17,7 +17,7 @@ const ChooseLanguage = () => {
 				<Button
 					key={language}
 					label={t('components:translate:' + language)}
-					background={i18next.language !== language ? colors.clickable : colors.primary}
+					background={i18next.language !== language ? colors.primary : colors.clickable}
 					onPress={() => i18next.changeLanguage(language)}
 				/>
 			))}
