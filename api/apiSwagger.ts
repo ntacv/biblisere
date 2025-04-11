@@ -890,6 +890,17 @@ export const bookStore = {
 	},
 };
 
+export const initialUserFull = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+};
+export const initialUserLogin = {
+	email: '',
+	password: '',
+};
+
 export const filterBooks = (size = 3) => {
 	return useStoreMap(StoreBooks.store, (store) => store)
 		.books?.filter((book, index) => book?.author === 'Aldous Huxley')

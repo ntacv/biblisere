@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, userStore } from 'api/apiSwagger';
+import { Api, initialUserLogin, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
@@ -55,7 +55,7 @@ const Login = () => {
 		<Formik
 			onSubmit={(values) => login(values)}
 			validationSchema={formSchema}
-			initialValues={{ email: '', password: '' }}
+			initialValues={initialUserLogin}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>
