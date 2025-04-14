@@ -109,7 +109,12 @@
 		"title": "Utilisateur",
 		"name": "John Doe",
 		"borrowed": "Vous avez emprunté {{val}}/10 livres",
-		"cantBorrow": "Vous ne pouvez pas emprunter de livres"
+		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
+		"deleteAccount": "Supprimer le compte",
+		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte?",
+		"deleteAccountError": "Vous devez rendre tous vos livres avant de supprimer votre compte.",
+		"cancel": "Annuler",
+		"delete": "Supprimer"
 	},
 	"login": {
 		"title": "Connexion",
