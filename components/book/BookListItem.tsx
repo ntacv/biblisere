@@ -44,7 +44,6 @@ const BookListItem = ({ bookId }: Props) => {
 						<TextContent>
 							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 						</TextContent>
-						{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 
 						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ViewSide>
