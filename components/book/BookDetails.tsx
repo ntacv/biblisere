@@ -8,8 +8,6 @@ import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
-
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import ImageBook from 'components/image/ImageBook';
@@ -18,8 +16,6 @@ import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
 import BorrowBook from './BorrowBook';
-
-const api = new Api();
 
 export interface ItemProps {
 	bookId: number;
@@ -69,7 +65,7 @@ const BookDetails = (props) => {
 						<ListRow title={t('details:sameAuthor')} booksId={[37]} />
 						{/* 3 books from the same category */}
 
-						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
+						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ContainerZone>
 				</ContainerColumn>
 			</ScrollViewContent>

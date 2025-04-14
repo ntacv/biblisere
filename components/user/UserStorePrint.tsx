@@ -5,6 +5,8 @@ import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUsers from 'stores/user';
 
+import { MAX_BOOKS } from 'api/apiSwagger';
+
 const UserStorePrint = () => {
 	const { t } = useTranslation();
 
@@ -26,7 +28,12 @@ const UserStorePrint = () => {
 				<Text>{t('user:cantBorrow')}</Text>
 			) : (
 				<>
-					<Text>{t('user:borrowed', { val: storeUser.id?.books.length.toString() })}</Text>
+					<Text>
+						{t('user:borrowed', {
+							val: storeUser.id?.books.length.toString(),
+							max: MAX_BOOKS.toString(),
+						})}
+					</Text>
 					<Text>{t('catalog:books') + t('config:text:colon')}</Text>
 					<View>
 						{storeUser.id?.books?.map((book) => (

@@ -96,6 +96,7 @@
 		"update": "Update",
 		"delete": "Delete",
 		"create": "Create",
+		"limitBooks": "You have reach the limit of {{val}} borrowed books",
 		"available": "Available",
 		"unavailable": "Out of stock",
 		"borrowed": "Borrowed"
@@ -108,7 +109,7 @@
 	"user": {
 		"title": "User",
 		"name": "John Doe",
-		"borrowed": "You have borrowed {{val}}/10 books",
+		"borrowed": "You have borrowed {{val}}/{{max}} books",
 		"cantBorrow": "You cannot borrow any books",
 		"deleteAccount": "Delete account",
 		"deleteAccountConfirm": "Are you sure you want to delete your account?",

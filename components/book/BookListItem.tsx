@@ -2,43 +2,28 @@ import * as React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
-
-import { Api, Book } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import BorrowBook from 'components/book/BorrowBook';
 import ImageBook from 'components/image/ImageBook';
 
-import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
-const api = new Api();
-
-export interface ItemProps {
-	book: Book;
+export interface Props {
+	bookId: number;
 }
 
-const borrowBook = (book: Book) => {
-	const token = StoreUser.store.getState().token;
-
-	api.books
-		.booksControllerBorrow(book.id, {
-			headers: { Authorization: `Bearer ${token}` },
-		})
-		.catch((error) => {
-			Logger.warn('Error borrowing book:', error);
-		});
-};
-
-const BookListItem = ({ book }: ItemProps) => {
+const BookListItem = ({ bookId }: Props) => {
 	const { t } = useTranslation();
 	const navigation = useNav();
 
 	const storeUser = StoreUser.store.getState();
+	const book = StoreBooks.store.getState().books.find((book) => book.id === bookId);
 
 	return (
 		<TouchableOpacity
@@ -56,7 +41,7 @@ const BookListItem = ({ book }: ItemProps) => {
 						</TextContent>
 						{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 
-						{storeUser.id?.canBorrow && <BorrowBook bookProp={book} />}
+						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ViewSide>
 				</ViewListItem>
 			</ContainerZone>

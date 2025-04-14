@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +74,7 @@ const UserPage = () => {
 };
 export default UserPage;
 
-const ScrollViewContent = styled.ScrollView`
+const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
 
