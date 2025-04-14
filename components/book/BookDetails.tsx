@@ -25,11 +25,24 @@ const BookDetails = (props) => {
 	const { t } = useTranslation();
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+	const books = useStoreMap(StoreBook.store, (store) => store.books);
 
 	const bookId = props.route.params.bookId;
-	const storeBook = useStoreMap(StoreBook.store, (store) => store);
+	const book = books.find((book) => book.id === bookId);
 
-	const book = storeBook.books.find((book) => book.id === bookId);
+	const sameAuthorBooks = books
+		?.filter((bookFiltered) => bookFiltered?.author === book?.author && bookFiltered.id !== bookId)
+		.slice(0, 3)
+		.map((book) => book.id);
+
+	const sameCategoryBooks = books
+		?.filter((bookFiltered) => {
+			return bookFiltered?.categories.some((category) => {
+				return book?.categories.some((categoryBook) => category.id === categoryBook.id);
+			});
+		})
+		.slice(0, 3)
+		.map((book) => book.id);
 
 	return (
 		<ViewPage header returnIcon>
@@ -61,9 +74,16 @@ const BookDetails = (props) => {
 							{book.description}
 							{t('lorem:long') + t('lorem:long')}
 						</TextContent>
+
 						{/* 3 books from author */}
-						<ListRow title={t('details:sameAuthor')} booksId={[37]} />
+						{sameAuthorBooks?.length > 0 && (
+							<ListRow booksId={sameAuthorBooks} title={t('details:sameAuthor')} />
+						)}
+
 						{/* 3 books from the same category */}
+						{sameCategoryBooks?.length > 0 && (
+							<ListRow booksId={sameCategoryBooks} title={t('details:sameKind')} />
+						)}
 
 						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ContainerZone>
