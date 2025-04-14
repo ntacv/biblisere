@@ -9,7 +9,14 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, CreateUserDto, userStore } from 'api/apiSwagger';
+import {
+	Api,
+	CreateUserDto,
+	REGEX_EMAIL,
+	REGEX_PASSWORD,
+	initialUserSignup,
+	userStore,
+} from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -21,9 +28,6 @@ const api = new Api();
 
 const Signup = (props) => {
 	const { t } = useTranslation();
-
-	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 	const formSchema = Yup.object().shape({
 		firstName: Yup.string().required(t('user:required')),
@@ -54,12 +58,7 @@ const Signup = (props) => {
 						userStore.update();
 					})
 					.catch((error) => {
-						Logger.warn('Error login: ', error);
-						if (error.status === 401) {
-							alert(t('login:wrongLogin'));
-						} else {
-							alert(t('login:serverError'));
-						}
+						throw error;
 					});
 			})
 			.catch((error) => {
@@ -76,7 +75,7 @@ const Signup = (props) => {
 		<Formik
 			onSubmit={(values) => signup(values)}
 			validationSchema={formSchema}
-			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+			initialValues={initialUserSignup}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>

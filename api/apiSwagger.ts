@@ -896,3 +896,9 @@ export const filterBooks = (size = 3) => {
 		.slice(0, size)
 		.map((book) => book.id);
 };
+
+export const initialUserLogin = { email: '', password: '' };
+export const initialUserSignup = { firstName: '', lastName: '', email: '', password: '' };
+
+export const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+export const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
