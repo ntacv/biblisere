@@ -136,6 +136,8 @@
 	"admin": {
 		"title": "Admin",
 		"name": "Admin",
+		"users": "Manage users",
+		"books": "Manage books",
 		"refused": "You are not authorized to access this page",
 		"canBorrow": "Can borrow",
 		"isAdmin": "Is admin",

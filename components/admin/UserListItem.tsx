@@ -10,13 +10,14 @@ import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { colors, fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
+import { Api, Role, userStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import Button from 'components/button/Button';
+import UpdateUser from 'components/user/UpdateUser';
 import renderAlert from 'components/utils/renderAlert';
 
-import useNav from 'utils/navigation';
+import Logger from 'utils/Logger';
 
 const api = new Api();
 
@@ -26,11 +27,13 @@ export interface Props {
 
 const UserListItem = ({ userId }: Props) => {
 	const { t } = useTranslation();
-	const navigation = useNav();
 	const [details, setDetails] = React.useState(true);
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 	const user = StoreAdmin.store.getState().users.find((user) => user.id === userId);
+
+	const [canBorrow, setCanBorrow] = React.useState(user.canBorrow);
+	const [isAdmin, setIsAdmin] = React.useState(user.role === Role.admin);
 
 	const deleteUser = (userId) => {
 		// return all books of the user
@@ -51,6 +54,56 @@ const UserListItem = ({ userId }: Props) => {
 		});
 	};
 
+	const updateCanBorrow = (canBorrow: boolean) => {
+		api.admin
+			?.adminControllerUpdateUser(
+				user.id,
+				{
+					canBorrow: canBorrow,
+				},
+				{
+					headers: { Authorization: `Bearer ${storeUser.token}` },
+				},
+			)
+			.then((response) => {
+				Logger.info('update response ', response.data);
+				userStore.update();
+			})
+			.catch((error) => {
+				Logger.warn('Error update: ', error);
+				if (error.status === 401) {
+					alert(t('login:wrongLogin'));
+				} else {
+					alert(t('login:serverError'));
+				}
+			});
+	};
+
+	const updateAdminRights = (isAdmin: boolean) => {
+		return api.admin
+			?.adminControllerUpdateUser(
+				user.id,
+				{
+					role: isAdmin ? Role.admin : Role.customer,
+				},
+				{
+					headers: { Authorization: `Bearer ${storeUser.token}` },
+				},
+			)
+			.then((response) => {
+				Logger.info('update response ', response.data);
+				userStore.update();
+			})
+			.catch((error) => {
+				Logger.warn('Error update: ', error);
+				if (error.status === 401) {
+					alert(t('login:wrongLogin'));
+				} else {
+					alert(t('login:serverError'));
+				}
+			});
+	};
+
 	return (
 		<TouchableOpacity activeOpacity={0.8} onPress={() => setDetails(!details)}>
 			<ContainerZone>
@@ -61,34 +114,43 @@ const UserListItem = ({ userId }: Props) => {
 						<TextContent>
 							{t('dates:month-year-long', { val: new Date(user.createdAt) })}
 						</TextContent>
+						<Text>can {canBorrow ? 'true' : 'false'}</Text>
 						{details && (
-							<ViewRow>
-								<BouncyCheckbox
-									size={20}
-									fillColor={colors.primary}
-									unFillColor={colors.secondary}
-									innerIconStyle={{ borderWidth: 2 }}
-									text={t('admin:canBorrow')}
-									onPress={(isChecked: boolean) => {
-										console.log(isChecked);
-									}}
-									style={{ flex: 1, padding: 5 }}
-									textStyle={{ textDecorationLine: 'none', color: colors.content }}
-								/>
+							<>
+								<ViewRow>
+									<BouncyCheckbox
+										size={20}
+										fillColor={colors.primary}
+										unFillColor={colors.secondary}
+										innerIconStyle={{ borderWidth: 2 }}
+										text={t('admin:canBorrow')}
+										isChecked={canBorrow}
+										onPress={(clicked: boolean) => {
+											setCanBorrow(clicked);
+											updateCanBorrow(clicked);
+										}}
+										style={{ flex: 1, padding: 5 }}
+										textStyle={{ textDecorationLine: 'none', color: colors.content }}
+									/>
 
-								<BouncyCheckbox
-									text={t('admin:isAdmin')}
-									size={20}
-									fillColor={colors.primary}
-									unFillColor={colors.secondary}
-									innerIconStyle={{ borderWidth: 2 }}
-									onPress={(isChecked: boolean) => {
-										console.log(isChecked);
-									}}
-									style={{ flex: 1, padding: 10 }}
-									textStyle={{ textDecorationLine: 'none', color: colors.content }}
-								/>
-							</ViewRow>
+									<BouncyCheckbox
+										text={t('admin:isAdmin')}
+										size={20}
+										fillColor={colors.primary}
+										unFillColor={colors.secondary}
+										innerIconStyle={{ borderWidth: 2 }}
+										isChecked={isAdmin}
+										onPress={(isChecked: boolean) => {
+											setIsAdmin(isChecked);
+											updateAdminRights(isChecked);
+										}}
+										style={{ flex: 1, padding: 10 }}
+										textStyle={{ textDecorationLine: 'none', color: colors.content }}
+									/>
+								</ViewRow>
+
+								<UpdateUser userId={userId} userProp={user} admin />
+							</>
 						)}
 					</ViewSide>
 					<View>

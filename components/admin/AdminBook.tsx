@@ -30,7 +30,7 @@ const AdminBook = () => {
 	return (
 		<>
 			<ContainerZone>
-				<TitleContent label={t('menu:books')} />
+				<TitleContent label={t('admin:books')} />
 			</ContainerZone>
 		</>
 	);

@@ -61,7 +61,7 @@ const AdminUser = () => {
 					<Signup isAdmin />
 				</ContainerZone>
 			)}
-			<TitleContent label={t('user:title')} />
+			<TitleContent label={t('admin:users')} />
 			<ViewList>
 				{storeAdmin.users.length > 0 &&
 					storeAdmin.users.map((user, index) => <UserListItem key={index} userId={user.id} />)}

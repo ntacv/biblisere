@@ -4,12 +4,13 @@ import { KeyboardAvoidingView, SafeAreaView, Text, View } from 'react-native';
 import { Formik } from 'formik';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreAdmin from 'stores/admin';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, UpdateUserDto, userStore } from 'api/apiSwagger';
+import { AdminUpdateUserDto, Api, UpdateUserDto, User, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -19,7 +20,14 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
-const UpdateUser = (props) => {
+interface Props {
+	userId?: number;
+	userProp?: User;
+	setEdit?: (edit: boolean) => void;
+	admin?: boolean;
+}
+
+const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 	const { t } = useTranslation();
 
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
@@ -63,9 +71,38 @@ const UpdateUser = (props) => {
 			});
 	};
 
+	const updateAdmin = ({ ...props }: AdminUpdateUserDto) => {
+		Logger.info('update input Admin ', props);
+		const toUpdate: AdminUpdateUserDto = {
+			email: !!props.email ? props.email : userProp.email,
+			firstName: !!props.firstName ? props.firstName : userProp.firstName,
+			lastName: !!props.lastName ? props.lastName : userProp.lastName,
+		};
+		Logger.info('update input Admin ', toUpdate);
+		return api.admin
+			?.adminControllerUpdateUser(userId, toUpdate, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then((response) => {
+				Logger.info('update response ', response.data);
+				//get the updated user and sync it to the admin store
+				StoreAdmin.actions.updateUser(user);
+			})
+			.catch((error) => {
+				Logger.warn('Error update: ', error);
+				if (error.status === 401) {
+					alert(t('login:wrongLogin'));
+				} else {
+					alert(t('login:serverError'));
+				}
+			});
+	};
+
 	return (
 		<Formik
-			onSubmit={(values) => update(values)}
+			onSubmit={(values) => {
+				admin ? updateAdmin(values) : update(values);
+			}}
 			validationSchema={formSchema}
 			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
 		>
@@ -73,7 +110,7 @@ const UpdateUser = (props) => {
 				<SafeViewForm>
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
-							<TitleContent label={t('user:updateUser')} />
+							{!admin && <TitleContent label={t('user:updateUser')} />}
 
 							<InputContent
 								inputError={!!errors.firstName}
@@ -113,7 +150,7 @@ const UpdateUser = (props) => {
 								label={t('user:save')}
 								onPress={() => {
 									handleSubmit();
-									props.setEdit(false);
+									if (!admin) setEdit(false);
 								}}
 							/>
 						</ContainerColumnForm>
@@ -138,4 +175,8 @@ const KeyboardView = styled(KeyboardAvoidingView)`
 const ContainerColumnForm = styled(View)`
 	align-items: center;
 	gap: ${sizes.padding.in}px;
+`;
+const ViewRow = styled(View)`
+	flex-direction: row;
+	gap: ${sizes.padding.main}px;
 `;

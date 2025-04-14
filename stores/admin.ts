@@ -11,9 +11,10 @@ const initialState: AdminState = {
 };
 
 export const actions = {
-	setUsers: createEvent<User[]>('SET_USERS'),
-	deleteUser: createEvent<number>('DELETE_USER'),
-	logout: createEvent('LOGOUT'),
+	setUsers: createEvent<User[]>('ADMIN_SET_USERS'),
+	deleteUser: createEvent<number>('ADMIN_DELETE_USER'),
+	updateUser: createEvent<User>('ADMIN_UPDATE_USER'),
+	logout: createEvent('ADMIN_LOGOUT'),
 };
 
 export const store = createStore(initialState, { name: 'User_v1' })
@@ -24,6 +25,10 @@ export const store = createStore(initialState, { name: 'User_v1' })
 	.on(actions.deleteUser, (store, userId) => ({
 		...store,
 		users: store.users.filter((user) => user.id !== userId),
+	}))
+	.on(actions.updateUser, (store, newUser) => ({
+		...store,
+		users: store.users.map((user) => (user.id === newUser.id ? { ...user, ...newUser } : user)),
 	}))
 	.reset(actions.logout);
 
