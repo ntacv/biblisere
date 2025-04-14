@@ -19,14 +19,11 @@ import TitleContent from 'components/text/TitleContent';
 import Signup from 'components/user/Signup';
 
 import Logger from 'utils/Logger';
-import useNav from 'utils/navigation';
 
 const api = new Api();
 
 const AdminUser = () => {
-	const navigation = useNav();
 	const { t } = useTranslation();
-	const [edit, setEdit] = React.useState(false);
 	const [signup, setSignup] = React.useState(false);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
@@ -64,7 +61,9 @@ const AdminUser = () => {
 			<TitleContent label={t('admin:users')} />
 			<ViewList>
 				{storeAdmin.users.length > 0 &&
-					storeAdmin.users.map((user, index) => <UserListItem key={index} userId={user.id} />)}
+					storeAdmin.users.map((user, index) => (
+						<UserListItem key={index} userId={user.id} setSignup={setSignup} />
+					))}
 			</ViewList>
 		</>
 	);

@@ -23,22 +23,25 @@ const api = new Api();
 
 export interface Props {
 	userId: number;
+	setSignup?: (signup: boolean) => void;
 }
 
-const UserListItem = ({ userId }: Props) => {
+const UserListItem = ({ userId, setSignup }: Props) => {
 	const { t } = useTranslation();
-	const [details, setDetails] = React.useState(true);
+	const [details, setDetails] = React.useState(false);
 
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-	const user = StoreAdmin.store.getState().users.find((user) => user.id === userId);
+	const currentUser = useStoreMap(StoreAdmin.store, (store) => store.users).find(
+		(user) => user.id === userId,
+	);
+	const token = useStoreMap(StoreUser.store, (store) => store.token);
 
-	const [canBorrow, setCanBorrow] = React.useState(user.canBorrow);
-	const [isAdmin, setIsAdmin] = React.useState(user.role === Role.admin);
+	const [canBorrow, setCanBorrow] = React.useState(currentUser.canBorrow);
+	const [isAdmin, setIsAdmin] = React.useState(currentUser.role === Role.admin);
 
 	const deleteUser = (userId) => {
 		// return all books of the user
 		// alert that all books will be returned
-		if (StoreAdmin.store.getState().users.find((user) => user.id === userId).books.length > 0) {
+		if (currentUser.books.length > 0) {
 			return renderAlert(t('user:deleteAccount'), t('user:deleteAccountError'), t('user:cancel'));
 		}
 
@@ -47,7 +50,7 @@ const UserListItem = ({ userId }: Props) => {
 			text: t('user:delete'),
 			onPress: () => {
 				api.admin?.adminControllerDeleteUser(userId, {
-					headers: { Authorization: `Bearer ${storeUser.token}` },
+					headers: { Authorization: `Bearer ${token}` },
 				});
 				StoreAdmin.actions.deleteUser(userId);
 			},
@@ -57,12 +60,12 @@ const UserListItem = ({ userId }: Props) => {
 	const updateCanBorrow = (canBorrow: boolean) => {
 		api.admin
 			?.adminControllerUpdateUser(
-				user.id,
+				currentUser.id,
 				{
 					canBorrow: canBorrow,
 				},
 				{
-					headers: { Authorization: `Bearer ${storeUser.token}` },
+					headers: { Authorization: `Bearer ${token}` },
 				},
 			)
 			.then((response) => {
@@ -82,12 +85,12 @@ const UserListItem = ({ userId }: Props) => {
 	const updateAdminRights = (isAdmin: boolean) => {
 		return api.admin
 			?.adminControllerUpdateUser(
-				user.id,
+				currentUser.id,
 				{
 					role: isAdmin ? Role.admin : Role.customer,
 				},
 				{
-					headers: { Authorization: `Bearer ${storeUser.token}` },
+					headers: { Authorization: `Bearer ${token}` },
 				},
 			)
 			.then((response) => {
@@ -105,16 +108,21 @@ const UserListItem = ({ userId }: Props) => {
 	};
 
 	return (
-		<TouchableOpacity activeOpacity={0.8} onPress={() => setDetails(!details)}>
+		<TouchableOpacity
+			activeOpacity={0.8}
+			onPress={() => {
+				setDetails(!details);
+				setSignup(false);
+			}}
+		>
 			<ContainerZone>
 				<ViewListItem>
 					<ViewSide>
-						<TextBold>{user.firstName + ' ' + user.lastName}</TextBold>
-						<TextContent>{user.email}</TextContent>
+						<TextBold>{currentUser.firstName + ' ' + currentUser.lastName}</TextBold>
+						<TextContent>{currentUser.email}</TextContent>
 						<TextContent>
-							{t('dates:month-year-long', { val: new Date(user.createdAt) })}
+							{t('dates:month-year-long', { val: new Date(currentUser.createdAt) })}
 						</TextContent>
-						<Text>can {canBorrow ? 'true' : 'false'}</Text>
 						{details && (
 							<>
 								<ViewRow>
@@ -149,18 +157,18 @@ const UserListItem = ({ userId }: Props) => {
 									/>
 								</ViewRow>
 
-								<UpdateUser userId={userId} userProp={user} admin />
+								<UpdateUser userId={userId} userProp={currentUser} admin />
 							</>
 						)}
 					</ViewSide>
-					<View>
+					<ViewAbsolute>
 						<Button
 							iconName={IconNames.x}
 							onPress={() => {
-								deleteUser(user.id);
+								deleteUser(currentUser.id);
 							}}
 						/>
-					</View>
+					</ViewAbsolute>
 				</ViewListItem>
 			</ContainerZone>
 		</TouchableOpacity>
@@ -178,6 +186,11 @@ const ViewSide = styled(View)`
 const ViewRow = styled(View)`
 	flex-direction: row;
 	gap: ${sizes.padding.main}px;
+`;
+const ViewAbsolute = styled(View)`
+	position: absolute;
+	right: 0;
+	top: 0;
 `;
 
 const TextContent = styled(Text)`

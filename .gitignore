@@ -71,3 +71,5 @@ yarn-error.*
 
 # editor
 .vscode/
+
+baseurl.ts

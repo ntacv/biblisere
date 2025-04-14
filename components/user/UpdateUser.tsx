@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { KeyboardAvoidingView, SafeAreaView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, View } from 'react-native';
 
 import { Formik } from 'formik';
 import { useStoreMap } from 'node_modules/effector-react';
@@ -32,6 +32,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
 	const user = useStoreMap(StoreUser.store, (store) => store.id);
+	const adminStore = useStoreMap(StoreAdmin.store, (store) => store.users);
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -43,6 +44,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 		password: Yup.string().matches(REGEX_PASSWORD, t('user:wrongPassword')).optional(),
 	});
 
+	// Update personal user info from the user page
 	const update = ({ ...props }: UpdateUserDto) => {
 		Logger.info('update input ', props);
 		return api.users
@@ -71,6 +73,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 			});
 	};
 
+	// Update a user info from the admin page
 	const updateAdmin = ({ ...props }: AdminUpdateUserDto) => {
 		Logger.info('update input Admin ', props);
 		const toUpdate: AdminUpdateUserDto = {
@@ -84,9 +87,25 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				Logger.info('update response ', response.data);
 				//get the updated user and sync it to the admin store
-				StoreAdmin.actions.updateUser(user);
+				api.admin
+					?.adminControllerFindOneUser(userId, {
+						headers: { Authorization: `Bearer ${token}` },
+					})
+					.then((response) => {
+						Logger.info('update response ', response.data);
+						StoreAdmin.actions.updateUser(response.data);
+					})
+					.then(() => {
+						if (adminStore.map((user) => user.id === userId))
+							Logger.info(
+								'update response ',
+								StoreAdmin.store.map((store) => store.users),
+							);
+					})
+					.catch((error) => {
+						Logger.warn('Error fetching updated user', error);
+					});
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
@@ -162,9 +181,6 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 };
 export default UpdateUser;
 
-const TextUnder = styled(Text)`
-	text-decoration: underline;
-`;
 const SafeViewForm = styled(SafeAreaView)`
 	flex: 1;
 	flex-direction: row;
@@ -175,8 +191,4 @@ const KeyboardView = styled(KeyboardAvoidingView)`
 const ContainerColumnForm = styled(View)`
 	align-items: center;
 	gap: ${sizes.padding.in}px;
-`;
-const ViewRow = styled(View)`
-	flex-direction: row;
-	gap: ${sizes.padding.main}px;
 `;
