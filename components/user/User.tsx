@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { Alert, ScrollView, Text, View } from 'react-native';
 
-import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { colors, fonts, sizes } from 'styles/Variables';
+import { fonts, sizes } from 'styles/Variables';
 
 import { Api } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
-import Button from 'components/button/Button';
 import TextAction from 'components/button/TextAction';
 import Login from 'components/user/Login';
 import UpdateUser from 'components/user/UpdateUser';
@@ -67,13 +65,7 @@ const UserPage = () => {
 								{edit && <UpdateUser setEdit={setEdit} />}
 								{!edit && (
 									<>
-										<UserInfo />
-										<Button
-											label={t('user:edit')}
-											iconName={IconNames.editLine}
-											onPress={() => setEdit(true)}
-											background={colors.secondary}
-										/>
+										<UserInfo setEdit={setEdit} />
 									</>
 								)}
 							</ContainerZone>

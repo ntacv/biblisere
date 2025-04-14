@@ -51,7 +51,7 @@
 	},
 	"home": {
 		"name": "Biblisère",
-		"title": "Page d'accueil",
+		"title": "Accueil",
 		"intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
 		"explore": "Explorer",
 		"content": {
@@ -67,7 +67,7 @@
 		},
 		"titles": {
 			"services": "Nos Services",
-			"news": "Nouvelles",
+			"news": "Dernières arrivées",
 			"popular": "Populaire",
 			"recommended": "Recommandé",
 			"access": "Accès",
@@ -101,7 +101,7 @@
 		"sameKind": "Du même genre"
 	},
 	"user": {
-		"title": "Utilisateur",
+		"title": "Mon compte",
 		"name": "John Doe",
 		"membership": "Membre depuis ",
 		"borrowed": "Vous avez emprunté {{val}}/10 livres",
@@ -135,7 +135,7 @@
 		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {
-		"title": "Admin",
+		"title": "Administration",
 		"name": "Admin"
 	},
 	"footer": {

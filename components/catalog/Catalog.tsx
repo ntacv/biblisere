@@ -91,7 +91,7 @@ const Catalog = (props) => {
 					<Searchbar value={{ search, setSearch }} onPress={searchBooks} />
 					<View>
 						<Button
-							label={t('catalog:filter')}
+							label={t('components:filter:filter')}
 							iconName={IconNames.arrowDown}
 							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
 							background={colors.secondary}
