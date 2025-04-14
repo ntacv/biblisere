@@ -14,7 +14,7 @@ import {
 	CreateUserDto,
 	REGEX_EMAIL,
 	REGEX_PASSWORD,
-	initialUserSignup,
+	initialUserFull,
 	userStore,
 } from 'api/apiSwagger';
 
@@ -75,7 +75,7 @@ const Signup = (props) => {
 		<Formik
 			onSubmit={(values) => signup(values)}
 			validationSchema={formSchema}
-			initialValues={initialUserSignup}
+			initialValues={initialUserFull}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>
