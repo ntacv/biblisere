@@ -1,3 +1,4 @@
+import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 
 import Logger from 'utils/Logger';
@@ -811,7 +812,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
 	};
 }
 
+export const MAX_BOOKS = 10;
 export const api = new Api();
+
 export const userStore = {
 	update: () => {
 		const token = StoreUser.store.getState().token;
@@ -830,15 +833,16 @@ export const userStore = {
 export const bookStore = {
 	update: () => {
 		api.books
-			.booksControllerFindAll()
+			.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
 			.then((response) => {
-				Logger.info('Books fetched:', response);
+				StoreBooks.actions.setBooks(response.data);
+				Logger.info('Books fetched');
 			})
 			.catch((error) => {
 				Logger.warn('Error fetching books:', error);
 			});
 	},
-	borrow: (bookId) => {
+	borrowBook: (bookId: number, update?: boolean) => {
 		const token = StoreUser.store.getState().token;
 
 		api.books
@@ -846,15 +850,20 @@ export const bookStore = {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				userStore.update(); // Update user data after borrowing a book
-				bookStore.update(); // Update book data after borrowing a book
-				Logger.info('Book borrowed:', response);
+				api.books.booksControllerFindOne(bookId).then((response) => {
+					const newBook = response.data;
+					StoreBooks.actions.updateBook(newBook);
+					StoreUser.actions.borrowBook(newBook);
+				});
 			})
 			.catch((error) => {
 				Logger.warn('Error borrowing book:', error);
 			});
+
+		if (update) bookStore.update();
 	},
-	return: (bookId) => {
+
+	returnBook: (bookId: number, update?: boolean) => {
 		const token = StoreUser.store.getState().token;
 
 		api.books
@@ -862,12 +871,15 @@ export const bookStore = {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((response) => {
-				userStore.update(); // Update user data after returning a book
-				bookStore.update(); // Update book data after returning a book
-				Logger.info('Book returned:', response);
+				api.books.booksControllerFindOne(bookId).then((response) => {
+					const newBook = response.data;
+					StoreBooks.actions.updateBook(newBook);
+					StoreUser.actions.returnBook(newBook);
+				});
 			})
 			.catch((error) => {
 				Logger.warn('Error returning book:', error);
 			});
+		if (update) bookStore.update();
 	},
 };

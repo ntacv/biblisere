@@ -1,53 +1,41 @@
 import * as React from 'react';
 import { Text } from 'react-native';
 
+import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
+import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
 import { fonts } from 'styles/Variables';
 
-import { Api, Book, bookStore } from 'api/apiSwagger';
+import { MAX_BOOKS, bookStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 
-import Logger from 'utils/Logger';
-
-const api = new Api();
-
-export interface ItemProps {
-	bookProp: Book;
+export interface Props {
+	bookId: number;
 }
 
-const borrowBook = (book: Book) => {
-	const token = StoreUser.store.getState().token;
-
-	api.books
-		.booksControllerBorrow(book.id, {
-			headers: { Authorization: `Bearer ${token}` },
-		})
-		.catch((error) => {
-			Logger.warn('Error borrowing book:', error);
-		});
-	api.users
-		.usersControllerGetMe({
-			headers: { Authorization: `Bearer ${token}` },
-		})
-		.then((response) => {
-			StoreUser.actions.setUser(response.data);
-		})
-		.catch((error) => {
-			Logger.warn('Error fetching user data:', error);
-		});
-};
-
-const returnBook = (book: Book) => {
-	bookStore.return(book.id);
-};
-
-const BorrowBook = (props: ItemProps) => {
-	const book = props.bookProp;
-
+const BorrowBook = ({ bookId }: Props) => {
 	const { t } = useTranslation();
+
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+
+	const book = StoreBooks.store.getState().books.find((book) => book.id === bookId);
+
+	const borrowBook = (bookId: number) => {
+		// check if user has reached the limit of borrowed books
+		if (storeUser.id?.books?.length >= MAX_BOOKS) {
+			alert(t('catalog:limitBooks', { val: MAX_BOOKS }));
+			return;
+		}
+		// else borrow a book and update user and catalog data
+		bookStore.borrowBook(bookId);
+	};
+
+	const returnBook = (bookId: number) => {
+		bookStore.returnBook(bookId);
+	};
 
 	return (
 		<>
@@ -58,14 +46,14 @@ const BorrowBook = (props: ItemProps) => {
 				<Button
 					label={t('catalog:add')}
 					iconName="bookmark"
-					onPress={() => borrowBook(book)}
+					onPress={() => borrowBook(book.id)}
 					alignLeft
 				/>
 			) : (
 				<Button
 					label={t('catalog:remove')}
 					iconName="x"
-					onPress={() => returnBook(book)}
+					onPress={() => returnBook(book.id)}
 					alignLeft
 				/>
 			)}

@@ -9,7 +9,7 @@ import * as StoreSchedules from 'stores/schedules';
 import { styled } from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
+import { Api, bookStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -38,11 +38,8 @@ function Homepage() {
 	const newBooks = books.books?.slice(0, 5).map((book) => book.id);
 
 	React.useEffect(() => {
-		api.books
-			?.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
-			.then((response) => {
-				StoreBooks.actions.setBooks(response.data);
-			});
+		bookStore.update();
+
 		api.schedules?.schedulesControllerFindAllSchedules().then((response) => {
 			StoreSchedules.actions.setSchedules(response.data);
 		});
