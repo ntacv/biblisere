@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
@@ -8,7 +8,7 @@ import StoreAdmin from 'stores/admin';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { fonts, sizes } from 'styles/Variables';
+import { colors, sizes } from 'styles/Variables';
 
 import { Api } from 'api/apiSwagger';
 
@@ -52,6 +52,7 @@ const AdminUser = () => {
 				label={t('admin:add')}
 				iconName={IconNames.userCheck}
 				onPress={() => setSignup(!signup)}
+				background={colors.secondary}
 			/>
 			{signup && (
 				<ContainerZone>
@@ -71,19 +72,6 @@ const AdminUser = () => {
 
 export default AdminUser;
 
-const ScrollViewContent = styled(ScrollView)`
-	flex: 1;
-`;
-const TextContent = styled(Text)`
-	font: ${fonts.content};
-`;
-const ViewRow = styled(View)`
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: ${sizes.padding.main}px;
-	padding: ${sizes.padding.main}px;
-`;
 const ViewList = styled(View)`
 	gap: ${sizes.padding.main}px;
 `;

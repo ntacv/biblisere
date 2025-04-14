@@ -46,7 +46,6 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 
 	// Update personal user info from the user page
 	const update = ({ ...props }: UpdateUserDto) => {
-		Logger.info('update input ', props);
 		return api.users
 			?.usersControllerUpdate(
 				{
@@ -75,13 +74,11 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 
 	// Update a user info from the admin page
 	const updateAdmin = ({ ...props }: AdminUpdateUserDto) => {
-		Logger.info('update input Admin ', props);
 		const toUpdate: AdminUpdateUserDto = {
 			email: !!props.email ? props.email : userProp.email,
 			firstName: !!props.firstName ? props.firstName : userProp.firstName,
 			lastName: !!props.lastName ? props.lastName : userProp.lastName,
 		};
-		Logger.info('update input Admin ', toUpdate);
 		return api.admin
 			?.adminControllerUpdateUser(userId, toUpdate, {
 				headers: { Authorization: `Bearer ${token}` },
@@ -93,15 +90,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 						headers: { Authorization: `Bearer ${token}` },
 					})
 					.then((response) => {
-						Logger.info('update response ', response.data);
 						StoreAdmin.actions.updateUser(response.data);
-					})
-					.then(() => {
-						if (adminStore.map((user) => user.id === userId))
-							Logger.info(
-								'update response ',
-								StoreAdmin.store.map((store) => store.users),
-							);
 					})
 					.catch((error) => {
 						Logger.warn('Error fetching updated user', error);

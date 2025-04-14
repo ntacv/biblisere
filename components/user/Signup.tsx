@@ -15,6 +15,7 @@ import { Api, CreateUserDto, userStore } from 'api/apiSwagger';
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
+import renderAlert from 'components/utils/renderAlert';
 
 import Logger from 'utils/Logger';
 
@@ -60,6 +61,12 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 						})
 						.then((response) => {
 							StoreAdmin.actions.setUsers(response.data);
+							renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
+							// reset form
+							setSignup(false);
+						})
+						.catch((error) => {
+							Logger.warn('Error fetching admin users', error);
 						});
 					return;
 				}
@@ -72,6 +79,7 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 					.then((response) => {
 						StoreUser.actions.setToken(response.data.access_token);
 						userStore.update();
+						renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
 					})
 					.catch((error) => {
 						Logger.warn('Error login: ', error);
@@ -144,7 +152,7 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
 								onPress={() => {
 									handleSubmit();
-									resetForm({ values: initialValues });
+									//resetForm({ values: initialValues });
 								}}
 							/>
 							{!isAdmin && (

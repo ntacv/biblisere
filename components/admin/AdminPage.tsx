@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { fonts, sizes } from 'styles/Variables';
+import { colors, fonts, sizes } from 'styles/Variables';
 
 import { Api } from 'api/apiSwagger';
 
@@ -63,6 +63,7 @@ const AdminPage = () => {
 								setUserSection(true);
 								setBookSection(false);
 							}}
+							background={userSection ? colors.secondary : colors.primary}
 						/>
 						<Button
 							label={t('menu:books')}
@@ -71,6 +72,7 @@ const AdminPage = () => {
 								setUserSection(false);
 								setBookSection(true);
 							}}
+							background={bookSection ? colors.secondary : colors.primary}
 						/>
 					</ViewRow>
 

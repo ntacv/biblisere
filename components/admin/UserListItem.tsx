@@ -38,11 +38,52 @@ const UserListItem = ({ userId, setSignup }: Props) => {
 	const [canBorrow, setCanBorrow] = React.useState(currentUser.canBorrow);
 	const [isAdmin, setIsAdmin] = React.useState(currentUser.role === Role.admin);
 
+	const returnAllBooks = (userId: number): boolean => {
+		// return all books
+		currentUser.books.forEach((book) => {
+			api.books
+				?.booksControllerReturn(book.id, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				.then((response) => {
+					Logger.info('return book user ', currentUser.books);
+				})
+				.catch((error) => {
+					Logger.warn('Error return book: ', error);
+				});
+		});
+		if (currentUser.books.length === 0) {
+			return true;
+		}
+	};
+
 	const deleteUser = (userId) => {
 		// return all books of the user
 		// alert that all books will be returned
 		if (currentUser.books.length > 0) {
-			return renderAlert(t('user:deleteAccount'), t('user:deleteAccountError'), t('user:cancel'));
+			return renderAlert(
+				t('user:deleteAccount'),
+				t('user:deleteAccountAndBooksInfo'),
+				t('user:cancel'),
+				{
+					text: t('user:deleteAccountAndBooks'),
+					onPress: () => {
+						if (returnAllBooks(userId)) {
+							// delete user
+							api.admin?.adminControllerDeleteUser(userId, {
+								headers: { Authorization: `Bearer ${token}` },
+							});
+							StoreAdmin.actions.deleteUser(userId);
+						} else {
+							renderAlert(
+								t('user:deleteAccount'),
+								t('user:deleteAccountAndBooksError'),
+								t('user:cancel'),
+							);
+						}
+					},
+				},
+			);
 		}
 
 		// alert to ask if delete
