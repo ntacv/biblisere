@@ -8,7 +8,7 @@ import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -20,6 +20,7 @@ import UpdateUser from 'components/user/UpdateUser';
 import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
+import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
@@ -30,8 +31,14 @@ const UserPage = () => {
 	const { t } = useTranslation();
 	const [edit, setEdit] = React.useState(false);
 
-	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const token = useStoreMap(StoreUser.store, (store) => store.token);
+	const { user } = useStoreMap(StoreUser.store, (store) => ({ user: store.id }));
+	const { token } = useStoreMap(StoreUser.store, (store) => ({ token: store.token }));
+
+	// user info are not synced but the login has been stored
+	if (token && !user) {
+		Logger.info('Get user info');
+		userStore.update();
+	}
 
 	const deleteAccount = () => {
 		if (user && user.books.length > 0) {
@@ -53,35 +60,33 @@ const UserPage = () => {
 	return (
 		<ViewPage header>
 			{!token && <Login />}
-			{token && (
+			{token && user && (
 				<ScrollViewContent>
-					{user && (
-						<ContainerColumn>
-							<ContainerZone>
-								{edit && <UpdateUser setEdit={setEdit} />}
-								{!edit && (
-									<>
-										<UserInfo />
-										<Button
-											label={t('user:edit')}
-											iconName={IconNames.editLine}
-											onPress={() => setEdit(true)}
-										/>
-									</>
-								)}
-							</ContainerZone>
+					<ContainerColumn>
+						<ContainerZone>
+							{edit && <UpdateUser setEdit={setEdit} />}
+							{!edit && (
+								<>
+									<UserInfo />
+									<Button
+										label={t('user:edit')}
+										iconName={IconNames.editLine}
+										onPress={() => setEdit(true)}
+									/>
+								</>
+							)}
+						</ContainerZone>
 
-							<ViewList>
-								{user.books ? (
-									user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
-								) : (
-									<TextContent>{t('config:loading')}</TextContent>
-								)}
-							</ViewList>
+						<ViewList>
+							{user.books ? (
+								user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+							) : (
+								<TextContent>{t('config:loading')}</TextContent>
+							)}
+						</ViewList>
 
-							<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
-						</ContainerColumn>
-					)}
+						<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
+					</ContainerColumn>
 				</ScrollViewContent>
 			)}
 		</ViewPage>
