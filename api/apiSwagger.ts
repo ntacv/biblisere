@@ -883,14 +883,3 @@ export const bookStore = {
 		if (update) bookStore.update();
 	},
 };
-
-export const initialUserFull = {
-	firstName: '',
-	lastName: '',
-	email: '',
-	password: '',
-};
-export const initialUserLogin = {ßßßß
-	email: '',
-	password: '',
-};

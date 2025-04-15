@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, initialUserLogin, userStore } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
@@ -17,6 +17,11 @@ import InputContent from 'components/utils/InputContent';
 import Logger from 'utils/Logger';
 
 const api = new Api();
+
+const initialUserLogin = {
+	email: '',
+	password: '',
+};
 
 const Login = () => {
 	const { t } = useTranslation();

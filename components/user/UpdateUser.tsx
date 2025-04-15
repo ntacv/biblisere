@@ -9,7 +9,7 @@ import styled from 'styled-components/native';
 import { sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, UpdateUserDto, initialUserFull, userStore } from 'api/apiSwagger';
+import { Api, UpdateUserDto, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -18,6 +18,13 @@ import InputContent from 'components/utils/InputContent';
 import Logger from 'utils/Logger';
 
 const api = new Api();
+
+const initialUserFull = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+};
 
 const UpdateUser = (props) => {
 	const { t } = useTranslation();
