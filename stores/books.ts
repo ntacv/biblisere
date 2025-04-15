@@ -9,7 +9,7 @@ interface BooksState {
 
 const initialState: BooksState = {
 	books: undefined,
-	bookMap: undefined,
+	bookMap: {},
 };
 
 export const actions = {
