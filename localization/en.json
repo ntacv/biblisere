@@ -115,12 +115,18 @@
 		"deleteAccount": "Delete account",
 		"deleteAccountConfirm": "Are you sure you want to delete your account?",
 		"deleteAccountError": "You have to return all your books before deleting your account.",
+		"updateUser": "Update your profile",
 		"cancel": "Cancel",
-		"delete": "Delete"
+		"delete": "Delete",
+		"edit": "Edit",
+		"done": "Done",
+		"save": "Save"
 	},
 	"login": {
 		"title": "Log in",
 		"required": "Required",
+		"firstName": "First name",
+		"lastName": "Last name",
 		"email": "Email",
 		"wrongEmail": "Invalid email",
 		"password": "Password",

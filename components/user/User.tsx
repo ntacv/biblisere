@@ -1,21 +1,23 @@
 import * as React from 'react';
 import { Alert, ScrollView, Text, View } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api, MAX_BOOKS, userStore } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
 import Button from 'components/button/Button';
 import TextAction from 'components/button/TextAction';
-import TitleContent from 'components/text/TitleContent';
 import Login from 'components/user/Login';
+import UpdateUser from 'components/user/UpdateUser';
+import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
 import Logger from 'utils/Logger';
@@ -27,6 +29,7 @@ const api = new Api();
 const UserPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
+	const [edit, setEdit] = React.useState(false);
 
 	const { user } = useStoreMap(StoreUser.store, (store) => ({ user: store.id }));
 	const { token } = useStoreMap(StoreUser.store, (store) => ({ token: store.token }));
@@ -61,38 +64,17 @@ const UserPage = () => {
 				<ScrollViewContent>
 					<ContainerColumn>
 						<ContainerZone>
-							<TitleContent label={user.firstName + ' ' + user.lastName} />
-							<TextContent>{user.email}</TextContent>
-							<TextContent>
-								{t('user:membership') +
-									t('dates:month-year-long', { val: new Date(user.createdAt) })}
-							</TextContent>
-							<TextContent>
-								{user.canBorrow ? (
-									<Text>
-										{t('user:borrowed', {
-											val: user.books.length.toString(),
-											max: MAX_BOOKS.toString(),
-										})}
-									</Text>
-								) : (
-									<Text>{t('user:cantBorrow')}</Text>
-								)}
-							</TextContent>
-
-							<Button
-								iconName="userX"
-								label={t('menu:logout')}
-								onPress={() => {
-									renderAlert(t('menu:logout'), t('menu:logoutConfirm'), t('user:cancel'), {
-										text: t('menu:logout'),
-										onPress: () => {
-											StoreUser.actions.logout();
-											navigation.navigate(RouteNames.User);
-										},
-									});
-								}}
-							/>
+							{edit && <UpdateUser setEdit={setEdit} />}
+							{!edit && (
+								<>
+									<UserInfo />
+									<Button
+										label={t('user:edit')}
+										iconName={IconNames.editLine}
+										onPress={() => setEdit(true)}
+									/>
+								</>
+							)}
 						</ContainerZone>
 
 						<ViewList>

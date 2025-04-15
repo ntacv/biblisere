@@ -18,11 +18,16 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
+const initialUserLogin = {
+	email: '',
+	password: '',
+};
+
 const Login = () => {
 	const { t } = useTranslation();
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
+	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 	const formSchema = Yup.object().shape({
 		email: Yup.string().matches(REGEX_EMAIL, t('user:wrongEmail')).required(t('user:required')),
@@ -55,7 +60,7 @@ const Login = () => {
 		<Formik
 			onSubmit={(values) => login(values)}
 			validationSchema={formSchema}
-			initialValues={{ email: '', password: '' }}
+			initialValues={initialUserLogin}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>

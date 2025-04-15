@@ -1,0 +1,67 @@
+import * as React from 'react';
+import { Text } from 'react-native';
+
+import { useStoreMap } from 'node_modules/effector-react';
+import { useTranslation } from 'react-i18next';
+import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
+import { fonts } from 'styles/Variables';
+
+import { Api, MAX_BOOKS } from 'api/apiSwagger';
+
+import Button from 'components/button/Button';
+import TitleContent from 'components/text/TitleContent';
+import renderAlert from 'components/utils/renderAlert';
+
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
+
+const api = new Api();
+
+const UserPage = () => {
+	const navigation = useNav();
+	const { t } = useTranslation();
+
+	const { user } = useStoreMap(StoreUser.store, (store) => ({ user: store.id }));
+
+	return (
+		<>
+			<TitleContent label={user.firstName + ' ' + user.lastName} />
+			<TextContent>{user.email}</TextContent>
+			<TextContent>
+				{t('user:membership') + t('dates:month-year-long', { val: new Date(user.createdAt) })}
+			</TextContent>
+			<TextContent>
+				{user.canBorrow ? (
+					<Text>
+						{t('user:borrowed', {
+							val: user.books.length.toString(),
+							max: MAX_BOOKS.toString(),
+						})}
+					</Text>
+				) : (
+					<Text>{t('user:cantBorrow')}</Text>
+				)}
+			</TextContent>
+
+			<Button
+				iconName="userX"
+				label={t('menu:logout')}
+				onPress={() => {
+					renderAlert(t('menu:logout'), t('menu:logoutConfirm'), t('user:cancel'), {
+						text: t('menu:logout'),
+						onPress: () => {
+							StoreUser.actions.logout();
+							navigation.navigate(RouteNames.User);
+						},
+					});
+				}}
+			/>
+		</>
+	);
+};
+export default UserPage;
+
+const TextContent = styled(Text)`
+	font: ${fonts.content};
+`;

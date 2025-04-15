@@ -5,6 +5,8 @@ import arrowUp from 'assets/icons/arrow-up.svg';
 import book from 'assets/icons/book.svg';
 import bookmark from 'assets/icons/bookmark.svg';
 import clock from 'assets/icons/clock.svg';
+import editLine from 'assets/icons/edit-line.svg';
+import edit from 'assets/icons/edit.svg';
 import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
@@ -22,6 +24,8 @@ export enum IconNames {
 	book = 'book',
 	bookmark = 'bookmark',
 	clock = 'clock',
+	edit = 'edit',
+	editLine = 'editLine',
 	info = 'info',
 	mapPin = 'mapPin',
 	menu = 'menu',
@@ -40,6 +44,8 @@ const IconSvgs = {
 	book: book,
 	bookmark: bookmark,
 	clock: clock,
+	edit: edit,
+	editLine: editLine,
 	info: info,
 	mapPin: mapPin,
 	menu: menu,
