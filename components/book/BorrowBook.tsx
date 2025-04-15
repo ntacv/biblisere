@@ -19,13 +19,14 @@ export interface Props {
 const BorrowBook = ({ bookId }: Props) => {
 	const { t } = useTranslation();
 
-	const storeUser = useStoreMap(StoreUser.store, (store) => store);
-
-	const book = StoreBooks.store.getState().books.find((book) => book.id === bookId);
+	const user = useStoreMap(StoreUser.store, (store) => store.id);
+	const book = useStoreMap(StoreBooks.store, (store) => store.books).find(
+		(book) => book.id === bookId,
+	);
 
 	const borrowBook = (bookId: number) => {
 		// check if user has reached the limit of borrowed books
-		if (storeUser.id?.books?.length >= MAX_BOOKS) {
+		if (user.books.length >= MAX_BOOKS) {
 			alert(t('catalog:limitBooks', { val: MAX_BOOKS }));
 			return;
 		}
@@ -40,22 +41,27 @@ const BorrowBook = ({ bookId }: Props) => {
 	return (
 		<>
 			<TextContent>
-				{book.quantity > 0 ? t('catalog:available') : t('catalog:unavailable')}
+				{book.quantity > 0
+					? t('catalog:available', { val: book.quantity })
+					: t('catalog:unavailable')}
 			</TextContent>
-			{book.quantity > 0 ? (
-				<Button
-					label={t('catalog:add')}
-					iconName="bookmark"
-					onPress={() => borrowBook(book.id)}
-					alignLeft
-				/>
-			) : (
+
+			{user.books.map((self) => self.id).includes(bookId) ? (
 				<Button
 					label={t('catalog:remove')}
 					iconName="x"
 					onPress={() => returnBook(book.id)}
 					alignLeft
 				/>
+			) : (
+				book.quantity > 0 && (
+					<Button
+						label={t('catalog:add')}
+						iconName="bookmark"
+						onPress={() => borrowBook(book.id)}
+						alignLeft
+					/>
+				)
 			)}
 		</>
 	);

@@ -90,7 +90,7 @@
 		"delete": "Supprimer",
 		"create": "Créer",
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
-		"available": "Disponible",
+		"available": "Disponible ({{val}})",
 		"unavailable": "Rupture de stock",
 		"borrowed": "Emprunté"
 	},

@@ -90,7 +90,7 @@
 		"delete": "Delete",
 		"create": "Create",
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
-		"available": "Available",
+		"available": "Available ({{val}})",
 		"unavailable": "Out of stock",
 		"borrowed": "Borrowed"
 	},
