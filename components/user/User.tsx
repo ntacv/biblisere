@@ -7,7 +7,7 @@ import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api, MAX_BOOKS } from 'api/apiSwagger';
+import { Api, MAX_BOOKS, userStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -18,6 +18,7 @@ import TitleContent from 'components/text/TitleContent';
 import Login from 'components/user/Login';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
+import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
@@ -27,8 +28,14 @@ const UserPage = () => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
-	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const token = useStoreMap(StoreUser.store, (store) => store.token);
+	const { user } = useStoreMap(StoreUser.store, (store) => ({ user: store.id }));
+	const { token } = useStoreMap(StoreUser.store, (store) => ({ token: store.token }));
+
+	// user info are not synced but the login has been stored
+	if (token && !user) {
+		Logger.info('Get user info');
+		userStore.update();
+	}
 
 	const deleteAccount = () => {
 		if (user && user.books.length > 0) {
@@ -50,58 +57,54 @@ const UserPage = () => {
 	return (
 		<ViewPage header>
 			{!token && <Login />}
-			{token && (
+			{token && user && (
 				<ScrollViewContent>
-					{user && (
-						<ContainerColumn>
-							<ContainerZone>
-								<TitleContent
-									label={user ? user.firstName + ' ' + user.lastName : t('errors:notConnected')}
-								/>
-								<TextContent>{user.email}</TextContent>
-								<TextContent>
-									{t('user:membership') +
-										t('dates:month-year-long', { val: new Date(user.createdAt) })}
-								</TextContent>
-								<TextContent>
-									{!user.canBorrow ? (
-										<Text>
-											{t('user:borrowed', {
-												val: user.books.length.toString(),
-												max: MAX_BOOKS.toString(),
-											})}
-										</Text>
-									) : (
-										<Text>{t('user:cantBorrow')}</Text>
-									)}
-								</TextContent>
-
-								<Button
-									iconName="userX"
-									label={t('menu:logout')}
-									onPress={() => {
-										renderAlert(t('menu:logout'), t('menu:logoutConfirm'), t('user:cancel'), {
-											text: t('menu:logout'),
-											onPress: () => {
-												StoreUser.actions.logout();
-												navigation.navigate(RouteNames.User);
-											},
-										});
-									}}
-								/>
-							</ContainerZone>
-
-							<ViewList>
-								{user.books ? (
-									user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+					<ContainerColumn>
+						<ContainerZone>
+							<TitleContent label={user.firstName + ' ' + user.lastName} />
+							<TextContent>{user.email}</TextContent>
+							<TextContent>
+								{t('user:membership') +
+									t('dates:month-year-long', { val: new Date(user.createdAt) })}
+							</TextContent>
+							<TextContent>
+								{user.canBorrow ? (
+									<Text>
+										{t('user:borrowed', {
+											val: user.books.length.toString(),
+											max: MAX_BOOKS.toString(),
+										})}
+									</Text>
 								) : (
-									<TextContent>{t('config:loading')}</TextContent>
+									<Text>{t('user:cantBorrow')}</Text>
 								)}
-							</ViewList>
+							</TextContent>
 
-							<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
-						</ContainerColumn>
-					)}
+							<Button
+								iconName="userX"
+								label={t('menu:logout')}
+								onPress={() => {
+									renderAlert(t('menu:logout'), t('menu:logoutConfirm'), t('user:cancel'), {
+										text: t('menu:logout'),
+										onPress: () => {
+											StoreUser.actions.logout();
+											navigation.navigate(RouteNames.User);
+										},
+									});
+								}}
+							/>
+						</ContainerZone>
+
+						<ViewList>
+							{user.books ? (
+								user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+							) : (
+								<TextContent>{t('config:loading')}</TextContent>
+							)}
+						</ViewList>
+
+						<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
+					</ContainerColumn>
 				</ScrollViewContent>
 			)}
 		</ViewPage>
