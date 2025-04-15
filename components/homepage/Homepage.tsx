@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 
 import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
@@ -15,6 +15,7 @@ import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import Button from 'components/button/Button';
 import Footer from 'components/footer/Footer';
+import ListRow from 'components/list/ListRow';
 import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
@@ -29,9 +30,12 @@ function Homepage() {
 	const { t } = useTranslation();
 
 	const services = t('home:content:services', { returnObjects: true }) as string[];
+	const access = t('home:access', { returnObjects: true }) as string[];
 
 	const books = useStoreMap(StoreBooks.store, (store) => store);
 	const schedules = useStoreMap(StoreSchedules.store, (store) => store);
+
+	const newBooks = books.books?.slice(0, 5).map((book) => book.id);
 
 	React.useEffect(() => {
 		bookStore.update();
@@ -49,57 +53,45 @@ function Homepage() {
 				<ContainerColumn>
 					<Searchbar />
 
-					<TouchableOpacity
-						activeOpacity={0.8}
-						onPress={() =>
-							navigation.navigate(RouteNames.CatalogNavigator, {
-								screen: RouteNames.Catalog,
-							} as any)
-						}
-					>
-						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
-					</TouchableOpacity>
-					<ViewNewBooks horizontal>
-						{!books.books ? (
-							<TextContent>{t('config:loading')}</TextContent>
-						) : (
-							books.books?.map((book, index) => (
-								<TouchableOpacity
-									key={index}
-									activeOpacity={0.8}
-									onPress={() =>
-										navigation.navigate(RouteNames.CatalogNavigator, {
-											screen: RouteNames.Details,
-											params: { bookId: book.id } as any,
-										} as any)
-									}
-								>
-									<ImageBook source={{ uri: book.imageUrl }} />
-									<TextContentDate>
-										{t('dates:month-year', { val: new Date(book.publicationDate) })}
-									</TextContentDate>
-								</TouchableOpacity>
-							))
-						)}
-					</ViewNewBooks>
+					{newBooks?.length > 0 && (
+						<ListRow
+							booksId={newBooks}
+							title={t('home:titles:news')}
+							onPressTitle={() =>
+								navigation.navigate(RouteNames.CatalogNavigator, {
+									screen: RouteNames.Catalog,
+								} as any)
+							}
+						/>
+					)}
+					{schedules.data && (
+						<ContainerZone>
+							<TitleContent iconStart={IconNames.clock} label={t('home:titles:times')} />
+							<ViewList>
+								{schedules.data?.map((schedule) => (
+									<TextContent key={schedule.id}>
+										{t('home:content:days:' + [schedule.dayNumber - 1]) +
+											' - ' +
+											schedule.openingTime.hours +
+											':' +
+											(schedule.openingTime.minutes == 0 ? '00' : schedule.openingTime.minutes) +
+											' - ' +
+											schedule.closingTime.hours +
+											':' +
+											(schedule.closingTime.minutes == 0 ? '00' : schedule.closingTime.minutes)}
+									</TextContent>
+								))}
+							</ViewList>
+						</ContainerZone>
+					)}
 
 					<ContainerZone>
-						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:times')} />
-						<ViewList>
-							{schedules.data?.map((schedule) => (
-								<TextContent key={schedule.id}>
-									{t('home:content:days:' + [schedule.dayNumber - 1]) +
-										' - ' +
-										schedule.openingTime.hours +
-										':' +
-										(schedule.openingTime.minutes == 0 ? '00' : schedule.openingTime.minutes) +
-										' - ' +
-										schedule.closingTime.hours +
-										':' +
-										(schedule.closingTime.minutes == 0 ? '00' : schedule.closingTime.minutes)}
-								</TextContent>
+						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:access')} />
+						<View>
+							{access.map((access, index) => (
+								<TextContent key={index}>{t('home:access:' + index)}</TextContent>
 							))}
-						</ViewList>
+						</View>
 					</ContainerZone>
 
 					<TitleContent label={t('home:intro')} />
