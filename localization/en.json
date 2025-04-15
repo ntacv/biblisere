@@ -31,6 +31,7 @@
 			"french": "French"
 		},
 		"input": {
+			"search": "Search",
 			"placeholder": "Search...",
 			"clear": "Clear"
 		},
@@ -91,7 +92,8 @@
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
 		"available": "Available",
 		"unavailable": "Out of stock",
-		"borrowed": "Borrowed"
+		"borrowed": "Borrowed",
+		"result": " results"
 	},
 	"details": {
 		"title": "Details",

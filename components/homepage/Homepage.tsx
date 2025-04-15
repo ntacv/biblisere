@@ -27,6 +27,7 @@ const api = new Api();
 function Homepage() {
 	const navigation = useNav();
 	const { t } = useTranslation();
+	const [search, setSearch] = React.useState('');
 
 	const services = t('home:content:services', { returnObjects: true }) as string[];
 
@@ -47,7 +48,16 @@ function Homepage() {
 				<ImageMainHome source={require('assets/images/mediatheque_espace_lecture.jpg')} />
 
 				<ContainerColumn>
-					<Searchbar />
+					<Searchbar
+						home
+						value={{ search, setSearch }}
+						onPress={() => {
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+								params: { search: search } as any,
+							} as any);
+						}}
+					/>
 
 					<TouchableOpacity
 						activeOpacity={0.8}
