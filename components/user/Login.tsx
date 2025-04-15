@@ -107,7 +107,7 @@ const Login = (props) => {
 							/>
 							<FastLogin
 								onPress={() => {
-									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+									login({ email: 'Wd@example.com', password: 'myAdmin123&' });
 								}}
 							/>
 						</ContainerColumnForm>
