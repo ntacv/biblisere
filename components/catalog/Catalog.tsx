@@ -58,12 +58,12 @@ const Catalog = (props) => {
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar value={{ search, setSearch }} onPress={filterBooks} />
-					<Text style={{ alignSelf: 'flex-end' }}>
-						{(search !== '' ? searchedBooks.length : storeBooks.books.length) + t('catalog:result')}
-					</Text>
+					<TextLeft>
+						{(!!search ? searchedBooks.length : storeBooks.books.length) + t('catalog:result')}
+					</TextLeft>
 					<ViewList>
 						{storeBooks.books ? (
-							search !== '' ? (
+							!!search ? (
 								// Display searched books
 								searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
 							) : (
@@ -89,4 +89,7 @@ const ViewList = styled(View)`
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
+`;
+const TextLeft = styled(Text)`
+	align-self: flex-end;
 `;
