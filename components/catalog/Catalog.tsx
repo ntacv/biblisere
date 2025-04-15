@@ -16,6 +16,8 @@ import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
+import Logger from 'utils/Logger';
+
 const api = new Api();
 
 interface Props {
@@ -37,6 +39,56 @@ const Catalog = (props) => {
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
+	const presentedBooks = () => {
+		Logger.info('presentedBooks', searchedBooks);
+		if (!!search) {
+			const bookFromSearch = storeBooks.books.filter(
+				(book) =>
+					book.title.toLowerCase().includes(search.toLowerCase()) ||
+					book.author.toLowerCase().includes(search.toLowerCase()),
+			);
+			setSearchedBooks(bookFromSearch.map((book) => book.id));
+
+			// If there are filters, filter the searched books
+			if (filters.length > 0) {
+				const books = storeBooks.books
+					.filter(
+						(book) =>
+							searchedBooks.includes(book.id) &&
+							book.categories.some((category) =>
+								filters.some((filter) => filter.id === category.id),
+							),
+					)
+					.map((book) => book.id);
+				setSearchedBooks(books);
+			}
+		} else {
+			// If there are filters, filter the books
+			if (filters.length > 0) {
+				const books = storeBooks.books.filter((book) =>
+					book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
+				);
+				setSearchedBooks(books.map((book) => book.id));
+			}
+			// If no search and no filters, return all books
+			else {
+				setSearchedBooks(storeBooks.books.map((book) => book.id));
+			}
+		}
+	};
+
+	const filterBooks = () => {
+		// Filter books based on selected categories
+		const filteredBooks = storeBooks.books.filter((book) =>
+			book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
+		);
+
+		const filteredBooksIds = searchedBooks.filter((bookId) =>
+			filteredBooks.some((book) => book.id === bookId),
+		);
+		setSearchedBooks(filteredBooks.map((book) => book.id));
+	};
+
 	const searchBooks = () => {
 		// Filter books based on search input
 		setSearchedBooks(
@@ -49,9 +101,11 @@ const Catalog = (props) => {
 				.map((book) => book.id),
 		);
 	};
+
 	React.useEffect(() => {
 		if (search !== '') {
 			searchBooks();
+			presentedBooks();
 		}
 	}, [search]);
 
@@ -62,9 +116,12 @@ const Catalog = (props) => {
 	}, [propSearch]);
 
 	React.useEffect(() => {
+		Logger.info('Filters: ', filters);
+		Logger.info('serached books: ', searchedBooks);
 		if (filters.length > 0) {
-			searchBooks();
+			filterBooks();
 		}
+		presentedBooks();
 	}, [filters]);
 
 	React.useEffect(() => {
@@ -94,6 +151,7 @@ const Catalog = (props) => {
 							label={t('catalog:filter')}
 							iconName={IconNames.arrowDown}
 							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
+							background={colors.secondary}
 						/>
 						{categories.open && (
 							<ViewInline>
@@ -107,7 +165,7 @@ const Catalog = (props) => {
 												);
 											}}
 										>
-											{category.name + ', '}
+											{category.name + ','}
 										</TextSelected>
 									) : (
 										<TextToSelect
@@ -116,7 +174,7 @@ const Catalog = (props) => {
 												setFilters((filters) => [...filters, category]);
 											}}
 										>
-											{category.name + ', '}
+											{category.name + ','}
 										</TextToSelect>
 									),
 								)}
@@ -124,20 +182,21 @@ const Catalog = (props) => {
 						)}
 
 						<Text style={{ alignSelf: 'flex-end' }}>
-							{(search !== '' ? searchedBooks.length : storeBooks.books.length) +
+							{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
 								t('catalog:result')}
 						</Text>
 					</View>
 					<ViewList>
 						{storeBooks.books ? (
-							search !== '' ? (
+							searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
+						) : (
+							/* !!search || filters.length > 0 ? (
 								// Display searched books
 								searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
 							) : (
 								// Display all books
 								storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
-							)
-						) : (
+							) */
 							<TextContent>{t('config:loading')}</TextContent>
 						)}
 					</ViewList>
