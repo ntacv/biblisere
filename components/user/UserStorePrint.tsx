@@ -3,48 +3,70 @@ import { Text, View } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
-import * as StoreUsers from 'stores/user';
+import * as StoreBooks from 'stores/books';
+import * as StoreUser from 'stores/user';
+import styled from 'styled-components/native';
+import { fonts, sizes } from 'styles/Variables';
 
 import { MAX_BOOKS } from 'api/apiSwagger';
+
+import ContainerZone from 'components/ContainerZone';
+import BookListItem from 'components/book/BookListItem';
+import TitleContent from 'components/text/TitleContent';
 
 const UserStorePrint = () => {
 	const { t } = useTranslation();
 
-	const storeUser = useStoreMap(StoreUsers.store, (store) => store);
+	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
+	const user = storeUser.id;
 
 	return (
 		<View>
-			<Text>
-				{/* TEST COMPONENT to check login and user data */}
-				{t('menu:login') +
-					t('config:text:colon') +
-					(storeUser.id?.email ? storeUser.id?.email : t('errors:notConnected'))}
-			</Text>
-			<Text>
-				{storeUser.id?.firstName} {storeUser.id?.lastName}
-			</Text>
-
-			{!storeUser.id?.canBorrow ? (
-				<Text>{t('user:cantBorrow')}</Text>
-			) : (
-				<>
-					<Text>
-						{t('user:borrowed', {
-							val: storeUser.id?.books.length.toString(),
-							max: MAX_BOOKS.toString(),
-						})}
-					</Text>
-					<Text>{t('catalog:books') + t('config:text:colon')}</Text>
-					<View>
-						{storeUser.id?.books?.map((book) => (
-							<Text key={book.id}>
-								{book.title} - {book.author}
+			<ContainerZone>
+				<TitleContent
+					label={user ? user.firstName + ' ' + user.lastName : t('errors:notConnected')}
+				/>
+				<TextContent>{user.email}</TextContent>
+				<TextContent>
+					{!storeUser.id?.canBorrow ? (
+						<Text>{t('user:cantBorrow')}</Text>
+					) : (
+						<>
+							<Text>
+								{t('user:borrowed', {
+									val: storeUser.id?.books.length.toString(),
+									max: MAX_BOOKS.toString(),
+								})}
 							</Text>
-						))}
-					</View>
-				</>
-			)}
+							<Text>{t('catalog:books') + t('config:text:colon')}</Text>
+							<View>
+								{storeUser.id?.books?.map((book) => (
+									<Text key={book.id}>
+										{book.title} - {book.author}
+									</Text>
+								))}
+							</View>
+						</>
+					)}
+				</TextContent>
+			</ContainerZone>
+
+			<ViewList>
+				{storeBooks.books ? (
+					storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+				) : (
+					<TextContent>{t('config:loading')}</TextContent>
+				)}
+			</ViewList>
 		</View>
 	);
 };
 export default UserStorePrint;
+
+const TextContent = styled(Text)`
+	font: ${fonts.content};
+`;
+const ViewList = styled(View)`
+	gap: ${sizes.padding.main}px;
+`;
