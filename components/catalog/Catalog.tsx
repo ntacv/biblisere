@@ -8,15 +8,13 @@ import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { colors, fonts, sizes } from 'styles/Variables';
 
-import { Api, Category } from 'api/apiSwagger';
+import { Api, Book, Category } from 'api/apiSwagger';
 
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
-
-import Logger from 'utils/Logger';
 
 const api = new Api();
 
@@ -28,10 +26,10 @@ interface Props {
 	};
 }
 
-const Catalog = (props) => {
+const Catalog = ({ route }: Props) => {
 	const { t } = useTranslation();
 
-	const propSearch = props.route.params?.search;
+	const propSearch = route.params?.search;
 	const [search, setSearch] = React.useState('');
 	const [searchedBooks, setSearchedBooks] = React.useState<number[]>([]);
 	const [categories, setCategories] = React.useState({ open: false, categories: [] });
@@ -40,73 +38,47 @@ const Catalog = (props) => {
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
 	const presentedBooks = () => {
-		Logger.info('presentedBooks', searchedBooks);
 		if (!!search) {
-			const bookFromSearch = storeBooks.books.filter(
-				(book) =>
-					book.title.toLowerCase().includes(search.toLowerCase()) ||
-					book.author.toLowerCase().includes(search.toLowerCase()),
-			);
-			setSearchedBooks(bookFromSearch.map((book) => book.id));
-
-			// If there are filters, filter the searched books
-			if (filters.length > 0) {
-				const books = storeBooks.books
-					.filter(
-						(book) =>
-							searchedBooks.includes(book.id) &&
-							book.categories.some((category) =>
-								filters.some((filter) => filter.id === category.id),
-							),
+			if (filters.length === 0) {
+				// If there is a search, apply the search filter to the books
+				setSearchedBooks(searchedBookArray().map((book) => book.id));
+			} else {
+				// If there are filters and search, restart the book list
+				const booksIdSearchedAndFiltered = searchedBookArray() //.filteredBooksArray()
+					.filter((book) =>
+						book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
 					)
 					.map((book) => book.id);
-				setSearchedBooks(books);
+				setSearchedBooks(booksIdSearchedAndFiltered);
 			}
 		} else {
 			// If there are filters, filter the books
 			if (filters.length > 0) {
-				const books = storeBooks.books.filter((book) =>
-					book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
-				);
-				setSearchedBooks(books.map((book) => book.id));
-			}
-			// If no search and no filters, return all books
-			else {
+				setSearchedBooks(filteredBookArray().map((book) => book.id));
+			} else {
+				// If no search and no filters, return all books
 				setSearchedBooks(storeBooks.books.map((book) => book.id));
 			}
 		}
 	};
 
-	const filterBooks = () => {
-		// Filter books based on selected categories
-		const filteredBooks = storeBooks.books.filter((book) =>
+	const filteredBookArray = (bookArray?: Book[]) => {
+		return (bookArray ? bookArray : storeBooks.books).filter((book) =>
 			book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
 		);
-
-		const filteredBooksIds = searchedBooks.filter((bookId) =>
-			filteredBooks.some((book) => book.id === bookId),
-		);
-		setSearchedBooks(filteredBooks.map((book) => book.id));
 	};
 
-	const searchBooks = () => {
+	const searchedBookArray = () => {
 		// Filter books based on search input
-		setSearchedBooks(
-			storeBooks.books
-				.filter(
-					(book) =>
-						book.title.toLowerCase().includes(search.toLowerCase()) ||
-						book.author.toLowerCase().includes(search.toLowerCase()),
-				)
-				.map((book) => book.id),
+		return storeBooks.books.filter(
+			(book) =>
+				book.title.toLowerCase().includes(search.toLowerCase()) ||
+				book.author.toLowerCase().includes(search.toLowerCase()),
 		);
 	};
 
 	React.useEffect(() => {
-		if (search !== '') {
-			searchBooks();
-			presentedBooks();
-		}
+		presentedBooks();
 	}, [search]);
 
 	React.useEffect(() => {
@@ -116,11 +88,6 @@ const Catalog = (props) => {
 	}, [propSearch]);
 
 	React.useEffect(() => {
-		Logger.info('Filters: ', filters);
-		Logger.info('serached books: ', searchedBooks);
-		if (filters.length > 0) {
-			filterBooks();
-		}
 		presentedBooks();
 	}, [filters]);
 
@@ -145,13 +112,13 @@ const Catalog = (props) => {
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
-					<Searchbar value={{ search, setSearch }} onPress={searchBooks} />
+					<Searchbar value={{ search, setSearch }} onPress={presentedBooks} />
 					<View>
 						<Button
 							label={t('catalog:filter')}
-							iconName={IconNames.arrowDown}
+							iconName={categories.open ? IconNames.arrowUp : IconNames.arrowDown}
 							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
-							background={colors.secondary}
+							background={filters.length > 0 ? colors.primary : colors.secondary}
 						/>
 						{categories.open && (
 							<ViewInline>
@@ -190,13 +157,6 @@ const Catalog = (props) => {
 						{storeBooks.books ? (
 							searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
 						) : (
-							/* !!search || filters.length > 0 ? (
-								// Display searched books
-								searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
-							) : (
-								// Display all books
-								storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
-							) */
 							<TextContent>{t('config:loading')}</TextContent>
 						)}
 					</ViewList>
