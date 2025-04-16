@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { Text } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 import { styled } from 'styled-components/native';
-import { fonts } from 'styles/Variables';
+import { fonts, sizes } from 'styles/Variables';
 
-import { MAX_BOOKS, bookStore } from 'api/apiSwagger';
+import { MAX_BOOKS, Role, bookStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
+import renderAlert from 'components/utils/renderAlert';
 
 export interface Props {
 	bookId: number;
@@ -19,8 +21,8 @@ export interface Props {
 const BorrowBook = ({ bookId }: Props) => {
 	const { t } = useTranslation();
 
-	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const book = useStoreMap(StoreBooks.store, (store) => store.books).find(
+	const user = useStoreMap(StoreUser.store, (store) => store).id;
+	const book = useStoreMap(StoreBooks.store, (store) => store).books.find(
 		(book) => book.id === bookId,
 	);
 
@@ -46,23 +48,45 @@ const BorrowBook = ({ bookId }: Props) => {
 					: t('catalog:unavailable')}
 			</TextContent>
 
-			{user.books.map((self) => self.id).includes(bookId) ? (
-				<Button
-					label={t('catalog:remove')}
-					iconName="x"
-					onPress={() => returnBook(book.id)}
-					alignLeft
-				/>
-			) : (
-				book.quantity > 0 && (
+			<ViewRow>
+				{user.role === Role.admin && (
 					<Button
-						label={t('catalog:add')}
-						iconName="bookmark"
-						onPress={() => borrowBook(book.id)}
+						iconName={IconNames.x}
+						onPress={() => {
+							renderAlert(
+								t('catalog:deleteBook'),
+								t('catalog:deleteBookConfirm'),
+								t('user:cancel'),
+								{
+									text: t('catalog:delete'),
+									onPress: () => {
+										bookStore.deleteBook(bookId);
+									},
+								},
+							);
+						}}
 						alignLeft
 					/>
-				)
-			)}
+				)}
+
+				{user.books.map((self) => self.id).includes(bookId) ? (
+					<Button
+						label={t('catalog:remove')}
+						iconName="x"
+						onPress={() => returnBook(book.id)}
+						alignLeft
+					/>
+				) : (
+					book.quantity > 0 && (
+						<Button
+							label={t('catalog:add')}
+							iconName="bookmark"
+							onPress={() => borrowBook(book.id)}
+							alignLeft
+						/>
+					)
+				)}
+			</ViewRow>
 		</>
 	);
 };
@@ -71,4 +95,9 @@ export default BorrowBook;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 	flex: 1;
+`;
+const ViewRow = styled.View`
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: ${sizes.padding.main}px;
 `;

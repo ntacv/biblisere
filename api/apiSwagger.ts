@@ -888,6 +888,21 @@ export const bookStore = {
 			});
 		if (update) bookStore.update();
 	},
+
+	deleteBook: (bookId: number) => {
+		const token = StoreUser.store.getState().token;
+
+		api.admin
+			.adminControllerDeleteBook(bookId, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			.then(() => {
+				bookStore.update();
+			})
+			.catch((error) => {
+				Logger.warn('Error deleting book:', error);
+			});
+	},
 };
 
 export const initialUserFull = {
