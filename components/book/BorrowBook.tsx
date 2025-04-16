@@ -26,7 +26,7 @@ const BorrowBook = ({ bookId }: Props) => {
 
 	const borrowBook = (bookId: number) => {
 		// check if user has reached the limit of borrowed books
-		if (user.books.length >= MAX_BOOKS) {
+		if (user?.books.length >= MAX_BOOKS) {
 			alert(t('catalog:limitBooks', { val: MAX_BOOKS }));
 			return;
 		}
@@ -40,28 +40,47 @@ const BorrowBook = ({ bookId }: Props) => {
 
 	return (
 		<>
-			<TextContent>
-				{book.quantity > 0
-					? t('catalog:available', { val: book.quantity })
-					: t('catalog:unavailable')}
-			</TextContent>
+			{user?.canBorrow && (
+				<>
+					<TextContent>
+						{book.quantity > 0
+							? t('catalog:available', { val: book.quantity })
+							: t('catalog:unavailable')}
+					</TextContent>
 
-			{user.books.map((self) => self.id).includes(bookId) ? (
-				<Button
-					label={t('catalog:remove')}
-					iconName="x"
-					onPress={() => returnBook(book.id)}
-					alignLeft
-				/>
-			) : (
-				book.quantity > 0 && (
-					<Button
-						label={t('catalog:add')}
-						iconName="bookmark"
-						onPress={() => borrowBook(book.id)}
-						alignLeft
-					/>
-				)
+					{user?.books.map((self) => self.id).includes(bookId) ? (
+						<Button
+							label={t('catalog:remove')}
+							iconName="x"
+							onPress={() => returnBook(book.id)}
+							alignLeft
+						/>
+					) : (
+						book.quantity > 0 && (
+							<Button
+								label={t('catalog:add')}
+								iconName="bookmark"
+								onPress={() => borrowBook(book.id)}
+								alignLeft
+							/>
+						)
+					)}
+				</>
+			)}
+			{!user?.canBorrow && (
+				<>
+					<TextContent></TextContent>
+					{user?.books.map((self) => self.id).includes(bookId) ? (
+						<Button
+							label={t('catalog:remove')}
+							iconName="x"
+							onPress={() => returnBook(book.id)}
+							alignLeft
+						/>
+					) : (
+						<Text>Unavailable</Text>
+					)}
+				</>
 			)}
 		</>
 	);
