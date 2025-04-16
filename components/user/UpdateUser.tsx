@@ -20,6 +20,13 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
+const initialUserFull = {
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+};
+
 interface Props {
 	userId?: number;
 	userProp?: User;
@@ -64,11 +71,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -98,11 +101,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -112,7 +111,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 				admin ? updateAdmin(values) : update(values);
 			}}
 			validationSchema={formSchema}
-			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+			initialValues={initialUserFull}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>

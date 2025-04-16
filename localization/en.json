@@ -32,6 +32,7 @@
 			"french": "French"
 		},
 		"input": {
+			"search": "Search",
 			"placeholder": "Search...",
 			"clear": "Clear"
 		},
@@ -72,7 +73,15 @@
 			"recommended": "Recommended",
 			"access": "Access",
 			"times": "Opening times"
-		}
+		},
+		"access": [
+			"La Ferme, 38200 Vienne",
+			"Isère Rhodanienne",
+			"04 74 57 20 81",
+			"bibliotheques.vienne.fr",
+			"Fully accessible to reduced mobility",
+			"Free wifi"
+		]
 	},
 	"catalog": {
 		"title": "Catalog",
@@ -92,12 +101,13 @@
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
 		"available": "Available ({{val}})",
 		"unavailable": "Out of stock",
-		"borrowed": "Borrowed"
+		"borrowed": "Borrowed",
+		"result": " results"
 	},
 	"details": {
 		"title": "Details",
 		"sameAuthor": "Same author",
-		"sameKind": "Same kind"
+		"sameKind": "Same category"
 	},
 	"user": {
 		"title": "User",

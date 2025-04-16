@@ -37,7 +37,7 @@ const BookListItem = ({ bookId }: Props) => {
 		>
 			<ContainerZone>
 				<ViewListItem>
-					<ImageBook source={{ uri: book.imageUrl }} />
+					<ImageBook width={sizes.height.imageItem} source={{ uri: book.imageUrl }} />
 					<ViewSide>
 						<TextBold>{book.title}</TextBold>
 						<TextContent>{book.author}</TextContent>

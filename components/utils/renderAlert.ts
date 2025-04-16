@@ -10,20 +10,7 @@ const renderAlert = (title: string, message: string, cancel: string, button?: Al
 	return Alert.alert(
 		title,
 		message,
-		button
-			? [
-					{
-						text: cancel,
-						style: 'cancel',
-					},
-					button,
-				]
-			: [
-					{
-						text: cancel,
-						style: 'cancel',
-					},
-				],
+		[{ text: cancel, style: 'cancel' } as AlertButton, button].filter(Boolean),
 	);
 };
 export default renderAlert;

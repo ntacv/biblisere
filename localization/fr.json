@@ -32,6 +32,7 @@
 			"french": "Français"
 		},
 		"input": {
+			"search": "Rechercher",
 			"placeholder": "Rechercher...",
 			"clear": "Effacer"
 		},
@@ -72,7 +73,15 @@
 			"recommended": "Recommandé",
 			"access": "Accès",
 			"times": "Horaires d'ouverture"
-		}
+		},
+		"access": [
+			"La Ferme, 38200 Vienne",
+			"Isère Rhodanienne",
+			"04 74 57 20 81",
+			"bibliotheques.vienne.fr",
+			"Accès handicapé",
+			"Wifi gratuit"
+		]
 	},
 	"catalog": {
 		"title": "Catalogue",
@@ -92,7 +101,8 @@
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
 		"available": "Disponible ({{val}})",
 		"unavailable": "Rupture de stock",
-		"borrowed": "Emprunté"
+		"borrowed": "Emprunté",
+		"result": " résultats"
 	},
 	"details": {
 		"title": "Détails",
@@ -103,7 +113,7 @@
 		"title": "Utilisateur",
 		"name": "John Doe",
 		"membership": "Membre depuis ",
-		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"borrowed": "Vous avez emprunté {{val}}/{{max}} livres",
 		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
 		"deleteAccount": "Supprimer le compte",
 		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer ce compte?",
