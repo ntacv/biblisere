@@ -10,6 +10,7 @@ import { colors, fonts, sizes } from 'styles/Variables';
 
 import { Api, Book, Category } from 'api/apiSwagger';
 
+import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
 import Button from 'components/button/Button';
@@ -121,37 +122,39 @@ const Catalog = ({ route }: Props) => {
 							background={filters.length > 0 ? colors.primary : colors.secondary}
 						/>
 						{categories.open && (
-							<ViewInline>
-								{categories.categories.map((category, index) =>
-									filters.find((filter) => filter.id === category.id) ? (
-										<TextSelected
-											key={index}
-											onPress={() => {
-												setFilters((filters) =>
-													filters.filter((filter) => filter.id !== category.id),
-												);
-											}}
-										>
-											{category.name + ','}
-										</TextSelected>
-									) : (
-										<TextToSelect
-											key={index}
-											onPress={() => {
-												setFilters((filters) => [...filters, category]);
-											}}
-										>
-											{category.name + ','}
-										</TextToSelect>
-									),
-								)}
-							</ViewInline>
+							<ContainerZoneFilter>
+								<ViewInline>
+									{categories.categories.map((category, index) =>
+										filters.find((filter) => filter.id === category.id) ? (
+											<TextSelected
+												key={index}
+												onPress={() => {
+													setFilters((filters) =>
+														filters.filter((filter) => filter.id !== category.id),
+													);
+												}}
+											>
+												{category.name + ','}
+											</TextSelected>
+										) : (
+											<TextToSelect
+												key={index}
+												onPress={() => {
+													setFilters((filters) => [...filters, category]);
+												}}
+											>
+												{category.name + ','}
+											</TextToSelect>
+										),
+									)}
+								</ViewInline>
+							</ContainerZoneFilter>
 						)}
 
-						<Text style={{ alignSelf: 'flex-end' }}>
+						<TextLeft>
 							{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
 								t('catalog:result')}
-						</Text>
+						</TextLeft>
 					</View>
 					<ViewList>
 						{storeBooks.books ? (
@@ -173,6 +176,9 @@ const ScrollViewContent = styled(ScrollView)`
 const ViewList = styled(View)`
 	gap: ${sizes.padding.main}px;
 `;
+const ContainerZoneFilter = styled(ContainerZone)`
+	margin: ${sizes.padding.main}px 0;
+`;
 const ViewInline = styled(View)`
 	padding: ${sizes.padding.main}px;
 	flex-direction: row;
@@ -180,6 +186,9 @@ const ViewInline = styled(View)`
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
+`;
+const TextLeft = styled(Text)`
+	align-self: flex-end;
 `;
 const TextCategory = styled(Text)`
 	font: ${fonts.content};

@@ -9,7 +9,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, userStore } from 'api/apiSwagger';
+import { Api, REGEX_EMAIL, REGEX_PASSWORD, initialUserLogin, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -19,11 +19,12 @@ import Logger from 'utils/Logger';
 
 const api = new Api();
 
-const Login = (props) => {
-	const { t } = useTranslation();
+interface Props {
+	setSignup: (value: boolean) => void;
+}
 
-	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const Login = ({ setSignup }: Props) => {
+	const { t } = useTranslation();
 
 	const formSchema = Yup.object().shape({
 		email: Yup.string().matches(REGEX_EMAIL, t('user:wrongEmail')).required(t('user:required')),
@@ -56,7 +57,7 @@ const Login = (props) => {
 		<Formik
 			onSubmit={(values) => login(values)}
 			validationSchema={formSchema}
-			initialValues={{ email: '', password: '' }}
+			initialValues={initialUserLogin}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>
@@ -96,7 +97,7 @@ const Login = (props) => {
 							<Button
 								label={t('login:signup')}
 								iconName={IconNames.userCheck}
-								onPress={() => props.setSignup(true)}
+								onPress={() => setSignup(true)}
 							/>
 
 							{/* TEST COMPONENT to login as admin */}
