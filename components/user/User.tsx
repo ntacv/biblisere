@@ -21,7 +21,6 @@ import UpdateUser from 'components/user/UpdateUser';
 import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
-import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
 
@@ -38,7 +37,6 @@ const UserPage = () => {
 
 	// user info are not synced but the login has been stored
 	if (token && !user) {
-		Logger.info('Get user info');
 		userStore.update();
 	}
 

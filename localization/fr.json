@@ -143,6 +143,7 @@
 		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
 		"login": "Connexion",
 		"signup": "S'inscrire",
+		"signupSuccess": "Le compte a été créé avec succès",
 		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {

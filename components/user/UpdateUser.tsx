@@ -66,7 +66,6 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 				},
 			)
 			.then((response) => {
-				Logger.info('update response ', response.data);
 				userStore.update();
 			})
 			.catch((error) => {

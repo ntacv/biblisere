@@ -24,7 +24,7 @@ const api = new Api();
 
 const AdminUser = () => {
 	const { t } = useTranslation();
-	const [signup, setSignup] = React.useState(false);
+	const [addUser, setAddUser] = React.useState(false);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
@@ -38,7 +38,6 @@ const AdminUser = () => {
 				})
 				.then((response) => {
 					StoreAdmin.actions.setUsers(response.data);
-					Logger.info('Admin users', response.data);
 				})
 				.catch((error) => {
 					Logger.warn('Error fetching admin users', error);
@@ -51,19 +50,19 @@ const AdminUser = () => {
 			<Button
 				label={t('admin:add')}
 				iconName={IconNames.userCheck}
-				onPress={() => setSignup(!signup)}
+				onPress={() => setAddUser(!addUser)}
 				background={colors.secondary}
 			/>
-			{signup && (
+			{addUser && (
 				<ContainerZone>
-					<Signup isAdmin />
+					<Signup isAdmin setAddUser={setAddUser} />
 				</ContainerZone>
 			)}
 			<TitleContent label={t('admin:users')} />
 			<ViewList>
 				{storeAdmin.users.length > 0 &&
 					storeAdmin.users.map((user, index) => (
-						<UserListItem key={index} userId={user.id} setSignup={setSignup} />
+						<UserListItem key={index} userId={user.id} setSignup={setAddUser} />
 					))}
 			</ViewList>
 		</>

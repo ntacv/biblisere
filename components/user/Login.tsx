@@ -50,11 +50,7 @@ const Login = ({ setSignup }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 

@@ -28,11 +28,9 @@ const AdminBook = () => {
 	const user = storeUser.id;
 
 	return (
-		<>
-			<ContainerZone>
-				<TitleContent label={t('admin:books')} />
-			</ContainerZone>
-		</>
+		<ContainerZone>
+			<TitleContent label={t('admin:books')} />
+		</ContainerZone>
 	);
 };
 
