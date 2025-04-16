@@ -31,38 +31,44 @@ const ListRow = ({ title, booksId, onPressTitle }: Props) => {
 	const books = useStoreMap(StoreBooks.store, (store) => store);
 
 	return (
-		<View>
+		<ViewContainer>
 			{title && (
 				<TouchableOpacity activeOpacity={0.8} onPress={onPressTitle}>
 					<TitleContent iconEnd={onPressTitle && IconNames.arrowRight} label={title} />
 				</TouchableOpacity>
 			)}
-			{!booksId ? null : (
+			{booksId && (
 				<ViewNewBooks horizontal>
-					{books.books?.map((book, index) => (
-						<TouchableOpacity
-							key={index}
-							activeOpacity={0.8}
-							onPress={() =>
-								navigation.navigate(RouteNames.CatalogNavigator, {
-									screen: RouteNames.Details,
-									params: { bookId: book.id } as any,
-								} as any)
-							}
-						>
-							<ImageBook source={{ uri: book.imageUrl }} />
-							<TextContentDate>
-								{t('dates:month-year', { val: new Date(book.publicationDate) })}
-							</TextContentDate>
-						</TouchableOpacity>
-					))}
+					{booksId.map((bookId, index) => {
+						const book = books?.bookMap[bookId];
+						return (
+							<TouchableOpacity
+								key={index}
+								activeOpacity={0.8}
+								onPress={() => {
+									navigation.navigate(RouteNames.CatalogNavigator, {
+										screen: RouteNames.Details,
+										params: { bookId: book?.id } as any,
+									} as any);
+								}}
+							>
+								<ImageBook source={{ uri: book?.imageUrl }} />
+								<TextContentDate>
+									{t('dates:month-year', { val: new Date(book?.publicationDate) })}
+								</TextContentDate>
+							</TouchableOpacity>
+						);
+					})}
 				</ViewNewBooks>
 			)}
-		</View>
+		</ViewContainer>
 	);
 };
 export default ListRow;
 
+const ViewContainer = styled(View)`
+	gap: ${sizes.padding.main}px;
+`;
 const ViewNewBooks = styled(ScrollView)`
 	height: ${sizes.height.imageList + 30}px;
 `;
