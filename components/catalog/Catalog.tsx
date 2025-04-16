@@ -8,7 +8,7 @@ import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { colors, fonts, sizes } from 'styles/Variables';
 
-import { Api, Book, Category } from 'api/apiSwagger';
+import { Api, Book, Category, OrderType, SortsType, bookStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -27,6 +27,11 @@ interface Props {
 	};
 }
 
+interface SortsState {
+	open: boolean;
+	order: SortsType;
+}
+
 const Catalog = ({ route }: Props) => {
 	const { t } = useTranslation();
 
@@ -35,6 +40,11 @@ const Catalog = ({ route }: Props) => {
 	const [searchedBooks, setSearchedBooks] = React.useState<number[]>([]);
 	const [categories, setCategories] = React.useState({ open: false, categories: [] });
 	const [filters, setFilters] = React.useState([]);
+	const [ascendant, setAscendant] = React.useState(true);
+	const [sorts, setSorts] = React.useState<SortsState>({
+		open: false,
+		order: SortsType.publicationDate,
+	});
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
@@ -109,53 +119,102 @@ const Catalog = ({ route }: Props) => {
 		}));
 	}, []);
 
+	React.useEffect(() => {
+		bookStore.update(sorts.order, ascendant ? OrderType.asc : OrderType.desc).then(() => {
+			presentedBooks();
+		});
+	}, [sorts.order, ascendant]);
+
+	React.useEffect(() => {}, [searchedBooks]);
+
 	return (
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
 					<Searchbar value={{ search, setSearch }} onPress={presentedBooks} />
-					<View>
+					<ViewFilters>
 						<Button
-							label={t('catalog:filter')}
+							label={t('components:filter:filter')}
 							iconName={categories.open ? IconNames.arrowUp : IconNames.arrowDown}
-							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
+							onPress={() => {
+								setCategories((filters) => ({ ...filters, open: !filters.open }));
+								setSorts((filters) => ({ ...filters, open: false }));
+							}}
 							background={filters.length > 0 ? colors.primary : colors.secondary}
 						/>
-						{categories.open && (
-							<ContainerZoneFilter>
-								<ViewInline>
-									{categories.categories.map((category, index) =>
-										filters.find((filter) => filter.id === category.id) ? (
-											<TextSelected
-												key={index}
-												onPress={() => {
-													setFilters((filters) =>
-														filters.filter((filter) => filter.id !== category.id),
-													);
-												}}
-											>
-												{category.name + ','}
-											</TextSelected>
-										) : (
-											<TextToSelect
-												key={index}
-												onPress={() => {
-													setFilters((filters) => [...filters, category]);
-												}}
-											>
-												{category.name + ','}
-											</TextToSelect>
-										),
-									)}
-								</ViewInline>
-							</ContainerZoneFilter>
-						)}
+						<Button
+							label={t('components:filter:sort')}
+							iconName={sorts.open ? IconNames.arrowUp : IconNames.arrowDown}
+							onPress={() => {
+								setSorts((filters) => ({ ...filters, open: !filters.open }));
+								setCategories((filters) => ({ ...filters, open: false }));
+							}}
+							background={colors.secondary}
+						/>
+						<Button
+							iconName={IconNames.arrowUp}
+							onPress={() => setAscendant(true)}
+							background={ascendant ? colors.clickable : colors.primary}
+						/>
+						<Button
+							iconName={IconNames.arrowDown}
+							onPress={() => setAscendant(false)}
+							background={!ascendant ? colors.clickable : colors.primary}
+						/>
+					</ViewFilters>
+					{categories.open && (
+						<ContainerZone>
+							<ViewInline>
+								{categories.categories.map((category, index) =>
+									filters.find((filter) => filter.id === category.id) ? (
+										<TextSelected
+											key={index}
+											onPress={() => {
+												setFilters((filters) =>
+													filters.filter((filter) => filter.id !== category.id),
+												);
+											}}
+										>
+											{category.name + ','}
+										</TextSelected>
+									) : (
+										<TextToSelect
+											key={index}
+											onPress={() => {
+												setFilters((filters) => [...filters, category]);
+											}}
+										>
+											{category.name + ','}
+										</TextToSelect>
+									),
+								)}
+							</ViewInline>
+						</ContainerZone>
+					)}
+					{sorts.open && (
+						<ContainerZone>
+							{Object.values(SortsType).map((sortName, index) => (
+								<TextSort
+									key={index}
+									onPress={() => {
+										setSorts((filters) => ({
+											...filters,
+											order: sortName,
+										}));
+									}}
+									selected={sorts.order === sortName}
+								>
+									{t('components:sorts:' + sortName)}
+								</TextSort>
+							))}
+						</ContainerZone>
+					)}
 
-						<TextLeft>
-							{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
-								t('catalog:result')}
-						</TextLeft>
-					</View>
+					<TextLeft>
+						{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
+							t('catalog:result')}
+					</TextLeft>
+
 					<ViewList>
 						{storeBooks.books ? (
 							searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
@@ -173,11 +232,14 @@ export default Catalog;
 const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
-const ViewList = styled(View)`
+const ViewFilters = styled(View)`
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	gap: ${sizes.padding.main}px;
 `;
-const ContainerZoneFilter = styled(ContainerZone)`
-	margin: ${sizes.padding.main}px 0;
+const ViewList = styled(View)`
+	gap: ${sizes.padding.main}px;
 `;
 const ViewInline = styled(View)`
 	padding: ${sizes.padding.main}px;
@@ -199,3 +261,10 @@ const TextSelected = styled(TextCategory)`
 	background-color: ${colors.primary};
 `;
 const TextToSelect = styled(TextCategory)``;
+
+const TextSort = styled(TextCategory)`
+	padding: ${sizes.padding.main}px;
+	margin: ${3 - sizes.padding.main}px 0;
+	border-radius: ${sizes.radius.in};
+	background-color: ${(props) => (props.selected ? colors.primary : 'transparent')};
+`;

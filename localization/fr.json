@@ -38,7 +38,19 @@
 		"filter": {
 			"title": "Filtres",
 			"filter": "Filtrer",
-			"advanced": "Avancé"
+			"advanced": "Avancé",
+			"sort": "Trier",
+			"asc": "asc",
+			"dsc": "desc"
+		},
+		"sorts": {
+			"title": "Titre",
+			"author": "Auteur",
+			"pages": "Pages",
+			"publicationDate": "Date de publication",
+			"id": "ID",
+			"quantity": "Quantité",
+			"updatedAt": "Dernière mise à jour"
 		},
 		"button": {
 			"click": "Cliquez moi"

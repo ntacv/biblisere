@@ -67,7 +67,7 @@ function Homepage() {
 							} as any)
 						}
 					>
-						<TitleContent iconEnd={IconNames.arrowRight} label={t('home:titles:news')} />
+						<TitleContent iconEnd={IconNames.arrowRight} label={t('catalog:books')} />
 					</TouchableOpacity>
 					<ViewNewBooks horizontal>
 						{!books.books ? (
