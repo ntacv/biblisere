@@ -1,3 +1,4 @@
+import { baseUrl } from 'baseurl';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 
@@ -234,7 +235,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-	public baseUrl: string = 'http://localhost:8000';
+	public baseUrl: string = baseUrl;
 	private securityData: SecurityDataType | null = null;
 	private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
 	private abortControllers = new Map<CancelToken, AbortController>();

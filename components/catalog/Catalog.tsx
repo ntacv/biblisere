@@ -8,7 +8,7 @@ import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { colors, fonts, sizes } from 'styles/Variables';
 
-import { Api, Book, Category, OrderType, SortsType, bookStore } from 'api/apiSwagger';
+import { Book, Category, OrderType, SortsType, bookStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -16,8 +16,6 @@ import BookListItem from 'components/book/BookListItem';
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
-
-const api = new Api();
 
 interface Props {
 	route: {
@@ -37,7 +35,7 @@ const Catalog = ({ route }: Props) => {
 
 	const propSearch = route.params?.search;
 	const [search, setSearch] = React.useState('');
-	const [searchedBooks, setSearchedBooks] = React.useState<number[]>([]);
+
 	const [categories, setCategories] = React.useState({ open: false, categories: [] });
 	const [filters, setFilters] = React.useState([]);
 	const [ascendant, setAscendant] = React.useState(true);
@@ -48,40 +46,21 @@ const Catalog = ({ route }: Props) => {
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
-	const presentedBooks = () => {
-		if (!!search) {
-			if (filters.length === 0) {
-				// If there is a search, apply the search filter to the books
-				setSearchedBooks(searchedBookArray().map((book) => book.id));
-			} else {
-				// If there are filters and search, restart the book list
-				const booksIdSearchedAndFiltered = searchedBookArray() //.filteredBooksArray()
-					.filter((book) =>
-						book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
-					)
-					.map((book) => book.id);
-				setSearchedBooks(booksIdSearchedAndFiltered);
-			}
-		} else {
-			// If there are filters, filter the books
-			if (filters.length > 0) {
-				setSearchedBooks(filteredBookArray().map((book) => book.id));
-			} else {
-				// If no search and no filters, return all books
-				setSearchedBooks(storeBooks.books.map((book) => book.id));
-			}
+	React.useEffect(() => {
+		if (propSearch !== '' && propSearch !== undefined) {
+			setSearch(propSearch);
 		}
-	};
+	}, [propSearch]);
 
 	const filteredBookArray = (bookArray?: Book[]) => {
-		return (bookArray ? bookArray : storeBooks.books).filter((book) =>
+		return (bookArray ? bookArray : storeBooks.books)?.filter((book) =>
 			book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
 		);
 	};
 
 	const searchedBookArray = () => {
 		// Filter books based on search input
-		return storeBooks.books.filter(
+		return storeBooks.books?.filter(
 			(book) =>
 				book.title.toLowerCase().includes(search.toLowerCase()) ||
 				book.author.toLowerCase().includes(search.toLowerCase()),
@@ -89,20 +68,7 @@ const Catalog = ({ route }: Props) => {
 	};
 
 	React.useEffect(() => {
-		presentedBooks();
-	}, [search]);
-
-	React.useEffect(() => {
-		if (propSearch !== '' && propSearch !== undefined) {
-			setSearch(propSearch);
-		}
-	}, [propSearch]);
-
-	React.useEffect(() => {
-		presentedBooks();
-	}, [filters]);
-
-	React.useEffect(() => {
+		// Get all categories from the books
 		const categoryUnique = storeBooks.books
 			.flatMap((book) => book.categories)
 			.reduce(
@@ -120,18 +86,35 @@ const Catalog = ({ route }: Props) => {
 	}, []);
 
 	React.useEffect(() => {
-		bookStore.update(sorts.order, ascendant ? OrderType.asc : OrderType.desc).then(() => {
-			presentedBooks();
-		});
+		// Update the book store with the selected sort
+		bookStore.update(sorts.order, ascendant ? OrderType.asc : OrderType.desc);
 	}, [sorts.order, ascendant]);
 
-	React.useEffect(() => {}, [searchedBooks]);
+	const searchedBooks = React.useMemo(() => {
+		if (!!search) {
+			if (filters.length === 0) {
+				// If there is a search, apply the search filter to the books
+				return searchedBookArray().map((book) => book.id);
+			} else {
+				// If there are filters and search, restart the book list
+				return filteredBookArray(searchedBookArray()).map((book) => book.id);
+			}
+		} else {
+			// If there are filters, filter the books
+			if (filters.length > 0) {
+				return filteredBookArray().map((book) => book.id);
+			} else {
+				// If no search and no filters, return all books
+				return storeBooks.books?.map((book) => book.id);
+			}
+		}
+	}, [storeBooks.books, filters, search]);
 
 	return (
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
-					<Searchbar value={{ search, setSearch }} onPress={presentedBooks} />
+					<Searchbar value={{ search, setSearch }} onPress={() => {}} />
 					<ViewFilters>
 						<Button
 							label={t('components:filter:filter')}
