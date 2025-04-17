@@ -60,6 +60,6 @@ const InputSearch = styled(TextInput)`
 	font: ${fonts.content};
 
 	align-self: center;
-	height: ${sizes.text.input}px;
-	flex: 1;
+	padding-bottom: ${sizes.padding.main - 5}px;
+	width: ${sizes.width.input}px;
 `;

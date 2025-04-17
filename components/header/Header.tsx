@@ -66,4 +66,5 @@ export default Header;
 const ViewHeader = styled(View)`
 	flex-direction: row;
 	padding: ${sizes.padding.main}px;
+	z-index: 1000;
 `;
