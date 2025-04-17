@@ -55,7 +55,7 @@ const BorrowBook = ({ bookId }: Props) => {
 			<ViewRow>
 				{user.role === Role.admin && (
 					<Button
-						iconName={IconNames.x}
+						iconName={IconNames.trash}
 						onPress={() => {
 							renderAlert(t('catalog:delete'), t('catalog:deleteBookConfirm'), t('user:cancel'), {
 								text: t('catalog:delete'),

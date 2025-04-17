@@ -23,36 +23,40 @@ const BookListItem = ({ bookId }: Props) => {
 	const { t } = useTranslation();
 	const navigation = useNav();
 
-	const storeUser = StoreUser.store.getState();
+	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 	const book = useStoreMap(StoreBooks.store, (store) => store).books?.find(
 		(book) => book.id === bookId,
 	);
 
 	return (
-		<TouchableOpacity
-			activeOpacity={0.8}
-			onPress={() =>
-				navigation.navigate(RouteNames.CatalogNavigator, {
-					screen: RouteNames.Details,
-					params: { bookId: book.id } as any,
-				} as any)
-			}
-		>
-			<ContainerZone>
-				<ViewListItem>
-					<ImageBook width={sizes.height.imageItem} source={{ uri: book.imageUrl }} />
-					<ViewSide>
-						<TextBold>{book.title}</TextBold>
-						<TextContent>{book.author}</TextContent>
-						<TextContent>
-							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
-						</TextContent>
+		<>
+			{book && (
+				<TouchableOpacity
+					activeOpacity={0.8}
+					onPress={() =>
+						navigation.navigate(RouteNames.CatalogNavigator, {
+							screen: RouteNames.Details,
+							params: { bookId: book.id } as any,
+						} as any)
+					}
+				>
+					<ContainerZone>
+						<ViewListItem>
+							<ImageBook width={sizes.height.imageItem} source={{ uri: book.imageUrl }} />
+							<ViewSide>
+								<TextBold>{book.title}</TextBold>
+								<TextContent>{book.author}</TextContent>
+								<TextContent>
+									{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
+								</TextContent>
 
-						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
-					</ViewSide>
-				</ViewListItem>
-			</ContainerZone>
-		</TouchableOpacity>
+								{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
+							</ViewSide>
+						</ViewListItem>
+					</ContainerZone>
+				</TouchableOpacity>
+			)}
+		</>
 	);
 };
 export default BookListItem;

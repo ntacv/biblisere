@@ -11,6 +11,7 @@ import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
 import search from 'assets/icons/search.svg';
+import trash from 'assets/icons/trash.svg';
 import userCheck from 'assets/icons/user-check.svg';
 import userX from 'assets/icons/user-x.svg';
 import user from 'assets/icons/user.svg';
@@ -30,6 +31,7 @@ export enum IconNames {
 	mapPin = 'mapPin',
 	menu = 'menu',
 	search = 'search',
+	trash = 'trash',
 	user = 'user',
 	userCheck = 'userCheck',
 	userX = 'userX',
@@ -50,6 +52,7 @@ const IconSvgs = {
 	mapPin: mapPin,
 	menu: menu,
 	search: search,
+	trash: trash,
 	user: user,
 	userCheck: userCheck,
 	userX: userX,
