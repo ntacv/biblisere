@@ -34,8 +34,8 @@ export const sizes = {
 	},
 	height: {
 		image: 130,
-		imageItem: 110,
-		imageList: 140,
+		imageItem: 90,
+		imageList: 130,
 	},
 	width: {
 		input: 200,

@@ -42,7 +42,7 @@ const ListRow = ({ title, booksId, onPressTitle }: Props) => {
 					{booksId.map((bookId, index) => {
 						const book = books?.bookMap[bookId];
 						return (
-							<TouchableOpacity
+							<TouchableBook
 								key={index}
 								activeOpacity={0.8}
 								onPress={() => {
@@ -56,7 +56,7 @@ const ListRow = ({ title, booksId, onPressTitle }: Props) => {
 								<TextContentDate>
 									{t('dates:month-year', { val: new Date(book?.publicationDate) })}
 								</TextContentDate>
-							</TouchableOpacity>
+							</TouchableBook>
 						);
 					})}
 				</ViewNewBooks>
@@ -71,6 +71,10 @@ const ViewContainer = styled(View)`
 `;
 const ViewNewBooks = styled(ScrollView)`
 	height: ${sizes.height.imageList + 30}px;
+`;
+const TouchableBook = styled(TouchableOpacity)`
+	margin-right: ${sizes.padding.main}px;
+	gap: 5px;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};

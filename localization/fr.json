@@ -52,7 +52,7 @@
 	"home": {
 		"name": "Biblisère",
 		"title": "Accueil",
-		"intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
+		"intro": "Bibliothèque Municipale de Biblisère",
 		"explore": "Explorer",
 		"content": {
 			"days": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
@@ -62,7 +62,7 @@
 				"- Espaces de lecture et de travail",
 				"- Activités et événements"
 			],
-			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
+			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Biblisère a à offrir. À bientôt !",
 			"presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
 		},
 		"titles": {
