@@ -14,12 +14,16 @@ import { MAX_BOOKS, Role, bookStore } from 'api/apiSwagger';
 import Button from 'components/button/Button';
 import renderAlert from 'components/utils/renderAlert';
 
+import useNav from 'utils/navigation';
+import RouteNames from 'utils/routes';
+
 export interface Props {
 	bookId: number;
 }
 
 const BorrowBook = ({ bookId }: Props) => {
 	const { t } = useTranslation();
+	const navigation = useNav();
 
 	const user = useStoreMap(StoreUser.store, (store) => store).id;
 	const book = useStoreMap(StoreBooks.store, (store) => store).books.find(
@@ -57,6 +61,9 @@ const BorrowBook = ({ bookId }: Props) => {
 								text: t('catalog:delete'),
 								onPress: () => {
 									bookStore.deleteBook(bookId);
+									navigation.navigate(RouteNames.CatalogNavigator, {
+										screen: RouteNames.Catalog,
+									} as any);
 								},
 							});
 						}}

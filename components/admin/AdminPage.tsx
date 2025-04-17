@@ -16,8 +16,8 @@ import ContainerColumn from 'components/utils/ContainerColumn';
 
 const AdminPage = () => {
 	const { t } = useTranslation();
-	const [userSection, setUserSection] = React.useState(false);
-	const [bookSection, setBookSection] = React.useState(true);
+	const [userSection, setUserSection] = React.useState(true);
+	const [bookSection, setBookSection] = React.useState(false);
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 

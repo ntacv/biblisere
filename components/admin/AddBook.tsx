@@ -69,7 +69,7 @@ const AddBook = ({ setAddBook }: Props) => {
 			.then((response) => {
 				Logger.info('Book created successfully', response.data);
 				bookStore.update();
-				alert(t('catalog:bookCreated'));
+				alert(t('admin:bookCreated'));
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
@@ -92,7 +92,7 @@ const AddBook = ({ setAddBook }: Props) => {
 
 							<InputContent
 								inputError={!!errors.title}
-								placeholder={t('catalog:title')}
+								placeholder={t('catalog:bookTitle')}
 								onChangeText={handleChange('title')}
 								onBlur={handleBlur('title')}
 								value={values.title}

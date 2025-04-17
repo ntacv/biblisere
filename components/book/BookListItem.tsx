@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
+import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
@@ -23,7 +24,9 @@ const BookListItem = ({ bookId }: Props) => {
 	const navigation = useNav();
 
 	const storeUser = StoreUser.store.getState();
-	const book = StoreBooks.store.getState().books.find((book) => book.id === bookId);
+	const book = useStoreMap(StoreBooks.store, (store) => store).books?.find(
+		(book) => book.id === bookId,
+	);
 
 	return (
 		<TouchableOpacity

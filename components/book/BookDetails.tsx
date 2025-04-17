@@ -15,6 +15,8 @@ import ListRow from 'components/list/ListRow';
 import TitleContent from 'components/text/TitleContent';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
+import useNav from 'utils/navigation';
+
 import BorrowBook from './BorrowBook';
 
 interface Props {
@@ -27,12 +29,17 @@ interface Props {
 
 const BookDetails = (props: Props) => {
 	const { t } = useTranslation();
+	const navigation = useNav();
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);
 	const books = useStoreMap(StoreBook.store, (store) => store.books);
 
 	const bookId = props.route.params.bookId;
 	const book = books.find((book) => book.id === bookId);
+
+	if (!bookId && !book) {
+		navigation.goBack();
+	}
 
 	const sameAuthorBooks = books
 		?.filter((bookFiltered) => bookFiltered?.author === book?.author && bookFiltered.id !== bookId)
@@ -51,47 +58,49 @@ const BookDetails = (props: Props) => {
 	return (
 		<ViewPage header returnIcon>
 			<ScrollViewContent>
-				<ContainerColumn>
-					<ContainerZone>
-						<TitleContent label={book.title} />
-						<ImageBookDetails height={300} source={{ uri: book.imageUrl }} />
+				{bookId && book && (
+					<ContainerColumn>
+						<ContainerZone>
+							<TitleContent label={book.title} />
+							<ImageBookDetails height={300} source={{ uri: book.imageUrl }} />
 
-						<TextBold>{book.author}</TextBold>
+							<TextBold>{book.author}</TextBold>
 
-						<TextContent>
-							{t('catalog:from') +
-								t('dates:month-year-long', { val: new Date(book.publicationDate) })}
-						</TextContent>
+							<TextContent>
+								{t('catalog:from') +
+									t('dates:month-year-long', { val: new Date(book.publicationDate) })}
+							</TextContent>
 
-						<TextContent>
-							{t('catalog:categories') + t('config:text:colon')}
-							{book.categories
-								.map((category) => {
-									return category.name;
-								})
-								.join(', ')}
-						</TextContent>
+							<TextContent>
+								{t('catalog:categories') + t('config:text:colon')}
+								{book.categories
+									.map((category) => {
+										return category.name;
+									})
+									.join(', ')}
+							</TextContent>
 
-						<TextContent>{book.pages + t('catalog:pages')}</TextContent>
-						{/* max 10 lines */}
-						<TextContent numberOfLines={10}>
-							{book.description}
-							{t('lorem:long') + t('lorem:long')}
-						</TextContent>
+							<TextContent>{book.pages + t('catalog:pages')}</TextContent>
+							{/* max 10 lines */}
+							<TextContent numberOfLines={10}>
+								{book.description}
+								{t('lorem:long') + t('lorem:long')}
+							</TextContent>
 
-						{/* 3 books from author */}
-						{sameAuthorBooks?.length > 0 && (
-							<ListRow booksId={sameAuthorBooks} title={t('details:sameAuthor')} />
-						)}
+							{/* 3 books from author */}
+							{sameAuthorBooks?.length > 0 && (
+								<ListRow booksId={sameAuthorBooks} title={t('details:sameAuthor')} />
+							)}
 
-						{/* 3 books from the same category */}
-						{sameCategoryBooks?.length > 0 && (
-							<ListRow booksId={sameCategoryBooks} title={t('details:sameKind')} />
-						)}
+							{/* 3 books from the same category */}
+							{sameCategoryBooks?.length > 0 && (
+								<ListRow booksId={sameCategoryBooks} title={t('details:sameKind')} />
+							)}
 
-						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
-					</ContainerZone>
-				</ContainerColumn>
+							{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
+						</ContainerZone>
+					</ContainerColumn>
+				)}
 			</ScrollViewContent>
 		</ViewPage>
 	);
