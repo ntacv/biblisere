@@ -72,7 +72,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.email}
-								placeholder={t('user:email')}
+								placeholder={t('login:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
@@ -81,7 +81,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.password}
-								placeholder={t('user:password')}
+								placeholder={t('login:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}

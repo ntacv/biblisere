@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Icon, { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
+import { colors, sizes } from 'styles/Variables';
 
 import DrawerContentCustom from 'components/menu/DrawerContentCustom';
 
@@ -26,7 +28,22 @@ const DrawerMenu = () => {
 			screenOptions={{
 				headerShown: false,
 				drawerType: 'slide',
-				drawerStyle: { backgroundColor: 'white' },
+				drawerStyle: { backgroundColor: colors.background },
+				drawerActiveBackgroundColor: colors.clickable,
+				drawerInactiveBackgroundColor: colors.primary,
+				drawerIcon: ({ focused, color }) => (
+					<Icon
+						iconName={IconNames.arrowRight}
+						width={sizes.icons.search}
+						stroke={focused ? colors.primary : colors.content}
+					/>
+				),
+				drawerLabelStyle: {
+					color: colors.content,
+				},
+				drawerItemStyle: {
+					borderRadius: parseFloat(sizes.radius.in),
+				},
 			}}
 			drawerContent={(props) => <DrawerContentCustom {...props} />}
 		>
