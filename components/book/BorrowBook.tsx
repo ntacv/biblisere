@@ -53,17 +53,12 @@ const BorrowBook = ({ bookId }: Props) => {
 					<Button
 						iconName={IconNames.x}
 						onPress={() => {
-							renderAlert(
-								t('catalog:deleteBook'),
-								t('catalog:deleteBookConfirm'),
-								t('user:cancel'),
-								{
-									text: t('catalog:delete'),
-									onPress: () => {
-										bookStore.deleteBook(bookId);
-									},
+							renderAlert(t('catalog:delete'), t('catalog:deleteBookConfirm'), t('user:cancel'), {
+								text: t('catalog:delete'),
+								onPress: () => {
+									bookStore.deleteBook(bookId);
 								},
-							);
+							});
 						}}
 						alignLeft
 					/>

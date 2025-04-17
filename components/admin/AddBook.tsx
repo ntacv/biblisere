@@ -88,7 +88,7 @@ const AddBook = ({ setAddBook }: Props) => {
 				<SafeViewForm>
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
-							<TitleContent label={t('addBook')} />
+							<TitleContent label={t('admin:addBook')} />
 
 							<InputContent
 								inputError={!!errors.title}
@@ -100,7 +100,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.author}
-								placeholder={t('login:author')}
+								placeholder={t('catalog:authors')}
 								onChangeText={handleChange('author')}
 								onBlur={handleBlur('author')}
 								value={values.author}
@@ -108,7 +108,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.publicationDate}
-								placeholder={t('login:publicationDate')}
+								placeholder={t('catalog:publicationDate')}
 								onChangeText={handleChange('publicationDate')}
 								onBlur={handleBlur('publicationDate')}
 								value={values.publicationDate}
@@ -116,7 +116,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.description}
-								placeholder={t('login:description')}
+								placeholder={t('catalog:description')}
 								onChangeText={handleChange('description')}
 								onBlur={handleBlur('description')}
 								value={values.description}
@@ -124,7 +124,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.imageUrl}
-								placeholder={t('login:imageUrl')}
+								placeholder={t('catalog:imageUrl')}
 								onChangeText={handleChange('imageUrl')}
 								onBlur={handleBlur('imageUrl')}
 								value={values.imageUrl}
@@ -132,7 +132,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.quantity}
-								placeholder={t('login:quantity')}
+								placeholder={t('catalog:quantity')}
 								onChangeText={handleChange('quantity')}
 								onBlur={handleBlur('quantity')}
 								value={values.quantity.toString()}
@@ -140,7 +140,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.categories}
-								placeholder={t('login:categories')}
+								placeholder={t('catalog:categories')}
 								onChangeText={handleChange('categories')}
 								onBlur={handleBlur('categories')}
 								value={values.categories.toString()}
@@ -148,7 +148,7 @@ const AddBook = ({ setAddBook }: Props) => {
 							/>
 							<InputContent
 								inputError={!!errors.tags}
-								placeholder={t('login:tags')}
+								placeholder={t('catalog:tags')}
 								onChangeText={handleChange('tags')}
 								onBlur={handleBlur('tags')}
 								value={values.tags.toString()}
