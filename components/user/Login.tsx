@@ -64,7 +64,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.email}
-								placeholder={t('user:email')}
+								placeholder={t('login:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
@@ -73,7 +73,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.password}
-								placeholder={t('user:password')}
+								placeholder={t('login:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
@@ -95,6 +95,7 @@ const Login = ({ setSignup }: Props) => {
 								label={t('login:signup')}
 								iconName={IconNames.userCheck}
 								onPress={() => setSignup(true)}
+								background={colors.secondary}
 							/>
 
 							{/* TEST COMPONENT to login as admin */}

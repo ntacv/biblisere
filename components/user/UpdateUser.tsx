@@ -31,9 +31,12 @@ interface Props {
 const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 	const { t } = useTranslation();
 
+	const adminStore = useStoreMap(StoreAdmin.store, (store) => store.users);
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
 	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const adminStore = useStoreMap(StoreAdmin.store, (store) => store.users);
+	initialUserFull.firstName = user?.firstName;
+	initialUserFull.lastName = user?.lastName;
+	initialUserFull.email = user?.email;
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -137,21 +140,20 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 								maxLength={sizes.text.length}
 							/>
 
-							<InputContent
-								inputError={!!errors.password}
-								placeholder={t('login:password')}
-								onChangeText={handleChange('password')}
-								onBlur={handleBlur('password')}
-								value={values.password}
-								maxLength={sizes.text.length}
-							/>
-
 							<Button
 								label={t('user:save')}
 								onPress={() => {
 									handleSubmit();
 									if (!admin) setEdit(false);
 								}}
+								active
+							/>
+							<Button
+								label={t('user:cancel')}
+								onPress={() => {
+									setEdit(false);
+								}}
+								active
 							/>
 						</ContainerColumnForm>
 					</KeyboardView>

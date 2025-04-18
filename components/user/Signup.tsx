@@ -165,6 +165,7 @@ const Signup = ({ setSignup, setAddUser, isAdmin }: Props) => {
 										onPress={() => {
 											setSignup(false);
 										}}
+										background={colors.secondary}
 									/>
 
 									{/* TEST COMPONENT to login as admin */}

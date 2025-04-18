@@ -52,23 +52,23 @@
 	},
 	"home": {
 		"name": "Biblisère",
-		"title": "Page d'accueil",
-		"intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
+		"title": "Accueil",
+		"intro": "Bibliothèque Municipale de Biblisère",
 		"explore": "Explorer",
 		"content": {
 			"days": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
 			"services": [
-				"- Prêt de livres et de magazines",
-				"- Accès aux ressources numériques",
-				"- Espaces de lecture et de travail",
-				"- Activités et événements"
+				"- Emprunter des livres et des magazines",
+				"- Accéder à des ressources numériques",
+				"- Profiter des espaces de lecture et de travail",
+				"- Participer à des activités et événements"
 			],
-			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
+			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Biblisère a à offrir. À bientôt !",
 			"presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
 		},
 		"titles": {
-			"services": "Nos Services",
-			"news": "Nouvelles",
+			"services": "Ici, vous pouvez",
+			"news": "Dernières arrivées",
 			"popular": "Populaire",
 			"recommended": "Recommandé",
 			"access": "Accès",
@@ -110,7 +110,7 @@
 		"sameKind": "Du même genre"
 	},
 	"user": {
-		"title": "Utilisateur",
+		"title": "Mon compte",
 		"name": "John Doe",
 		"membership": "Membre depuis ",
 		"borrowed": "Vous avez emprunté {{val}}/{{max}} livres",
@@ -147,7 +147,7 @@
 		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {
-		"title": "Admin",
+		"title": "Administration",
 		"name": "Admin",
 		"users": "Gérer les utilisateurs",
 		"books": "Gérer les livres",

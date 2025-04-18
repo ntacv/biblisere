@@ -17,7 +17,7 @@ const ChooseLanguage = () => {
 				<Button
 					key={language}
 					label={t('components:translate:' + language)}
-					background={i18next.language !== language ? colors.clickable : colors.primary}
+					background={i18next.language === language ? colors.primary : colors.clickable}
 					onPress={() => i18next.changeLanguage(language)}
 				/>
 			))}
@@ -27,7 +27,10 @@ const ChooseLanguage = () => {
 export default ChooseLanguage;
 
 const Container = styled(View)`
-	display: flex;
 	flex-direction: row;
 	gap: ${sizes.padding.main}px;
+
+	//padding: ${sizes.padding.main}px;
+	//border-radius: ${sizes.radius.out};
+	//border: 1px solid ${colors.locked};
 `;
