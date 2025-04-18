@@ -34,7 +34,7 @@ const AdminPage = () => {
 								setUserSection(true);
 								setBookSection(false);
 							}}
-							background={userSection ? colors.secondary : colors.primary}
+							background={userSection ? colors.primary : colors.clickable}
 						/>
 						<Button
 							label={t('menu:books')}
@@ -43,7 +43,7 @@ const AdminPage = () => {
 								setUserSection(false);
 								setBookSection(true);
 							}}
-							background={bookSection ? colors.secondary : colors.primary}
+							background={bookSection ? colors.primary : colors.clickable}
 						/>
 					</ViewRow>
 

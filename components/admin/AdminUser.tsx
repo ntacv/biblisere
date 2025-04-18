@@ -51,7 +51,7 @@ const AdminUser = () => {
 				label={t('admin:add')}
 				iconName={IconNames.userCheck}
 				onPress={() => setAddUser(!addUser)}
-				background={colors.secondary}
+				background={addUser ? colors.primary : colors.secondary}
 			/>
 			{addUser && (
 				<ContainerZone>
@@ -61,9 +61,11 @@ const AdminUser = () => {
 			<TitleContent label={t('admin:users')} />
 			<ViewList>
 				{storeAdmin.users.length > 0 &&
-					storeAdmin.users.map((user, index) => (
-						<UserListItem key={index} userId={user.id} setSignup={setAddUser} />
-					))}
+					storeAdmin.users
+						.reverse()
+						.map((user, index) => (
+							<UserListItem key={index} userId={user.id} setSignup={setAddUser} />
+						))}
 			</ViewList>
 		</>
 	);
@@ -73,4 +75,5 @@ export default AdminUser;
 
 const ViewList = styled(View)`
 	gap: ${sizes.padding.main}px;
+	margin-bottom: 320px;
 `;

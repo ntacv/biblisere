@@ -26,7 +26,7 @@ const AdminBook = () => {
 				label={t('admin:add')}
 				iconName={IconNames.bookmark}
 				onPress={() => setAddBook(!addBook)}
-				background={colors.secondary}
+				background={addBook ? colors.primary : colors.secondary}
 			/>
 			{addBook && (
 				<ContainerZone>
