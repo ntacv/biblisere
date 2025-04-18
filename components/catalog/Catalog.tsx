@@ -141,7 +141,7 @@ const Catalog = ({ route }: Props) => {
 					<ViewFilters>
 						<Button
 							label={t('components:filter:filter')}
-							iconName={categories.open ? IconNames.arrowUp : IconNames.arrowDown}
+							iconName={IconNames.tag}
 							onPress={() => {
 								setCategories((filters) => ({ ...filters, open: !filters.open }));
 								setSorts((filters) => ({ ...filters, open: false }));
@@ -150,22 +150,22 @@ const Catalog = ({ route }: Props) => {
 						/>
 						<Button
 							label={t('components:filter:sort')}
-							iconName={sorts.open ? IconNames.arrowUp : IconNames.arrowDown}
+							iconName={IconNames.barChart}
 							onPress={() => {
 								setSorts((filters) => ({ ...filters, open: !filters.open }));
 								setCategories((filters) => ({ ...filters, open: false }));
 							}}
-							background={colors.secondary}
+							background={sorts.open ? colors.primary : colors.secondary}
 						/>
 						<Button
 							iconName={IconNames.arrowUp}
 							onPress={() => setAscendant(true)}
-							background={ascendant ? colors.clickable : colors.primary}
+							background={ascendant ? colors.primary : colors.clickable}
 						/>
 						<Button
 							iconName={IconNames.arrowDown}
 							onPress={() => setAscendant(false)}
-							background={!ascendant ? colors.clickable : colors.primary}
+							background={!ascendant ? colors.primary : colors.clickable}
 						/>
 					</ViewFilters>
 					{categories.open && (

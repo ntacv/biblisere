@@ -2,6 +2,7 @@ import arrowDown from 'assets/icons/arrow-down.svg';
 import arrowLeft from 'assets/icons/arrow-left.svg';
 import arrowRight from 'assets/icons/arrow-right.svg';
 import arrowUp from 'assets/icons/arrow-up.svg';
+import barChart from 'assets/icons/bar-chart.svg';
 import book from 'assets/icons/book.svg';
 import bookmark from 'assets/icons/bookmark.svg';
 import clock from 'assets/icons/clock.svg';
@@ -11,6 +12,7 @@ import info from 'assets/icons/info.svg';
 import mapPin from 'assets/icons/map-pin.svg';
 import menu from 'assets/icons/menu.svg';
 import search from 'assets/icons/search.svg';
+import tag from 'assets/icons/tag.svg';
 import trash from 'assets/icons/trash.svg';
 import userCheck from 'assets/icons/user-check.svg';
 import userX from 'assets/icons/user-x.svg';
@@ -22,6 +24,7 @@ export enum IconNames {
 	arrowLeft = 'arrowLeft',
 	arrowRight = 'arrowRight',
 	arrowUp = 'arrowUp',
+	barChart = 'barChart',
 	book = 'book',
 	bookmark = 'bookmark',
 	clock = 'clock',
@@ -31,6 +34,7 @@ export enum IconNames {
 	mapPin = 'mapPin',
 	menu = 'menu',
 	search = 'search',
+	tag = 'tag',
 	trash = 'trash',
 	user = 'user',
 	userCheck = 'userCheck',
@@ -43,6 +47,7 @@ const IconSvgs = {
 	arrowLeft: arrowLeft,
 	arrowRight: arrowRight,
 	arrowUp: arrowUp,
+	barChart: barChart,
 	book: book,
 	bookmark: bookmark,
 	clock: clock,
@@ -52,6 +57,7 @@ const IconSvgs = {
 	mapPin: mapPin,
 	menu: menu,
 	search: search,
+	tag: tag,
 	trash: trash,
 	user: user,
 	userCheck: userCheck,
