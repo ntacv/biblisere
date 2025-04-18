@@ -38,6 +38,7 @@ const Searchbar = ({ onPress, value, home }: Props) => {
 				alignLeft
 				onPress={onPress}
 				label={home ? t('catalog:books') : null}
+				active
 			/>
 		</ViewSearchBar>
 	);

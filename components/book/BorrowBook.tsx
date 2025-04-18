@@ -48,6 +48,7 @@ const BorrowBook = ({ bookId }: Props) => {
 					iconName="bookmark"
 					onPress={() => borrowBook(book.id)}
 					alignLeft
+					active
 				/>
 			) : (
 				<Button
@@ -55,6 +56,7 @@ const BorrowBook = ({ bookId }: Props) => {
 					iconName="x"
 					onPress={() => returnBook(book.id)}
 					alignLeft
+					active
 				/>
 			)}
 		</>

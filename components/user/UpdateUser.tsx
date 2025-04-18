@@ -31,6 +31,9 @@ const UpdateUser = (props) => {
 
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
 	const user = useStoreMap(StoreUser.store, (store) => store.id);
+	initialUserFull.firstName = user?.firstName;
+	initialUserFull.lastName = user?.lastName;
+	initialUserFull.email = user?.email;
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -103,21 +106,20 @@ const UpdateUser = (props) => {
 								maxLength={sizes.text.length}
 							/>
 
-							<InputContent
-								inputError={!!errors.password}
-								placeholder={t('login:password')}
-								onChangeText={handleChange('password')}
-								onBlur={handleBlur('password')}
-								value={values.password}
-								maxLength={sizes.text.length}
-							/>
-
 							<Button
 								label={t('user:save')}
 								onPress={() => {
 									handleSubmit();
 									props.setEdit(false);
 								}}
+								active
+							/>
+							<Button
+								label={t('user:cancel')}
+								onPress={() => {
+									props.setEdit(false);
+								}}
+								active
 							/>
 						</ContainerColumnForm>
 					</KeyboardView>

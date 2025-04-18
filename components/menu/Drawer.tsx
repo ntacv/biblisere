@@ -5,7 +5,7 @@ import Icon, { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
-import { colors, sizes } from 'styles/Variables';
+import { colors, fonts, sizes } from 'styles/Variables';
 
 import DrawerContentCustom from 'components/menu/DrawerContentCustom';
 
@@ -29,17 +29,20 @@ const DrawerMenu = () => {
 				headerShown: false,
 				drawerType: 'slide',
 				drawerStyle: { backgroundColor: colors.background },
-				drawerActiveBackgroundColor: colors.clickable,
-				drawerInactiveBackgroundColor: colors.primary,
-				drawerIcon: ({ focused, color }) => (
+				drawerActiveBackgroundColor: colors.primary,
+				drawerInactiveBackgroundColor: colors.clickable,
+				drawerIcon: ({ focused }) => (
 					<Icon
 						iconName={IconNames.arrowRight}
 						width={sizes.icons.search}
-						stroke={focused ? colors.primary : colors.content}
+						stroke={focused ? colors.content : colors.content}
 					/>
 				),
 				drawerLabelStyle: {
 					color: colors.content,
+					fontSize: sizes.text.content,
+					fontFamily: fonts.family.primary,
+					fontWeight: '400',
 				},
 				drawerItemStyle: {
 					borderRadius: parseFloat(sizes.radius.in),

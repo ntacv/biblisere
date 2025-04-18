@@ -86,6 +86,7 @@ function Homepage() {
 								screen: RouteNames.Catalog,
 							} as any)
 						}
+						active
 					/>
 
 					<TitleContent label={t('home:titles:services')} />

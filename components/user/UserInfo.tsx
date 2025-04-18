@@ -64,6 +64,7 @@ const UserPage = (props) => {
 						},
 					});
 				}}
+				active
 			/>
 		</>
 	);

@@ -30,16 +30,12 @@ function Header({ returnIcon }: Props) {
 			{!returnIcon && (
 				<Button
 					iconName={IconNames.menu}
-					background={colors.clickable}
 					onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+					active
 				/>
 			)}
 			{returnIcon && (
-				<Button
-					iconName={IconNames.arrowLeft}
-					background={colors.clickable}
-					onPress={() => navigation.goBack()}
-				/>
+				<Button iconName={IconNames.arrowLeft} onPress={() => navigation.goBack()} active />
 			)}
 
 			<Title>
@@ -57,6 +53,7 @@ function Header({ returnIcon }: Props) {
 			<Button
 				iconName={storeUser.token ? IconNames.userCheck : IconNames.user}
 				onPress={() => navigation.navigate(RouteNames.User)}
+				active
 			/>
 		</ViewHeader>
 	);
