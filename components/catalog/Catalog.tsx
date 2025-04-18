@@ -8,7 +8,7 @@ import * as StoreBooks from 'stores/books';
 import styled from 'styled-components/native';
 import { colors, fonts, sizes } from 'styles/Variables';
 
-import { Api, Book, Category } from 'api/apiSwagger';
+import { Book, Category, OrderType, SortsType, bookStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
@@ -16,8 +16,6 @@ import BookListItem from 'components/book/BookListItem';
 import Button from 'components/button/Button';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
-
-const api = new Api();
 
 interface Props {
 	route: {
@@ -27,50 +25,41 @@ interface Props {
 	};
 }
 
+interface SortsState {
+	open: boolean;
+	order: SortsType;
+}
+
 const Catalog = ({ route }: Props) => {
 	const { t } = useTranslation();
 
 	const propSearch = route.params?.search;
 	const [search, setSearch] = React.useState('');
-	const [searchedBooks, setSearchedBooks] = React.useState<number[]>([]);
+
 	const [categories, setCategories] = React.useState({ open: false, categories: [] });
 	const [filters, setFilters] = React.useState([]);
+	const [ascendant, setAscendant] = React.useState(true);
+	const [sorts, setSorts] = React.useState<SortsState>({
+		open: false,
+		order: SortsType.publicationDate,
+	});
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
 
-	const presentedBooks = () => {
-		if (!!search) {
-			if (filters.length === 0) {
-				// If there is a search, apply the search filter to the books
-				setSearchedBooks(searchedBookArray().map((book) => book.id));
-			} else {
-				// If there are filters and search, restart the book list
-				const booksIdSearchedAndFiltered = searchedBookArray() //.filteredBooksArray()
-					.filter((book) =>
-						book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
-					)
-					.map((book) => book.id);
-				setSearchedBooks(booksIdSearchedAndFiltered);
-			}
-		} else {
-			// If there are filters, filter the books
-			if (filters.length > 0) {
-				setSearchedBooks(filteredBookArray().map((book) => book.id));
-			} else {
-				// If no search and no filters, return all books
-				setSearchedBooks(storeBooks.books.map((book) => book.id));
-			}
+	React.useEffect(() => {
+		if (propSearch !== '' && propSearch !== undefined) {
+			setSearch(propSearch);
 		}
-	};
+	}, [propSearch]);
 
 	const filteredBookArray = (bookArray?: Book[]) =>
-		(bookArray ? bookArray : storeBooks.books).filter((book) =>
+		(bookArray ? bookArray : storeBooks.books)?.filter((book) =>
 			book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
 		);
 
 	const searchedBookArray = () => {
 		// Filter books based on search input
-		return storeBooks.books.filter(
+		return storeBooks.books?.filter(
 			(book) =>
 				book.title.toLowerCase().includes(search.toLowerCase()) ||
 				book.author.toLowerCase().includes(search.toLowerCase()),
@@ -78,11 +67,7 @@ const Catalog = ({ route }: Props) => {
 	};
 
 	React.useEffect(() => {
-		presentedBooks();
-	}, [search, filters]);
-
-	React.useEffect(() => {
-		if (propSearch !== '' && propSearch !== undefined) {
+		if (!!propSearch) {
 			setSearch(propSearch);
 		}
 	}, [propSearch]);
@@ -103,6 +88,31 @@ const Catalog = ({ route }: Props) => {
 			categories: Object.values(categoryUnique),
 		}));
 	}, []);
+
+	React.useEffect(() => {
+		// Update the book store with the selected sort
+		bookStore.update(sorts.order, ascendant ? OrderType.asc : OrderType.desc);
+	}, [sorts.order, ascendant]);
+
+	const searchedBooks = React.useMemo(() => {
+		if (!!search) {
+			if (filters.length === 0) {
+				// If there is a search, apply the search filter to the books
+				return searchedBookArray().map((book) => book.id);
+			} else {
+				// If there are filters and search, restart the book list
+				return filteredBookArray(searchedBookArray()).map((book) => book.id);
+			}
+		} else {
+			// If there are filters, filter the books
+			if (filters.length > 0) {
+				return filteredBookArray().map((book) => book.id);
+			} else {
+				// If no search and no filters, return all books
+				return storeBooks.books?.map((book) => book.id);
+			}
+		}
+	}, [storeBooks.books, filters, search]);
 
 	const renderCatagoryFilter = (category, index) => {
 		const isActive = filters.find((filter) => filter.id === category.id);
@@ -127,29 +137,70 @@ const Catalog = ({ route }: Props) => {
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
-					<Searchbar value={{ search, setSearch }} onPress={presentedBooks} />
-					<View>
+					<Searchbar value={{ search, setSearch }} />
+					<ViewFilters>
 						<Button
 							label={t('components:filter:filter')}
 							iconName={categories.open ? IconNames.arrowUp : IconNames.arrowDown}
-							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
+							onPress={() => {
+								setCategories((filters) => ({ ...filters, open: !filters.open }));
+								setSorts((filters) => ({ ...filters, open: false }));
+							}}
 							background={filters.length > 0 ? colors.primary : colors.secondary}
 						/>
-						{categories.open && (
-							<ContainerZoneFilter>
-								<ViewInline>
-									{categories.categories.map((category, index) =>
-										renderCatagoryFilter(category, index),
-									)}
-								</ViewInline>
-							</ContainerZoneFilter>
-						)}
+						<Button
+							label={t('components:filter:sort')}
+							iconName={sorts.open ? IconNames.arrowUp : IconNames.arrowDown}
+							onPress={() => {
+								setSorts((filters) => ({ ...filters, open: !filters.open }));
+								setCategories((filters) => ({ ...filters, open: false }));
+							}}
+							background={colors.secondary}
+						/>
+						<Button
+							iconName={IconNames.arrowUp}
+							onPress={() => setAscendant(true)}
+							background={ascendant ? colors.clickable : colors.primary}
+						/>
+						<Button
+							iconName={IconNames.arrowDown}
+							onPress={() => setAscendant(false)}
+							background={!ascendant ? colors.clickable : colors.primary}
+						/>
+					</ViewFilters>
+					{categories.open && (
+						<ContainerZone>
+							<ViewInline>
+								{categories.categories.map((category, index) =>
+									renderCatagoryFilter(category, index),
+								)}
+							</ViewInline>
+						</ContainerZone>
+					)}
+					{sorts.open && (
+						<ContainerZone>
+							{Object.values(SortsType).map((sortName, index) => (
+								<TextSort
+									key={index}
+									onPress={() => {
+										setSorts((filters) => ({
+											...filters,
+											order: sortName,
+										}));
+									}}
+									selected={sorts.order === sortName}
+								>
+									{t('components:sorts:' + sortName)}
+								</TextSort>
+							))}
+						</ContainerZone>
+					)}
 
-						<TextLeft>
-							{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
-								t('catalog:result')}
-						</TextLeft>
-					</View>
+					<TextLeft>
+						{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
+							t('catalog:result')}
+					</TextLeft>
+
 					<ViewList>
 						{storeBooks.books ? (
 							searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
@@ -167,11 +218,14 @@ export default Catalog;
 const ScrollViewContent = styled(ScrollView)`
 	flex: 1;
 `;
-const ViewList = styled(View)`
+const ViewFilters = styled(View)`
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	gap: ${sizes.padding.main}px;
 `;
-const ContainerZoneFilter = styled(ContainerZone)`
-	margin: ${sizes.padding.main}px 0;
+const ViewList = styled(View)`
+	gap: ${sizes.padding.main}px;
 `;
 const ViewInline = styled(View)`
 	padding: ${sizes.padding.main}px;
@@ -189,4 +243,11 @@ const TextCategory = styled(Text)<{ active?: boolean }>`
 	color: ${colors.content};
 	background-color: ${(props) => (props.active ? colors.primary : 'transparent')};
 	padding: 3px;
+`;
+
+const TextSort = styled(TextCategory)`
+	padding: ${sizes.padding.main}px;
+	margin: ${3 - sizes.padding.main}px 0;
+	border-radius: ${sizes.radius.in};
+	background-color: ${(props) => (props.selected ? colors.primary : 'transparent')};
 `;

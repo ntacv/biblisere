@@ -23,6 +23,21 @@ export const AuthParams = (store) => {
 	};
 };
 
+export enum SortsType {
+	title = 'title',
+	author = 'author',
+	pages = 'pages',
+	publicationDate = 'publicationDate',
+	id = 'id',
+	quantity = 'quantity',
+	updatedAt = 'updatedAt',
+}
+
+export enum OrderType {
+	asc = 'asc',
+	desc = 'desc',
+}
+
 export interface Time {
 	hours: number;
 	minutes: number;
@@ -837,12 +852,18 @@ export const userStore = {
 	},
 };
 export const bookStore = {
-	update: () => {
-		api.books
-			.booksControllerFindAll({ sort: 'publicationDate', order: 'desc' })
+	update: (sort = SortsType.publicationDate, order = OrderType.desc) => {
+		return api.books
+			.booksControllerFindAll({ sort: sort, order: order })
 			.then((response) => {
 				StoreBooks.actions.setBooks(response.data);
-				Logger.info('Books fetched');
+				Logger.info(
+					'Books fetched',
+					sort,
+					order,
+					response.data[0],
+					StoreBooks.store.getState().books[0],
+				);
 			})
 			.catch((error) => {
 				Logger.warn('Error fetching books:', error);

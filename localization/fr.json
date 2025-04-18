@@ -39,7 +39,19 @@
 		"filter": {
 			"title": "Filtres",
 			"filter": "Filtrer",
-			"advanced": "Avancé"
+			"advanced": "Avancé",
+			"sort": "Trier",
+			"asc": "asc",
+			"dsc": "desc"
+		},
+		"sorts": {
+			"title": "Titre",
+			"author": "Auteur",
+			"pages": "Pages",
+			"publicationDate": "Date de publication",
+			"id": "ID",
+			"quantity": "Quantité",
+			"updatedAt": "Dernière mise à jour"
 		},
 		"button": {
 			"click": "Cliquez moi"
@@ -107,7 +119,8 @@
 		"deleteBookConfirm": "Êtes-vous sûr de vouloir supprimer ce livre ?",
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
 		"available": "Disponible ({{val}})",
-		"unavailable": "Rupture de stock",
+		"noStock": "Rupture de stock",
+		"unavailable": "Indisponible",
 		"borrowed": "Emprunté",
 		"result": " résultats"
 	},

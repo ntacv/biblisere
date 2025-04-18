@@ -66,7 +66,7 @@ function Homepage() {
 					{newBooks?.length > 0 && (
 						<ListRow
 							booksId={newBooks}
-							title={t('home:titles:news')}
+							title={t('catalog:books')}
 							onPressTitle={() =>
 								navigation.navigate(RouteNames.CatalogNavigator, {
 									screen: RouteNames.Catalog,
