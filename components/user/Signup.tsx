@@ -10,7 +10,7 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, CreateUserDto, REGEX_EMAIL, REGEX_PASSWORD, userStore } from 'api/apiSwagger';
+import { Api, CreateUserDto, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
@@ -18,10 +18,9 @@ import InputContent from 'components/utils/InputContent';
 import renderAlert from 'components/utils/renderAlert';
 
 import Logger from 'utils/Logger';
+import { REGEX_EMAIL, REGEX_PASSWORD, initialUserFull } from 'utils/UserUtils';
 
 const api = new Api();
-
-const initialUserFull = { firstName: '', lastName: '', email: '', password: '' };
 
 interface Props {
 	setSignup?: (signup: boolean) => void;
