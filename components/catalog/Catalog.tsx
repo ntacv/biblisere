@@ -67,7 +67,7 @@ const Catalog = ({ route }: Props) => {
 	};
 
 	React.useEffect(() => {
-		if (propSearch !== '' && propSearch !== undefined) {
+		if (!!propSearch) {
 			setSearch(propSearch);
 		}
 	}, [propSearch]);
@@ -137,7 +137,7 @@ const Catalog = ({ route }: Props) => {
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
-					<Searchbar value={{ search, setSearch }} onPress={() => {}} />
+					<Searchbar value={{ search, setSearch }} />
 					<ViewFilters>
 						<Button
 							label={t('components:filter:filter')}
