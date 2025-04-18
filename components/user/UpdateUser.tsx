@@ -16,15 +16,9 @@ import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
+import { initialUserFull } from 'utils/UserUtils';
 
 const api = new Api();
-
-const initialUserFull = {
-	firstName: '',
-	lastName: '',
-	email: '',
-	password: '',
-};
 
 const UpdateUser = (props) => {
 	const { t } = useTranslation();
