@@ -19,7 +19,8 @@
 		"login": "Log in",
 		"logout": "Log out",
 		"logoutConfirm": "Are you sure you want to log out?",
-		"settings": "Settings"
+		"settings": "Settings",
+		"books": "Books"
 	},
 	"components": {
 		"translate": {
@@ -64,27 +65,35 @@
 	"home": {
 		"name": "Biblisère",
 		"title": "Homepage",
-		"intro": "Municipal Library of Trou-perdu-en-Isère",
+		"intro": "Municipal Library of Biblisère",
 		"explore": "Explore",
 		"content": {
 			"days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			"services": [
-				"- Book and magazine lending",
-				"- Access to digital resources",
-				"- Reading and working spaces",
-				"- Activities and events"
+				"- Lend books and magazines",
+				"- Access digital resources",
+				"- Read and work in our spaces",
+				"- Participate in activities and events"
 			],
-			"outro": "We invite you to come and discover everything the Municipal Library of Trou-perdu-en-Isère has to offer. See you soon!",
+			"outro": "We invite you to come and discover everything the Municipal Library of Biblisère has to offer. See you soon!",
 			"presentation": "Our library is a place of culture and knowledge, where you can explore a vast collection of books, magazines, and digital resources. Whether you are a reading enthusiast, a student seeking knowledge, or simply looking for a quiet place to relax, our library has something to offer everyone."
 		},
 		"titles": {
-			"services": "Our Services",
-			"news": "News",
+			"services": "Here you can",
+			"news": "Latest arrivals",
 			"popular": "Popular",
 			"recommended": "Recommended",
 			"access": "Access",
 			"times": "Opening times"
-		}
+		},
+		"access": [
+			"La Ferme, 38200 Vienne",
+			"Isère Rhodanienne",
+			"04 74 57 20 81",
+			"bibliotheques.vienne.fr",
+			"Fully accessible to reduced mobility",
+			"Free wifi"
+		]
 	},
 	"catalog": {
 		"title": "Catalog",
@@ -102,7 +111,7 @@
 		"delete": "Delete",
 		"create": "Create",
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
-		"available": "Available",
+		"available": "Available ({{val}})",
 		"unavailable": "Out of stock",
 		"borrowed": "Borrowed",
 		"result": " results"
@@ -110,7 +119,7 @@
 	"details": {
 		"title": "Details",
 		"sameAuthor": "Same author",
-		"sameKind": "Same kind"
+		"sameKind": "Same category"
 	},
 	"user": {
 		"title": "User",
@@ -119,8 +128,10 @@
 		"borrowed": "You have borrowed {{val}}/{{max}} books",
 		"cantBorrow": "You cannot borrow any books",
 		"deleteAccount": "Delete account",
-		"deleteAccountConfirm": "Are you sure you want to delete your account?",
+		"deleteAccountConfirm": "Are you sure you want to delete the account?",
 		"deleteAccountError": "You have to return all your books before deleting your account.",
+		"deleteAccountAndBooksInfo": "The user will be deleted and all his books will be returned.",
+		"deleteAccountAndBooks": "Return books",
 		"updateUser": "Update your profile",
 		"cancel": "Cancel",
 		"delete": "Delete",
@@ -144,11 +155,23 @@
 		"forgotText": "We will contact you to reset your password.",
 		"login": "Log in",
 		"signup": "Sign up",
+		"signupSuccess": "The account has been created successfully",
 		"unauthaurized": "You are not authorized"
 	},
 	"admin": {
 		"title": "Admin",
-		"name": "Admin"
+		"name": "Admin",
+		"users": "Manage users",
+		"books": "Manage books",
+		"refused": "You are not authorized to access this page",
+		"canBorrow": "Borrows",
+		"isAdmin": "Administrator",
+		"add": "Add",
+		"update": "Update",
+		"delete": "Delete",
+		"edit": "Edit",
+		"cancel": "Cancel",
+		"save": "Save"
 	},
 	"footer": {
 		"contact": "Contact us",

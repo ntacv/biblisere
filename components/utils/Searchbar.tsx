@@ -38,6 +38,7 @@ const Searchbar = ({ onPress, value, home }: Props) => {
 				alignLeft
 				onPress={onPress}
 				label={home ? t('catalog:books') : null}
+				active
 			/>
 		</ViewSearchBar>
 	);
@@ -60,6 +61,6 @@ const InputSearch = styled(TextInput)`
 	font: ${fonts.content};
 
 	align-self: center;
-	height: ${sizes.text.input}px;
-	flex: 1;
+	padding-bottom: ${sizes.padding.main - 5}px;
+	width: ${sizes.width.input}px;
 `;

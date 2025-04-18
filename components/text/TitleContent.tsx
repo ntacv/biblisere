@@ -11,7 +11,7 @@ interface Props {
 	iconEnd?: iconType;
 }
 
-const Title = ({ label, iconStart, iconEnd }: Props) => {
+const TitleContent = ({ label, iconStart, iconEnd }: Props) => {
 	return (
 		<ViewTitle>
 			{iconStart && (
@@ -34,7 +34,7 @@ const Title = ({ label, iconStart, iconEnd }: Props) => {
 		</ViewTitle>
 	);
 };
-export default Title;
+export default TitleContent;
 
 const TextTitle = styled(Text)`
 	${styles.textOneLine}

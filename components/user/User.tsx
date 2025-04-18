@@ -1,29 +1,26 @@
 import * as React from 'react';
 import { Alert, ScrollView, Text, View } from 'react-native';
 
-import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { fonts, sizes } from 'styles/Variables';
 
-import { Api } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import ContainerZone from 'components/ContainerZone';
 import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
-import Button from 'components/button/Button';
 import TextAction from 'components/button/TextAction';
 import Login from 'components/user/Login';
+import Signup from 'components/user/Signup';
 import UpdateUser from 'components/user/UpdateUser';
 import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
-
-import Signup from './Signup';
 
 const api = new Api();
 
@@ -33,8 +30,13 @@ const UserPage = () => {
 	const [edit, setEdit] = React.useState(false);
 	const [signup, setSignup] = React.useState(false);
 
-	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const token = useStoreMap(StoreUser.store, (store) => store.token);
+	const { user } = useStoreMap(StoreUser.store, (store) => ({ user: store.id }));
+	const { token } = useStoreMap(StoreUser.store, (store) => ({ token: store.token }));
+
+	// user info are not synced but the login has been stored
+	if (token && !user) {
+		userStore.update();
+	}
 
 	const deleteAccount = () => {
 		if (user && user.books.length > 0) {
@@ -57,35 +59,24 @@ const UserPage = () => {
 		<ViewPage header>
 			{!token && !signup && <Login setSignup={setSignup} />}
 			{!token && signup && <Signup setSignup={setSignup} />}
-			{token && (
+			{token && user && (
 				<ScrollViewContent>
-					{user && (
-						<ContainerColumn>
-							<ContainerZone>
-								{edit && <UpdateUser setEdit={setEdit} />}
-								{!edit && (
-									<>
-										<UserInfo />
-										<Button
-											label={t('user:edit')}
-											iconName={IconNames.editLine}
-											onPress={() => setEdit(true)}
-										/>
-									</>
-								)}
-							</ContainerZone>
+					<ContainerColumn>
+						<ContainerZone>
+							{edit && <UpdateUser setEdit={setEdit} />}
+							{!edit && <UserInfo setEdit={setEdit} />}
+						</ContainerZone>
 
-							<ViewList>
-								{user.books ? (
-									user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
-								) : (
-									<TextContent>{t('config:loading')}</TextContent>
-								)}
-							</ViewList>
+						<ViewList>
+							{user.books ? (
+								user.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+							) : (
+								<TextContent>{t('config:loading')}</TextContent>
+							)}
+						</ViewList>
 
-							<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
-						</ContainerColumn>
-					)}
+						<TextAction label={t('user:deleteAccount')} onPress={deleteAccount} />
+					</ContainerColumn>
 				</ScrollViewContent>
 			)}
 		</ViewPage>

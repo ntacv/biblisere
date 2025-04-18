@@ -52,11 +52,10 @@ const Catalog = ({ route }: Props) => {
 		}
 	}, [propSearch]);
 
-	const filteredBookArray = (bookArray?: Book[]) => {
-		return (bookArray ? bookArray : storeBooks.books)?.filter((book) =>
+	const filteredBookArray = (bookArray?: Book[]) =>
+		(bookArray ? bookArray : storeBooks.books)?.filter((book) =>
 			book.categories.some((category) => filters.some((filter) => filter.id === category.id)),
 		);
-	};
 
 	const searchedBookArray = () => {
 		// Filter books based on search input
@@ -68,7 +67,12 @@ const Catalog = ({ route }: Props) => {
 	};
 
 	React.useEffect(() => {
-		// Get all categories from the books
+		if (propSearch !== '' && propSearch !== undefined) {
+			setSearch(propSearch);
+		}
+	}, [propSearch]);
+
+	React.useEffect(() => {
 		const categoryUnique = storeBooks.books
 			.flatMap((book) => book.categories)
 			.reduce(
@@ -110,6 +114,25 @@ const Catalog = ({ route }: Props) => {
 		}
 	}, [storeBooks.books, filters, search]);
 
+	const renderCatagoryFilter = (category, index) => {
+		const isActive = filters.find((filter) => filter.id === category.id);
+		return (
+			<TextCategory
+				key={index}
+				onPress={() => {
+					setFilters((filters) =>
+						isActive
+							? filters.filter((filter) => filter.id !== category.id)
+							: [...filters, category],
+					);
+				}}
+				active={isActive}
+			>
+				{category.name + ','}
+			</TextCategory>
+		);
+	};
+
 	return (
 		<ViewPage header>
 			<ScrollViewContent>
@@ -149,27 +172,7 @@ const Catalog = ({ route }: Props) => {
 						<ContainerZone>
 							<ViewInline>
 								{categories.categories.map((category, index) =>
-									filters.find((filter) => filter.id === category.id) ? (
-										<TextSelected
-											key={index}
-											onPress={() => {
-												setFilters((filters) =>
-													filters.filter((filter) => filter.id !== category.id),
-												);
-											}}
-										>
-											{category.name + ','}
-										</TextSelected>
-									) : (
-										<TextToSelect
-											key={index}
-											onPress={() => {
-												setFilters((filters) => [...filters, category]);
-											}}
-										>
-											{category.name + ','}
-										</TextToSelect>
-									),
+									renderCatagoryFilter(category, index),
 								)}
 							</ViewInline>
 						</ContainerZone>
@@ -235,15 +238,12 @@ const TextContent = styled(Text)`
 const TextLeft = styled(Text)`
 	align-self: flex-end;
 `;
-const TextCategory = styled(Text)`
+const TextCategory = styled(Text)<{ active?: boolean }>`
 	font: ${fonts.content};
 	color: ${colors.content};
+	background-color: ${(props) => (props.active ? colors.primary : 'transparent')};
 	padding: 3px;
 `;
-const TextSelected = styled(TextCategory)`
-	background-color: ${colors.primary};
-`;
-const TextToSelect = styled(TextCategory)``;
 
 const TextSort = styled(TextCategory)`
 	padding: ${sizes.padding.main}px;

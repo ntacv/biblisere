@@ -37,14 +37,13 @@ const BookListItem = ({ bookId }: Props) => {
 		>
 			<ContainerZone>
 				<ViewListItem>
-					<ImageBook source={{ uri: book.imageUrl }} />
+					<ImageBook width={sizes.height.imageItem} source={{ uri: book.imageUrl }} />
 					<ViewSide>
 						<TextBold>{book.title}</TextBold>
 						<TextContent>{book.author}</TextContent>
 						<TextContent>
 							{t('dates:month-year-long', { val: new Date(book.publicationDate) })}
 						</TextContent>
-						{storeUser.id?.canBorrow && <TextContent>{book.quantity}</TextContent>}
 
 						{storeUser.id?.canBorrow && <BorrowBook bookId={book.id} />}
 					</ViewSide>
@@ -61,6 +60,7 @@ const ViewListItem = styled(View)`
 `;
 const ViewSide = styled(View)`
 	flex: 1;
+	padding-left: ${sizes.padding.main}px;
 `;
 
 const TextContent = styled(Text)`

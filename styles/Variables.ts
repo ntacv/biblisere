@@ -18,7 +18,7 @@ export const sizes = {
 	},
 	icon: 35,
 	icons: {
-		search: 27,
+		search: 25,
 		title: 26,
 		content: 24,
 	},
@@ -34,6 +34,7 @@ export const sizes = {
 	},
 	height: {
 		image: 130,
+		imageItem: 90,
 		imageList: 130,
 	},
 	width: {
@@ -58,6 +59,7 @@ export const colors = {
 };
 
 export const fonts = {
+	family: { primary: 'Arial' },
 	title: '32px Arial black',
 	content: '15px Arial black',
 };

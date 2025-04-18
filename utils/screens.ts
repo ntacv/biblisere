@@ -1,3 +1,4 @@
+import AdminPage from 'components/admin/AdminPage';
 import BookDetails from 'components/book/BookDetails';
 import Catalog from 'components/catalog/Catalog';
 import CatalogNavigator from 'components/catalog/CatalogNavigator';
@@ -30,7 +31,7 @@ export const screens = {
 	},
 	[RouteNames.Admin]: {
 		name: RouteNames.Admin,
-		component: User,
+		component: AdminPage,
 		options: {
 			title: 'admin:title',
 		},

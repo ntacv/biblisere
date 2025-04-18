@@ -9,13 +9,14 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, REGEX_EMAIL, REGEX_PASSWORD, initialUserLogin, userStore } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
+import { REGEX_EMAIL, REGEX_PASSWORD, initialUserLogin } from 'utils/UserUtils';
 
 const api = new Api();
 
@@ -45,11 +46,7 @@ const Login = ({ setSignup }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -67,7 +64,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.email}
-								placeholder={t('user:email')}
+								placeholder={t('login:email')}
 								onChangeText={handleChange('email')}
 								onBlur={handleBlur('email')}
 								value={values.email}
@@ -76,7 +73,7 @@ const Login = ({ setSignup }: Props) => {
 
 							<InputContent
 								inputError={!!errors.password}
-								placeholder={t('user:password')}
+								placeholder={t('login:password')}
 								onChangeText={handleChange('password')}
 								onBlur={handleBlur('password')}
 								value={values.password}
@@ -98,6 +95,7 @@ const Login = ({ setSignup }: Props) => {
 								label={t('login:signup')}
 								iconName={IconNames.userCheck}
 								onPress={() => setSignup(true)}
+								background={colors.secondary}
 							/>
 
 							{/* TEST COMPONENT to login as admin */}
@@ -108,7 +106,7 @@ const Login = ({ setSignup }: Props) => {
 							/>
 							<FastLogin
 								onPress={() => {
-									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+									login({ email: 'Wd@example.com', password: 'myAdmin123&' });
 								}}
 							/>
 						</ContainerColumnForm>
