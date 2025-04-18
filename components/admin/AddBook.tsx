@@ -163,7 +163,6 @@ const AddBook = ({ setAddBook }: Props) => {
 									Object.keys(errors).length === 0
 										? handleSubmit()
 										: alert(Object.values(errors).join(', '));
-									//setAddBook(false);
 								}}
 							/>
 						</ContainerColumnForm>

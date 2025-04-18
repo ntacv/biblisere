@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View } from 'react-native';
 
 import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
@@ -135,7 +135,9 @@ const Catalog = ({ route }: Props) => {
 
 	return (
 		<ViewPage header>
-			<ScrollViewContent>
+			<ScrollViewContent
+				refreshControl={<RefreshControl refreshing={false} onRefresh={() => bookStore.update()} />}
+			>
 				<ContainerColumn>
 					<Searchbar value={{ search, setSearch }} />
 					<ViewFilters>
