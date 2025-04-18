@@ -60,6 +60,7 @@ const ViewListItem = styled(View)`
 `;
 const ViewSide = styled(View)`
 	flex: 1;
+	padding-left: ${sizes.padding.main}px;
 `;
 
 const TextContent = styled(Text)`

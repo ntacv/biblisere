@@ -116,7 +116,7 @@ const Catalog = ({ route }: Props) => {
 					<Searchbar value={{ search, setSearch }} onPress={presentedBooks} />
 					<View>
 						<Button
-							label={t('catalog:filter')}
+							label={t('components:filter:filter')}
 							iconName={categories.open ? IconNames.arrowUp : IconNames.arrowDown}
 							onPress={() => setCategories((filters) => ({ ...filters, open: !filters.open }))}
 							background={filters.length > 0 ? colors.primary : colors.secondary}

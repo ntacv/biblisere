@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Text } from 'react-native';
 
+import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'node_modules/effector-react';
 import { useTranslation } from 'react-i18next';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
-import { fonts } from 'styles/Variables';
+import { colors, fonts } from 'styles/Variables';
 
 import { Api, MAX_BOOKS } from 'api/apiSwagger';
 
@@ -18,7 +19,7 @@ import RouteNames from 'utils/routes';
 
 const api = new Api();
 
-const UserPage = () => {
+const UserPage = (props) => {
 	const navigation = useNav();
 	const { t } = useTranslation();
 
@@ -45,6 +46,13 @@ const UserPage = () => {
 			</TextContent>
 
 			<Button
+				label={t('user:edit')}
+				iconName={IconNames.editLine}
+				onPress={() => props.setEdit(true)}
+				background={colors.secondary}
+			/>
+
+			<Button
 				iconName="userX"
 				label={t('menu:logout')}
 				onPress={() => {
@@ -56,6 +64,7 @@ const UserPage = () => {
 						},
 					});
 				}}
+				active
 			/>
 		</>
 	);
