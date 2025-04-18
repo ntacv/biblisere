@@ -46,11 +46,7 @@ const Login = ({ setSignup }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -109,7 +105,7 @@ const Login = ({ setSignup }: Props) => {
 							/>
 							<FastLogin
 								onPress={() => {
-									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+									login({ email: 'Wd@example.com', password: 'myAdmin123&' });
 								}}
 							/>
 						</ContainerColumnForm>

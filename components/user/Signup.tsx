@@ -4,6 +4,7 @@ import { KeyboardAvoidingView, SafeAreaView, Text, TouchableOpacity, View } from
 import { IconNames } from 'assets/icons/Icons';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import StoreAdmin from 'stores/admin';
 import * as StoreUser from 'stores/user';
 import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
@@ -14,13 +15,20 @@ import { Api, CreateUserDto, userStore } from 'api/apiSwagger';
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
+import renderAlert from 'components/utils/renderAlert';
 
 import Logger from 'utils/Logger';
 import { REGEX_EMAIL, REGEX_PASSWORD, initialUserFull } from 'utils/UserUtils';
 
 const api = new Api();
 
-const Signup = (props) => {
+interface Props {
+	setSignup?: (signup: boolean) => void;
+	setAddUser?: (addUser: boolean) => void;
+	isAdmin?: boolean;
+}
+
+const Signup = ({ setSignup, setAddUser, isAdmin }: Props) => {
 	const { t } = useTranslation();
 
 	const formSchema = Yup.object().shape({
@@ -50,6 +58,7 @@ const Signup = (props) => {
 					.then((response) => {
 						StoreUser.actions.setToken(response.data.access_token);
 						userStore.update();
+						renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
 					})
 					.catch((error) => {
 						throw error;
@@ -57,21 +66,49 @@ const Signup = (props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:unauthorized'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
+			});
+	};
+
+	const signupAdmin = ({ ...props }: CreateUserDto) => {
+		return api.users
+			?.usersControllerCreate({
+				firstName: props.firstName,
+				lastName: props.lastName,
+				email: props.email,
+				password: props.password,
+			})
+			.then((response) => {
+				// if an admin create a use, they do not want to login
+				api.admin
+					?.adminControllerFindAllUsers({
+						headers: { Authorization: `Bearer ${StoreUser.store.getState().token}` },
+					})
+					.then((response) => {
+						StoreAdmin.actions.setUsers(response.data);
+						renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
+						// reset form
+						setSignup(false);
+					})
+					.catch((error) => {
+						Logger.warn('Error fetching admin users', error);
+					});
+			})
+			.catch((error) => {
+				Logger.warn('Error login: ', error);
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
 	return (
 		<Formik
-			onSubmit={(values) => signup(values)}
+			onSubmit={(values) => {
+				isAdmin ? signupAdmin(values) : signup(values);
+			}}
 			validationSchema={formSchema}
 			initialValues={initialUserFull}
 		>
-			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+			{({ handleSubmit, handleChange, handleBlur, values, errors, touched, resetForm }) => (
 				<SafeViewForm>
 					<KeyboardView behavior="padding" keyboardVerticalOffset={0}>
 						<ContainerColumnForm>
@@ -115,27 +152,35 @@ const Signup = (props) => {
 							<Button
 								label={t('login:submit')}
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
-								onPress={() => handleSubmit()}
-							/>
-
-							<Button
-								label={t('login:login')}
-								iconName={IconNames.user}
-								onPress={() => props.setSignup(false)}
-							/>
-
-							{/* TEST COMPONENT to login as admin */}
-							<FastLogin
 								onPress={() => {
-									signup({
-										firstName: 'hi',
-										lastName: 'you',
-										email: 'hi@example.com',
-										password: 'myAdmin123&',
-									});
+									handleSubmit();
+									setAddUser(false);
 								}}
 							/>
-							<FastLogin onPress={() => {}} />
+							{!isAdmin && (
+								<>
+									<Button
+										label={t('login:login')}
+										iconName={IconNames.user}
+										onPress={() => {
+											setSignup(false);
+										}}
+									/>
+
+									{/* TEST COMPONENT to login as admin */}
+									<FastLogin
+										onPress={() => {
+											signup({
+												firstName: 'hi',
+												lastName: 'you',
+												email: 'hi@example.com',
+												password: 'myAdmin123&',
+											});
+										}}
+									/>
+									<FastLogin onPress={() => {}} />
+								</>
+							)}
 						</ContainerColumnForm>
 					</KeyboardView>
 				</SafeViewForm>

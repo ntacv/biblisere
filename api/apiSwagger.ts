@@ -1,3 +1,4 @@
+import { baseUrl } from 'baseurl';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 
@@ -149,10 +150,15 @@ export interface UpdateBookDto {
 	tags?: string[];
 }
 
+export enum Role {
+	admin = 'ADMIN',
+	customer = 'CUSTOMER',
+}
+
 export interface AdminUpdateUserDto {
 	/** @format email */
 	email?: string;
-	role?: 'ADMIN' | 'CUSTOMER';
+	role?: Role;
 	firstName?: string;
 	lastName?: string;
 	canBorrow?: boolean;
@@ -219,7 +225,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-	public baseUrl: string = 'http://localhost:8000';
+	public baseUrl: string = baseUrl;
 	private securityData: SecurityDataType | null = null;
 	private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
 	private abortControllers = new Map<CancelToken, AbortController>();
