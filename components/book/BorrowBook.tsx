@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { useStoreMap } from 'effector-react';
 import { useTranslation } from 'react-i18next';
@@ -24,14 +24,14 @@ const BorrowBook = ({ bookId }: Props) => {
 		(book) => book.id === bookId,
 	);
 
+	const bookBorrowed = user?.books.map((self) => self.id).includes(bookId);
+
 	const borrowBook = (bookId: number) => {
 		// check if user has reached the limit of borrowed books
-		if (user?.books.length >= MAX_BOOKS) {
-			alert(t('catalog:limitBooks', { val: MAX_BOOKS }));
-			return;
-		}
-		// else borrow a book and update user and catalog data
-		bookStore.borrowBook(bookId);
+		user?.books.length >= MAX_BOOKS
+			? alert(t('catalog:limitBooks', { val: MAX_BOOKS }))
+			: // else borrow a book and update user and catalog data
+				bookStore.borrowBook(bookId);
 	};
 
 	const returnBook = (bookId: number) => {
@@ -45,10 +45,10 @@ const BorrowBook = ({ bookId }: Props) => {
 					<TextContent>
 						{book?.quantity > 0
 							? t('catalog:available', { val: book.quantity })
-							: t('catalog:unavailable')}
+							: t('catalog:noStock')}
 					</TextContent>
 
-					{user?.books.map((self) => self.id).includes(bookId) ? (
+					{bookBorrowed ? (
 						<Button
 							label={t('catalog:remove')}
 							iconName="x"
@@ -69,18 +69,17 @@ const BorrowBook = ({ bookId }: Props) => {
 					)}
 				</>
 			)}
-			{!user?.canBorrow && (
+			{user && !user?.canBorrow && (
 				<>
-					<TextContent></TextContent>
-					{user?.books.map((self) => self.id).includes(bookId) ? (
+					<ViewFlex />
+					{bookBorrowed && (
 						<Button
 							label={t('catalog:remove')}
 							iconName="x"
 							onPress={() => returnBook(book.id)}
 							alignLeft
+							active
 						/>
-					) : (
-						<Text>Unavailable</Text>
 					)}
 				</>
 			)}
@@ -89,6 +88,9 @@ const BorrowBook = ({ bookId }: Props) => {
 };
 export default BorrowBook;
 
+const ViewFlex = styled(View)`
+	flex: 1;
+`;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
 	flex: 1;
