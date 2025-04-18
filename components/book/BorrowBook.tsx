@@ -70,8 +70,7 @@ const BorrowBook = ({ bookId }: Props) => {
 				</>
 			)}
 			{user && !user?.canBorrow && (
-				<>
-					<ViewFlex />
+				<ViewFlex>
 					{bookBorrowed && (
 						<Button
 							label={t('catalog:remove')}
@@ -81,7 +80,7 @@ const BorrowBook = ({ bookId }: Props) => {
 							active
 						/>
 					)}
-				</>
+				</ViewFlex>
 			)}
 		</>
 	);
@@ -90,6 +89,7 @@ export default BorrowBook;
 
 const ViewFlex = styled(View)`
 	flex: 1;
+	justify-content: flex-end;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
