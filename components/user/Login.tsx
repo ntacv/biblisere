@@ -9,20 +9,16 @@ import styled from 'styled-components/native';
 import { colors, sizes } from 'styles/Variables';
 import * as Yup from 'yup';
 
-import { Api, REGEX_EMAIL, REGEX_PASSWORD, userStore } from 'api/apiSwagger';
+import { Api, userStore } from 'api/apiSwagger';
 
 import Button from 'components/button/Button';
 import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
+import { REGEX_EMAIL, REGEX_PASSWORD, initialUserLogin } from 'utils/UserUtils';
 
 const api = new Api();
-
-const initialUserLogin = {
-	email: '',
-	password: '',
-};
 
 interface Props {
 	setSignup: (value: boolean) => void;
@@ -50,11 +46,7 @@ const Login = ({ setSignup }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -114,7 +106,7 @@ const Login = ({ setSignup }: Props) => {
 							/>
 							<FastLogin
 								onPress={() => {
-									login({ email: 'jdoe@example.com', password: 'JohnDoe123!' });
+									login({ email: 'Wd@example.com', password: 'myAdmin123&' });
 								}}
 							/>
 						</ContainerColumnForm>

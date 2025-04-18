@@ -19,7 +19,8 @@
 		"login": "Se connecter",
 		"logout": "Se déconnecter",
 		"logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter?",
-		"settings": "Paramètres"
+		"settings": "Paramètres",
+		"books": "Livres"
 	},
 	"components": {
 		"translate": {
@@ -98,7 +99,7 @@
 		"delete": "Supprimer",
 		"create": "Créer",
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
-		"available": "Disponible",
+		"available": "Disponible ({{val}})",
 		"unavailable": "Rupture de stock",
 		"borrowed": "Emprunté",
 		"result": " résultats"
@@ -115,8 +116,10 @@
 		"borrowed": "Vous avez emprunté {{val}}/{{max}} livres",
 		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
 		"deleteAccount": "Supprimer le compte",
-		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer votre compte?",
+		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer ce compte?",
 		"deleteAccountError": "Vous devez rendre tous vos livres avant de supprimer votre compte.",
+		"deleteAccountAndBooksInfo": "L'utilisateur sera supprimé et tous ses livres seront retournés.",
+		"deleteAccountAndBooks": "Retourner les livres",
 		"updateUser": "Mettre à jour votre profil",
 		"cancel": "Annuler",
 		"delete": "Supprimer",
@@ -140,11 +143,23 @@
 		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
 		"login": "Connexion",
 		"signup": "S'inscrire",
+		"signupSuccess": "Le compte a été créé avec succès",
 		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {
 		"title": "Administration",
-		"name": "Admin"
+		"name": "Admin",
+		"users": "Gérer les utilisateurs",
+		"books": "Gérer les livres",
+		"refused": "Vous n'êtes pas autorisé à accéder à cette page",
+		"canBorrow": "Emprunte",
+		"isAdmin": "Administrateur",
+		"add": "Ajouter",
+		"update": "Mettre à jour",
+		"delete": "Supprimer",
+		"edit": "Modifier",
+		"cancel": "Annuler",
+		"save": "Enregistrer"
 	},
 	"footer": {
 		"contact": "Contactez-nous",

@@ -14,15 +14,13 @@ import ViewPage from 'components/ViewPage';
 import BookListItem from 'components/book/BookListItem';
 import TextAction from 'components/button/TextAction';
 import Login from 'components/user/Login';
+import Signup from 'components/user/Signup';
 import UpdateUser from 'components/user/UpdateUser';
 import UserInfo from 'components/user/UserInfo';
 import ContainerColumn from 'components/utils/ContainerColumn';
 
-import Logger from 'utils/Logger';
 import useNav from 'utils/navigation';
 import RouteNames from 'utils/routes';
-
-import Signup from './Signup';
 
 const api = new Api();
 
@@ -37,7 +35,6 @@ const UserPage = () => {
 
 	// user info are not synced but the login has been stored
 	if (token && !user) {
-		Logger.info('Get user info');
 		userStore.update();
 	}
 
