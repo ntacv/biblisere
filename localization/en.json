@@ -107,7 +107,8 @@
 		"deleteBookConfirm": "Are you sure you want to delete this book?",
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
 		"available": "Available ({{val}})",
-		"unavailable": "Out of stock",
+		"noStock": "Out of stock",
+		"unavailable": "Unavailable",
 		"borrowed": "Borrowed",
 		"result": " results"
 	},
