@@ -45,9 +45,6 @@ const UserListItem = ({ userId, setSignup }: Props) => {
 				?.booksControllerReturn(book.id, {
 					headers: { Authorization: `Bearer ${token}` },
 				})
-				.then((response) => {
-					Logger.info('return book user ', currentUser.books);
-				})
 				.catch((error) => {
 					Logger.warn('Error return book: ', error);
 				});
@@ -110,16 +107,11 @@ const UserListItem = ({ userId, setSignup }: Props) => {
 				},
 			)
 			.then((response) => {
-				Logger.info('update response ', response.data);
 				userStore.update();
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -135,16 +127,11 @@ const UserListItem = ({ userId, setSignup }: Props) => {
 				},
 			)
 			.then((response) => {
-				Logger.info('update response ', response.data);
 				userStore.update();
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 

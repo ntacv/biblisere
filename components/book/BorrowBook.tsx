@@ -31,11 +31,11 @@ const BorrowBook = ({ bookId }: Props) => {
 			return;
 		}
 		// else borrow a book and update user and catalog data
-		bookStore.borrow(bookId);
+		bookStore.borrowBook(bookId);
 	};
 
 	const returnBook = (bookId: number) => {
-		bookStore.return(bookId);
+		bookStore.returnBook(bookId);
 	};
 
 	return (
@@ -43,7 +43,7 @@ const BorrowBook = ({ bookId }: Props) => {
 			{user?.canBorrow && (
 				<>
 					<TextContent>
-						{book.quantity > 0
+						{book?.quantity > 0
 							? t('catalog:available', { val: book.quantity })
 							: t('catalog:unavailable')}
 					</TextContent>
@@ -54,6 +54,7 @@ const BorrowBook = ({ bookId }: Props) => {
 							iconName="x"
 							onPress={() => returnBook(book.id)}
 							alignLeft
+							active
 						/>
 					) : (
 						book.quantity > 0 && (
@@ -62,6 +63,7 @@ const BorrowBook = ({ bookId }: Props) => {
 								iconName="bookmark"
 								onPress={() => borrowBook(book.id)}
 								alignLeft
+								active
 							/>
 						)
 					)}

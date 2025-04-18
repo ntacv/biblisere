@@ -18,21 +18,18 @@ import InputContent from 'components/utils/InputContent';
 import renderAlert from 'components/utils/renderAlert';
 
 import Logger from 'utils/Logger';
+import { REGEX_EMAIL, REGEX_PASSWORD, initialUserFull } from 'utils/UserUtils';
 
 const api = new Api();
 
 interface Props {
 	setSignup?: (signup: boolean) => void;
+	setAddUser?: (addUser: boolean) => void;
 	isAdmin?: boolean;
 }
 
-const Signup = ({ setSignup, isAdmin }: Props) => {
+const Signup = ({ setSignup, setAddUser, isAdmin }: Props) => {
 	const { t } = useTranslation();
-
-	const initialValues = { firstName: '', lastName: '', email: '', password: '' };
-
-	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 	const formSchema = Yup.object().shape({
 		firstName: Yup.string().required(t('user:required')),
@@ -44,7 +41,6 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 	});
 
 	const signup = ({ ...props }: CreateUserDto) => {
-		Logger.info('Signup', props);
 		return api.users
 			?.usersControllerCreate({
 				firstName: props.firstName,
@@ -53,23 +49,6 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 				password: props.password,
 			})
 			.then((response) => {
-				// if an admin create a use, they do not want to login
-				if (isAdmin) {
-					api.admin
-						?.adminControllerFindAllUsers({
-							headers: { Authorization: `Bearer ${StoreUser.store.getState().token}` },
-						})
-						.then((response) => {
-							StoreAdmin.actions.setUsers(response.data);
-							renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
-							// reset form
-							setSignup(false);
-						})
-						.catch((error) => {
-							Logger.warn('Error fetching admin users', error);
-						});
-					return;
-				}
 				// login user after signup
 				return api.login
 					?.authControllerLogin({
@@ -82,29 +61,52 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 						renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
 					})
 					.catch((error) => {
-						Logger.warn('Error login: ', error);
-						if (error.status === 401) {
-							alert(t('login:wrongLogin'));
-						} else {
-							alert(t('login:serverError'));
-						}
+						throw error;
 					});
 			})
 			.catch((error) => {
 				Logger.warn('Error login: ', error);
-				if (error.status === 401) {
-					alert(t('login:unauthorized'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
+			});
+	};
+
+	const signupAdmin = ({ ...props }: CreateUserDto) => {
+		return api.users
+			?.usersControllerCreate({
+				firstName: props.firstName,
+				lastName: props.lastName,
+				email: props.email,
+				password: props.password,
+			})
+			.then((response) => {
+				// if an admin create a use, they do not want to login
+				api.admin
+					?.adminControllerFindAllUsers({
+						headers: { Authorization: `Bearer ${StoreUser.store.getState().token}` },
+					})
+					.then((response) => {
+						StoreAdmin.actions.setUsers(response.data);
+						renderAlert(t('login:signup'), t('login:signupSuccess'), t('login:ok'));
+						// reset form
+						setSignup(false);
+					})
+					.catch((error) => {
+						Logger.warn('Error fetching admin users', error);
+					});
+			})
+			.catch((error) => {
+				Logger.warn('Error login: ', error);
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
 	return (
 		<Formik
-			onSubmit={(values) => signup(values)}
+			onSubmit={(values) => {
+				isAdmin ? signupAdmin(values) : signup(values);
+			}}
 			validationSchema={formSchema}
-			initialValues={initialValues}
+			initialValues={initialUserFull}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched, resetForm }) => (
 				<SafeViewForm>
@@ -152,7 +154,7 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 								background={!errors.email && !errors.password ? colors.primary : colors.locked}
 								onPress={() => {
 									handleSubmit();
-									//resetForm({ values: initialValues });
+									setAddUser(false);
 								}}
 							/>
 							{!isAdmin && (
@@ -163,6 +165,7 @@ const Signup = ({ setSignup, isAdmin }: Props) => {
 										onPress={() => {
 											setSignup(false);
 										}}
+										background={colors.secondary}
 									/>
 
 									{/* TEST COMPONENT to login as admin */}

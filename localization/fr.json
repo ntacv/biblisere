@@ -32,6 +32,7 @@
 			"french": "Français"
 		},
 		"input": {
+			"search": "Rechercher",
 			"placeholder": "Rechercher...",
 			"clear": "Effacer"
 		},
@@ -51,28 +52,36 @@
 	},
 	"home": {
 		"name": "Biblisère",
-		"title": "Page d'accueil",
-		"intro": "Bibliothèque Municipale de Trou-perdu-en-Isère",
+		"title": "Accueil",
+		"intro": "Bibliothèque Municipale de Biblisère",
 		"explore": "Explorer",
 		"content": {
 			"days": ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
 			"services": [
-				"- Prêt de livres et de magazines",
-				"- Accès aux ressources numériques",
-				"- Espaces de lecture et de travail",
-				"- Activités et événements"
+				"- Emprunter des livres et des magazines",
+				"- Accéder à des ressources numériques",
+				"- Profiter des espaces de lecture et de travail",
+				"- Participer à des activités et événements"
 			],
-			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Trou-perdu-en-Isère a à offrir. À bientôt !",
+			"outro": "Nous vous invitons à venir découvrir tout ce que la Bibliothèque Municipale de Biblisère a à offrir. À bientôt !",
 			"presentation": "Notre bibliothèque est un lieu de culture et de savoir, où vous pouvez explorer une vaste collection de livres, de magazines, et de ressources numériques. Que vous soyez un passionné de lecture, un étudiant en quête de connaissances, ou simplement à la recherche d'un endroit calme pour vous détendre, notre bibliothèque a quelque chose à offrir à chacun."
 		},
 		"titles": {
-			"services": "Nos Services",
-			"news": "Nouvelles",
+			"services": "Ici, vous pouvez",
+			"news": "Dernières arrivées",
 			"popular": "Populaire",
 			"recommended": "Recommandé",
 			"access": "Accès",
 			"times": "Horaires d'ouverture"
-		}
+		},
+		"access": [
+			"La Ferme, 38200 Vienne",
+			"Isère Rhodanienne",
+			"04 74 57 20 81",
+			"bibliotheques.vienne.fr",
+			"Accès handicapé",
+			"Wifi gratuit"
+		]
 	},
 	"catalog": {
 		"title": "Catalogue",
@@ -92,7 +101,8 @@
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
 		"available": "Disponible ({{val}})",
 		"unavailable": "Rupture de stock",
-		"borrowed": "Emprunté"
+		"borrowed": "Emprunté",
+		"result": " résultats"
 	},
 	"details": {
 		"title": "Détails",
@@ -100,10 +110,10 @@
 		"sameKind": "Du même genre"
 	},
 	"user": {
-		"title": "Utilisateur",
+		"title": "Mon compte",
 		"name": "John Doe",
 		"membership": "Membre depuis ",
-		"borrowed": "Vous avez emprunté {{val}}/10 livres",
+		"borrowed": "Vous avez emprunté {{val}}/{{max}} livres",
 		"cantBorrow": "Vous ne pouvez pas emprunter de livres",
 		"deleteAccount": "Supprimer le compte",
 		"deleteAccountConfirm": "Êtes-vous sûr de vouloir supprimer ce compte?",
@@ -133,10 +143,11 @@
 		"forgotText": "Nous vous contacterons pour réinitialiser votre mot de passe.",
 		"login": "Connexion",
 		"signup": "S'inscrire",
+		"signupSuccess": "Le compte a été créé avec succès",
 		"unauthaurized": "Vous n'êtes pas autorisé"
 	},
 	"admin": {
-		"title": "Admin",
+		"title": "Administration",
 		"name": "Admin",
 		"users": "Gérer les utilisateurs",
 		"books": "Gérer les livres",

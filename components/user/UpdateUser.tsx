@@ -17,6 +17,7 @@ import TitleContent from 'components/text/TitleContent';
 import InputContent from 'components/utils/InputContent';
 
 import Logger from 'utils/Logger';
+import { initialUserFull } from 'utils/UserUtils';
 
 const api = new Api();
 
@@ -30,9 +31,12 @@ interface Props {
 const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 	const { t } = useTranslation();
 
+	const adminStore = useStoreMap(StoreAdmin.store, (store) => store.users);
 	const token = useStoreMap(StoreUser.store, (store) => store.token);
 	const user = useStoreMap(StoreUser.store, (store) => store.id);
-	const adminStore = useStoreMap(StoreAdmin.store, (store) => store.users);
+	initialUserFull.firstName = user?.firstName;
+	initialUserFull.lastName = user?.lastName;
+	initialUserFull.email = user?.email;
 
 	const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 	const REGEX_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -59,16 +63,11 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 				},
 			)
 			.then((response) => {
-				Logger.info('update response ', response.data);
 				userStore.update();
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -98,11 +97,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 			})
 			.catch((error) => {
 				Logger.warn('Error update: ', error);
-				if (error.status === 401) {
-					alert(t('login:wrongLogin'));
-				} else {
-					alert(t('login:serverError'));
-				}
+				alert(t(error.status === 401 ? 'login:wrongLogin' : 'login:serverError'));
 			});
 	};
 
@@ -112,7 +107,7 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 				admin ? updateAdmin(values) : update(values);
 			}}
 			validationSchema={formSchema}
-			initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
+			initialValues={initialUserFull}
 		>
 			{({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
 				<SafeViewForm>
@@ -145,21 +140,20 @@ const UpdateUser = ({ userId, userProp, setEdit, admin }: Props) => {
 								maxLength={sizes.text.length}
 							/>
 
-							<InputContent
-								inputError={!!errors.password}
-								placeholder={t('login:password')}
-								onChangeText={handleChange('password')}
-								onBlur={handleBlur('password')}
-								value={values.password}
-								maxLength={sizes.text.length}
-							/>
-
 							<Button
 								label={t('user:save')}
 								onPress={() => {
 									handleSubmit();
 									if (!admin) setEdit(false);
 								}}
+								active
+							/>
+							<Button
+								label={t('user:cancel')}
+								onPress={() => {
+									setEdit(false);
+								}}
+								active
 							/>
 						</ContainerColumnForm>
 					</KeyboardView>

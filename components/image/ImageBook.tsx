@@ -16,6 +16,6 @@ export default ImageBook;
 const ImageBookStyle = styled(Image)`
 	height: ${(props) => (!!props.height ? props.height : sizes.height.imageList)}px;
 	width: ${(props) => (!!props.width ? props.width : sizes.height.imageList)}px;
-	aspect-ratio: 3/4;
-	object-fit: contain;
+	aspect-ratio: 105/151;
+	object-fit: cover;
 `;

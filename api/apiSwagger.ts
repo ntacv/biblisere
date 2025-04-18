@@ -1,5 +1,4 @@
 import { baseUrl } from 'baseurl';
-import { useStoreMap } from 'node_modules/effector-react';
 import * as StoreBooks from 'stores/books';
 import * as StoreUser from 'stores/user';
 
@@ -849,7 +848,7 @@ export const bookStore = {
 				Logger.warn('Error fetching books:', error);
 			});
 	},
-	borrow: (bookId: number, update?: boolean) => {
+	borrowBook: (bookId: number, update?: boolean) => {
 		const token = StoreUser.store.getState().token;
 
 		api.books
@@ -862,17 +861,15 @@ export const bookStore = {
 					StoreBooks.actions.updateBook(newBook);
 					StoreUser.actions.borrowBook(newBook);
 				});
-				// userStore.update(); // Update user data after borrowing a book
-				// bookStore.update(); // Update book data after borrowing a book
-				Logger.info('Book borrowed', 'user ', StoreUser.store.getState());
 			})
 			.catch((error) => {
 				Logger.warn('Error borrowing book:', error);
 			});
-		update ? bookStore.update() : null;
+
+		if (update) bookStore.update();
 	},
 
-	return: (bookId: number, update?: boolean) => {
+	returnBook: (bookId: number, update?: boolean) => {
 		const token = StoreUser.store.getState().token;
 
 		api.books
@@ -885,20 +882,10 @@ export const bookStore = {
 					StoreBooks.actions.updateBook(newBook);
 					StoreUser.actions.returnBook(newBook);
 				});
-				// userStore.update(); // Update user data after returning a book
-				// bookStore.update(); // Update book data after returning a book
-				Logger.info('Book returned', 'user ', StoreUser.store.getState());
 			})
 			.catch((error) => {
 				Logger.warn('Error returning book:', error);
 			});
-		update ? bookStore.update() : null;
+		if (update) bookStore.update();
 	},
-};
-
-export const filterBooks = (size = 3) => {
-	return useStoreMap(StoreBooks.store, (store) => store)
-		.books?.filter((book, index) => book?.author === 'Aldous Huxley')
-		.slice(0, size)
-		.map((book) => book.id);
 };
