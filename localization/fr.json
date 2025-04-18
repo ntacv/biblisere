@@ -100,7 +100,8 @@
 		"create": "Créer",
 		"limitBooks": "Vous avez atteint la limite de {{val}} livres empruntés",
 		"available": "Disponible ({{val}})",
-		"unavailable": "Rupture de stock",
+		"noStock": "Rupture de stock",
+		"unavailable": "Indisponible",
 		"borrowed": "Emprunté",
 		"result": " résultats"
 	},
