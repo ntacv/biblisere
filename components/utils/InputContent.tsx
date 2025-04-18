@@ -20,6 +20,6 @@ const InputContentStyle = styled(TextInput)`
 	font: ${fonts.content};
 
 	align-self: center;
-	height: ${sizes.text.input}px;
+	padding-bottom: ${sizes.padding.main - 5}px;
 	width: ${sizes.width.input}px;
 `;

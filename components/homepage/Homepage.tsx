@@ -74,9 +74,32 @@ function Homepage() {
 							}
 						/>
 					)}
+
+					<TitleContent label={t('home:intro')} />
+					<TextContent>{t('home:content:presentation')}</TextContent>
+
+					<Button
+						label={t('home:explore')}
+						iconName={IconNames.book}
+						onPress={() =>
+							navigation.navigate(RouteNames.CatalogNavigator, {
+								screen: RouteNames.Catalog,
+							} as any)
+						}
+						active
+					/>
+
+					<TitleContent label={t('home:titles:services')} />
+					<View>
+						{services.map((service, index) => (
+							<TextContent key={index}>{service}</TextContent>
+						))}
+					</View>
+
 					{schedules.data && (
 						<ContainerZone>
 							<TitleContent iconStart={IconNames.clock} label={t('home:titles:times')} />
+
 							<ViewList>
 								{schedules.data?.map((schedule) => (
 									<TextContent key={schedule.id}>
@@ -97,31 +120,13 @@ function Homepage() {
 
 					<ContainerZone>
 						<TitleContent iconStart={IconNames.mapPin} label={t('home:titles:access')} />
+
 						<View>
 							{access.map((access, index) => (
 								<TextContent key={index}>{t('home:access:' + index)}</TextContent>
 							))}
 						</View>
 					</ContainerZone>
-
-					<TitleContent label={t('home:intro')} />
-					<TextContent>{t('home:content:presentation')}</TextContent>
-
-					<TitleContent label={t('home:titles:services')} />
-					<View>
-						{services.map((service, index) => (
-							<TextContent key={index}>{service}</TextContent>
-						))}
-					</View>
-					<Button
-						label={t('home:explore')}
-						iconName={IconNames.book}
-						onPress={() =>
-							navigation.navigate(RouteNames.CatalogNavigator, {
-								screen: RouteNames.Catalog,
-							} as any)
-						}
-					/>
 				</ContainerColumn>
 
 				<Footer />
@@ -141,23 +146,10 @@ const ImageMainHome = styled(Image)`
 	opacity: 0.87;
 	margin-bottom: ${sizes.padding.main}px;
 `;
-const ImageBook = styled(Image)`
-	height: ${sizes.height.imageList}px;
-	aspect-ratio: 3/4;
-	object-fit: contain;
-`;
 const ViewList = styled(View)`
 	align-items: flex-end;
 	align-self: center;
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
-`;
-const TextContentDate = styled(Text)`
-	font: ${fonts.content};
-	text-align: center;
-	font-weight: bold;
-`;
-const ViewNewBooks = styled(ScrollView)`
-	height: ${sizes.height.imageList + 30}px;
 `;

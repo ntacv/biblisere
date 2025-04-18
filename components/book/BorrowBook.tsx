@@ -47,7 +47,7 @@ const BorrowBook = ({ bookId }: Props) => {
 	return (
 		<>
 			<TextContent>
-				{book.quantity > 0
+				{book?.quantity > 0
 					? t('catalog:available', { val: book.quantity })
 					: t('catalog:unavailable')}
 			</TextContent>
@@ -68,15 +68,17 @@ const BorrowBook = ({ bookId }: Props) => {
 							});
 						}}
 						alignLeft
+						active
 					/>
 				)}
 
-				{user.books.map((self) => self.id).includes(bookId) ? (
+				{user?.books.map((self) => self.id).includes(bookId) ? (
 					<Button
 						label={t('catalog:remove')}
 						iconName="x"
 						onPress={() => returnBook(book.id)}
 						alignLeft
+						active
 					/>
 				) : (
 					book.quantity > 0 && (
@@ -85,6 +87,7 @@ const BorrowBook = ({ bookId }: Props) => {
 							iconName="bookmark"
 							onPress={() => borrowBook(book.id)}
 							alignLeft
+							active
 						/>
 					)
 				)}
