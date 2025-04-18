@@ -12,20 +12,64 @@ import BookListItem from 'components/book/BookListItem';
 import ContainerColumn from 'components/utils/ContainerColumn';
 import Searchbar from 'components/utils/Searchbar';
 
-const Catalog = () => {
+interface Props {
+	route: {
+		params?: {
+			search?: string;
+		};
+	};
+}
+
+const Catalog = (props) => {
 	const { t } = useTranslation();
-	const [loading, setLoading] = React.useState(true);
+
+	const propSearch = props.route.params?.search;
+	const [search, setSearch] = React.useState('');
+	const [searchedBooks, setSearchedBooks] = React.useState<number[]>([]);
 
 	const storeBooks = useStoreMap(StoreBooks.store, (store) => store);
+
+	const filterBooks = () => {
+		// Filter books based on search input
+		setSearchedBooks(
+			storeBooks.books
+				.filter(
+					(book) =>
+						book.title.toLowerCase().includes(search.toLowerCase()) ||
+						book.author.toLowerCase().includes(search.toLowerCase()),
+				)
+				.map((book) => book.id),
+		);
+	};
+	React.useEffect(() => {
+		if (search !== '') {
+			filterBooks();
+		}
+	}, [search]);
+
+	React.useEffect(() => {
+		if (propSearch !== '' && propSearch !== undefined) {
+			setSearch(propSearch);
+		}
+	}, [propSearch]);
 
 	return (
 		<ViewPage header>
 			<ScrollViewContent>
 				<ContainerColumn>
-					<Searchbar />
+					<Searchbar value={{ search, setSearch }} onPress={filterBooks} />
+					<TextLeft>
+						{(!!search ? searchedBooks.length : storeBooks.books.length) + t('catalog:result')}
+					</TextLeft>
 					<ViewList>
 						{storeBooks.books ? (
-							storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+							!!search ? (
+								// Display searched books
+								searchedBooks.map((bookId, index) => <BookListItem key={index} bookId={bookId} />)
+							) : (
+								// Display all books
+								storeBooks.books.map((book, index) => <BookListItem key={index} bookId={book.id} />)
+							)
 						) : (
 							<TextContent>{t('config:loading')}</TextContent>
 						)}
@@ -45,4 +89,7 @@ const ViewList = styled(View)`
 `;
 const TextContent = styled(Text)`
 	font: ${fonts.content};
+`;
+const TextLeft = styled(Text)`
+	align-self: flex-end;
 `;

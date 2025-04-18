@@ -17,11 +17,15 @@ import ContainerColumn from 'components/utils/ContainerColumn';
 
 import BorrowBook from './BorrowBook';
 
-export interface ItemProps {
-	bookId: number;
+interface Props {
+	route: {
+		params: {
+			bookId: number;
+		};
+	};
 }
 
-const BookDetails = (props) => {
+const BookDetails = (props: Props) => {
 	const { t } = useTranslation();
 
 	const storeUser = useStoreMap(StoreUser.store, (store) => store);

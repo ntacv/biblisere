@@ -31,6 +31,7 @@
 			"french": "French"
 		},
 		"input": {
+			"search": "Search",
 			"placeholder": "Search...",
 			"clear": "Clear"
 		},
@@ -99,7 +100,8 @@
 		"limitBooks": "You have reach the limit of {{val}} borrowed books",
 		"available": "Available",
 		"unavailable": "Out of stock",
-		"borrowed": "Borrowed"
+		"borrowed": "Borrowed",
+		"result": " results"
 	},
 	"details": {
 		"title": "Details",
@@ -137,7 +139,8 @@
 		"forgot": "Forgot password?",
 		"forgotText": "We will contact you to reset your password.",
 		"login": "Log in",
-		"signup": "Sign up"
+		"signup": "Sign up",
+		"unauthaurized": "You are not authorized"
 	},
 	"admin": {
 		"title": "Admin",
