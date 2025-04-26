@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View } from 'react-native';
 
 import { IconNames } from 'assets/icons/Icons';
 import { useStoreMap } from 'effector-react';
@@ -67,14 +67,14 @@ const Catalog = ({ route }: Props) => {
 	};
 
 	React.useEffect(() => {
-		if (propSearch !== '' && propSearch !== undefined) {
+		if (!!propSearch) {
 			setSearch(propSearch);
 		}
 	}, [propSearch]);
 
 	React.useEffect(() => {
 		const categoryUnique = storeBooks.books
-			.flatMap((book) => book.categories)
+			?.flatMap((book) => book.categories)
 			.reduce(
 				(acc, val) => {
 					acc[val.id] = val;
@@ -85,7 +85,7 @@ const Catalog = ({ route }: Props) => {
 
 		setCategories((filters) => ({
 			...filters,
-			categories: Object.values(categoryUnique),
+			categories: Object.values(categoryUnique ? categoryUnique : {}),
 		}));
 	}, []);
 
@@ -135,9 +135,11 @@ const Catalog = ({ route }: Props) => {
 
 	return (
 		<ViewPage header>
-			<ScrollViewContent>
+			<ScrollViewContent
+				refreshControl={<RefreshControl refreshing={false} onRefresh={() => bookStore.update()} />}
+			>
 				<ContainerColumn>
-					<Searchbar value={{ search, setSearch }} onPress={() => {}} />
+					<Searchbar value={{ search, setSearch }} />
 					<ViewFilters>
 						<Button
 							label={t('components:filter:filter')}
@@ -197,7 +199,7 @@ const Catalog = ({ route }: Props) => {
 					)}
 
 					<TextLeft>
-						{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books.length) +
+						{(!!search || filters.length > 0 ? searchedBooks.length : storeBooks.books?.length) +
 							t('catalog:result')}
 					</TextLeft>
 

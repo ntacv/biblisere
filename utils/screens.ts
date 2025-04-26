@@ -1,3 +1,5 @@
+import { IconNames } from 'assets/icons/Icons';
+
 import AdminPage from 'components/admin/AdminPage';
 import BookDetails from 'components/book/BookDetails';
 import Catalog from 'components/catalog/Catalog';
@@ -13,6 +15,7 @@ export const screens = {
 		component: Homepage,
 		options: {
 			title: 'home:title',
+			icon: IconNames.menu, //house
 		},
 	},
 	[RouteNames.CatalogNavigator]: {
@@ -20,6 +23,7 @@ export const screens = {
 		component: CatalogNavigator,
 		options: {
 			title: 'catalog:title',
+			icon: IconNames.book,
 		},
 	},
 	[RouteNames.User]: {
@@ -27,6 +31,7 @@ export const screens = {
 		component: User,
 		options: {
 			title: 'user:title',
+			icon: IconNames.user,
 		},
 	},
 	[RouteNames.Admin]: {
@@ -34,6 +39,7 @@ export const screens = {
 		component: AdminPage,
 		options: {
 			title: 'admin:title',
+			icon: IconNames.userCheck, //lock
 		},
 	},
 } as const;

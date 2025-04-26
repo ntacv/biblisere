@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon, { IconNames } from 'assets/icons/Icons';
@@ -56,7 +57,14 @@ const DrawerMenu = () => {
 						key={route.name}
 						name={route.name}
 						component={route.component}
-						options={{ title: t(route.options.title) }}
+						options={{
+							title: t(route.options.title),
+							drawerIcon: () => (
+								<View>
+									<Icon iconName={route.options.icon} />
+								</View>
+							),
+						}}
 					/>
 				),
 			)}
