@@ -1,29 +1,34 @@
-# Plongeoir React Native Nathan Choukroun
+![BiblisereIcon](assets/biblisere_icon.png)
+# Plongeoir React Native ![BiblisereSvg](assets/icons/book.svg) Version 0.1.0
+By [Nathan Choukroun](https://github.com/ntacv)
 
-## Getting started
+![GitHub repo size](https://img.shields.io/github/repo-size/ntacv/biblisere)
 
-`npx expo start`
+## 
+
+## Visuals
+<img src="assets/visuals/biblisere-visual-simulator.png" alt="Visuals of the application" width="600px">
+
+
 
 ## Description
 
-Training project for React Native.
-This project is a library application that let visitors get information and users list their borrowed books. The admin page manages access users and books.
+**Training project for React Native.**
+This project is a virtual library application that let visitors get information and users list their borrowed books. The admin page manages access users and books.
 
-## Visuals
-
-## Installation
+## Getting started
 
 ```
-git clone 'repo'
-cd plongeoir
-npx expo start
+yarn && yarn start 
 ```
+- update baseurl.ts 
+- connect to your device with expo app
+
 
 ## Roadmap
 
-- [ ] Main page for information
-- [ ] Catalogue page and book details
-- [ ] User page and books list
-- [ ] Admin page and fonctionalities
+- [x] Main page for information
+- [x] Catalogue page and book details
+- [x] User page and books list
+- [x] Admin page and fonctionalities
 
-## Authors and acknowledgment
